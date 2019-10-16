@@ -49,12 +49,6 @@ app.use((req, res, next) => {
   next();
 });
 
-
-// catch 404 and forward to error handler
-app.use((req, res, next) => {
-  next(createError(404));
-});
-
 // error handler
 app.use((err, req, res, next) => {
   // set locals, only providing error in development
@@ -72,8 +66,7 @@ app.use('/api/v0.1/countries', countryRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
-  // next(createError(404));
-  next(Respond(res).error(404, 'RouteNotFound', 'This is the end of the earth'));
+  next(createError(404));
 });
 
 
