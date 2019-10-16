@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
@@ -47,10 +49,6 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use('/api/v0.1/countries', countryRouter);
-
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
@@ -67,5 +65,30 @@ app.use((err, req, res, next) => {
   res.status(err.status || 500);
   res.render('error');
 });
+
+app.use('/', indexRouter);
+app.use('/users', usersRouter);
+app.use('/api/v0.1/countries', countryRouter);
+
+// catch 404 and forward to error handler
+app.use(function (req, res, next) {
+  // next(createError(404));
+  next(Respond(res).error(404, 'RouteNotFound', 'This is the end of the earth'));
+});
+
+
+// refactored to work on both dev and prod.
+let port;
+if (app.get('env') === 'development') {
+  port = 3000 || process.env.PORT;
+} else {
+  port = process.env.PORT;
+}
+const server = app.listen(process.env.TEST_PORT);
+
+app.listen(port, () => {
+  console.log(`Listening on port ${port}`);
+})
+
 
 module.exports = app;
