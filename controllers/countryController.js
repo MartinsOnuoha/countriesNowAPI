@@ -5,7 +5,7 @@ class CountryController {
         return res.status(200).json({
             error: false,
             msg: 'countries and cities retrieved',
-            data: countriesAndCities
+            data: CountriesAndCities
         })
     }
 
