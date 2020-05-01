@@ -43,12 +43,16 @@ class CountryController {
             data: countryFound.cities
         })
     }
-
+    /**
+     * Get all countries, code and dial codes
+     * @param {Object} req request object
+     * @param {Object} res response object
+     */
     static getCountriesAndCodes(req, res) {
         return res.status(200).json({
             error: false,
             msg: 'countries and codes retrieved',
-            data: CountriesAndCodes
+            data: CountriesAndCodes.map(x => ({ name: x.name, code: x.code, dial_code: x.dial_code }))
         });
     }
 }
