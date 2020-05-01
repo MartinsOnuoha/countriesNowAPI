@@ -53,8 +53,8 @@ now visit the site on port 3000 (default) or whatever port was set as the `PORT`
 
 ### GET CITIES BY COUNTRY
 
-- Endpoint: `/api/v0.1/countries`
-    - Action: `GET`
+- Endpoint: `/api/v0.1/countries/cities`
+    - Action: `POST`
     - HEADERS: `{'Content-Type': 'application/json'}`
 - PARAMS:
 ```json

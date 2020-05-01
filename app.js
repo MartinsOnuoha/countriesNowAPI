@@ -65,8 +65,11 @@ app.use('/users', usersRouter);
 app.use('/api/v0.1/countries', countryRouter);
 
 // catch 404 and forward to error handler
-app.use(function (req, res, next) {
-  next(createError(404));
+app.use(function (req, res) {
+  return res.status(404).json({
+    error: true,
+    msg: 'you seem to be lost'
+  })
 });
 
 

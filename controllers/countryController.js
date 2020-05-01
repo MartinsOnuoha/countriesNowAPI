@@ -1,14 +1,26 @@
 const CountriesAndCities = require('../model/countriesAndCities')
+const CountriesAndUnicodes = require('../model/countriesAndUnicodes')
+const CountriesAndFlag = require('../model/countriesAndFlag')
+const CountriesAndCodes = require('../model/countriesAndCodes')
 
 class CountryController {
-    static getAll(req, res) {
+    /**
+     * Get all countries and cities
+     * @param {Object} req request object
+     * @param {Object} res response object
+     */
+    static getCountriesAndCities(req, res) {
         return res.status(200).json({
             error: false,
             msg: 'countries and cities retrieved',
             data: CountriesAndCities
         })
     }
-
+    /**
+     * Get cities of a specified country
+     * @param {Object} req request obeject
+     * @param {Object} res response object
+     */
     static getCitiesByCountry(req, res) {
         const { country } = req.body
         if (!country) {
@@ -17,7 +29,7 @@ class CountryController {
                 msg: 'missing param (country)'
             })
         }
-        const countryFound = CountriesAndCities.find(x => x.country == country)
+        const countryFound = CountriesAndCities.find(x => x.country.toLowerCase() == country.toLowerCase())
 
         if (!countryFound) {
             return res.status(404).json({
@@ -30,6 +42,14 @@ class CountryController {
             msg: `cities in ${country} retrieved`,
             data: countryFound.cities
         })
+    }
+
+    static getCountriesAndCodes(req, res) {
+        return res.status(200).json({
+            error: false,
+            msg: 'countries and codes retrieved',
+            data: CountriesAndCodes
+        });
     }
 }
 

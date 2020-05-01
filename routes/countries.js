@@ -3,7 +3,8 @@ const router = express.Router()
 
 const CountryController  = require('../controllers/countryController')
 
-router.get('/', CountryController.getAll)
-router.get('/cities-by-country', CountryController.getCitiesByCountry)
+router.get('/', CountryController.getCountriesAndCities)
+router.post('/cities', CountryController.getCitiesByCountry)
+router.get('/codes', CountryController.getCountriesAndCodes)
 
 module.exports = router;
