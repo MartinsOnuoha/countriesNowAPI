@@ -117,6 +117,38 @@ class CountryController {
             data: result
         })
     }
+    /**
+     * get all countries with their flag images
+     * @param {Object} req request object
+     * @param {Object} res response object
+     */
+    static getCountriesFlagImages(req, res) {
+        return res.status(200).json({
+            error: false,
+            msg: 'flags images retrieved',
+            data: CountriesAndFlag.map(x => ({ name: x.name, flag: x.flag }))
+        })
+    }
+    /**
+     * Get single country with flag image
+     * @param {Object} req request object
+     * @param {Object} res response object
+     */
+    static getCountryFlagImage(req, res) {
+        const { country } = req.body;
+        if (!country) {
+            return res.status(400).json({
+                error: true,
+                msg: 'missing param (country)'
+            })
+        }
+
+        return res.status(200).json({
+            error: false,
+            msg: 'country and flag retrieved',
+            data: CountriesAndFlag.map(x => ({ name: x.name, flag: x.flag })).find(x => x.name.toLowerCase() === country.toLowerCase())
+        });
+    }
 }
 
 module.exports = CountryController

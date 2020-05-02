@@ -2,16 +2,20 @@
 
 ## SETUP LOCALLY
 ```sh
-git clone https://github.com/MartinsOnuoha/countriesAndCitiesAPI countries
-cd countries
-npm i
-npm start
+$ git clone https://github.com/MartinsOnuoha/countriesAndCitiesAPI countries
+
+$ cd countries
+
+$ npm i
+
+$ npm start
 ```
 now visit the site on port 3000 (default) or whatever port was set as the `PORT` environment variable
 
 ## USAGE
 The API does not require any form of Authentication or token.
 
+----------
 ### GET ALL COUNTRIES AND CITIES
 
 - Endpoint: `/api/v0.1/countries`
@@ -302,6 +306,14 @@ The API does not require any form of Authentication or token.
 	"min": 1,
 	"max": 40
 }
+
+OR
+
+{
+	"type": "lat",
+	"min": 1,
+	"max": 40
+}
 ```
 - RESPONSE:
 
@@ -347,4 +359,74 @@ The API does not require any form of Authentication or token.
     },
     ...
 
+```
+
+
+--------------------------------------------------------
+
+
+### GET ALL COUNTRIES WITH FLAG IMAGES
+
+- Endpoint: `/api/v0.1/countries/flag/images`
+    - Action: `GET`
+    - HEADERS: `{'Content-Type': 'application/json'}`
+- RESPONSE:
+
+```json
+{
+  "error": false,
+  "msg": "flags images retrieved",
+  "data": [
+    {
+      "name": "Afghanistan",
+      "flag": "https://upload.wikimedia.org/wikipedia/commons/9/9a/Flag_of_Afghanistan.svg"
+    },
+    {
+      "name": "Albania",
+      "flag": "https://upload.wikimedia.org/wikipedia/commons/3/36/Flag_of_Albania.svg"
+    },
+    {
+      "name": "Algeria",
+      "flag": "https://upload.wikimedia.org/wikipedia/commons/7/77/Flag_of_Algeria.svg"
+    },
+    {
+      "name": "Andorra",
+      "flag": "https://upload.wikimedia.org/wikipedia/commons/1/19/Flag_of_Andorra.svg"
+    },
+    {
+      "name": "Angola",
+      "flag": "https://upload.wikimedia.org/wikipedia/commons/9/9d/Flag_of_Angola.svg"
+    },
+    {
+      "name": "Anguilla",
+      "flag": "https://upload.wikimedia.org/wikipedia/commons/b/b4/Flag_of_Anguilla.svg"
+    },
+    ...
+```
+
+--------------------------------------------------------
+
+
+### GET SINGLE COUNTRY WITH FLAG IMAGE
+
+- Endpoint: `/api/v0.1/countries/flag/images`
+    - Action: `POST`
+    - HEADERS: `{'Content-Type': 'application/json'}`
+- PARAMS:
+```json
+{
+	"country": "nigeria"
+}
+```
+- RESPONSE:
+
+```json
+{
+  "error": false,
+  "msg": "country and flag retrieved",
+  "data": {
+    "name": "Nigeria",
+    "flag": "https://upload.wikimedia.org/wikipedia/commons/7/79/Flag_of_Nigeria.svg"
+  }
+}
 ```
