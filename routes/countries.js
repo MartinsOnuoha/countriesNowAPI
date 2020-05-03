@@ -1,17 +1,19 @@
-const express = require('express')
-const router = express.Router()
+const express = require('express');
+const router = express.Router();
 
-const CountryController  = require('../controllers/countryController')
+const CountryController  = require('../controllers/countryController');
 
-router.get('/', CountryController.getCountriesAndCities)
-router.post('/cities', CountryController.getCitiesByCountry)
-router.get('/codes', CountryController.getCountriesAndCodes)
+router.get('/', CountryController.getCountriesAndCities);
+router.post('/cities', CountryController.getCitiesByCountry);
+router.get('/codes', CountryController.getCountriesAndCodes);
 
 router.get('/flag/images', CountryController.getCountriesFlagImages);
-router.post('/flag/images', CountryController.getCountryFlagImage)
+router.post('/flag/images', CountryController.getCountryFlagImage);
+router.get('/flag/unicode', CountryController.getCountriesUnicodeFlag);
+router.post('/flag/unicode', CountryController.getCountryUnicodeFlag);
 
-router.get('/positions', CountryController.getCountriesPosition)
-router.post('/positions', CountryController.getSinglePosition)
-router.post('/positions/range', CountryController.getPositionRange)
+router.get('/positions', CountryController.getCountriesPosition);
+router.post('/positions', CountryController.getSinglePosition);
+router.post('/positions/range', CountryController.getPositionRange);
 
 module.exports = router;

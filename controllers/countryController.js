@@ -115,7 +115,7 @@ class CountryController {
             error: true,
             msg: `countries between ${type} of (${min} and ${max})`,
             data: result
-        })
+        });
     }
     /**
      * get all countries with their flag images
@@ -127,7 +127,7 @@ class CountryController {
             error: false,
             msg: 'flags images retrieved',
             data: CountriesAndFlag.map(x => ({ name: x.name, flag: x.flag }))
-        })
+        });
     }
     /**
      * Get single country with flag image
@@ -147,6 +147,37 @@ class CountryController {
             error: false,
             msg: 'country and flag retrieved',
             data: CountriesAndFlag.map(x => ({ name: x.name, flag: x.flag })).find(x => x.name.toLowerCase() === country.toLowerCase())
+        });
+    }
+    /**
+     * Get countries and unicode flags
+     * @param {Object} req request object
+     * @param {Object} res response object
+     */
+    static getCountriesUnicodeFlag(req, res) {
+        return res.status(200).json({
+            error: false,
+            msg: 'countries and unicode flags retrieved',
+            data: CountriesAndUnicodes.map(x => ({ name: x.Name, unicodeFlag: x.Unicode }))
+        });
+    }
+    /**
+     * Get a country and unicode flag
+     * @param {Object} req request object
+     * @param {Object} res response object
+     */
+    static getCountryUnicodeFlag(req, res) {
+        const { country } = req.body;
+        if (!country) {
+            return res.status(400).json({
+                error: true,
+                msg: 'missing param (country)'
+            });
+        }
+        return res.status(200).json({
+            error: false,
+            msg: 'countries and unicode flags retrieved',
+            data: CountriesAndUnicodes.map(x => ({ name: x.Name, unicodeFlag: x.Unicode })).find(x => x.name.toLowerCase() === country.toLowerCase())
         });
     }
 }
