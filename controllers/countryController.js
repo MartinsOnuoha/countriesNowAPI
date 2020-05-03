@@ -180,6 +180,30 @@ class CountryController {
             data: CountriesAndUnicodes.map(x => ({ name: x.Name, unicodeFlag: x.Unicode })).find(x => x.name.toLowerCase() === country.toLowerCase())
         });
     }
+
+    static getCountriesCapital(req, res) {
+        return res.status(200).json({
+            error: false,
+            msg: 'countries and capitals retrieved',
+            data: CountriesAndUnicodes.map(x => ({ name: x.Name, capital: x.Capital }))
+        });
+    }
+
+
+    static getCountryCapital(req, res) {
+        const { country } = req.body;
+        if (!country) {
+            return res.status(400).json({
+                error: true,
+                msg: 'missing param (country)'
+            })
+        }
+        return res.status(200).json({
+            error: false,
+            msg: 'countries and capitals retrieved',
+            data: CountriesAndUnicodes.map(x => ({ name: x.Name, capital: x.Capital })).find(x => x.name.toLowerCase() === country.toLowerCase()),
+        });
+    }
 }
 
 module.exports = CountryController
