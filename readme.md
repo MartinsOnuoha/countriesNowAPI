@@ -1,6 +1,6 @@
 # COUNTRIES AND CITIES API
 
-A curation of Countries data including (dial codes, states, cities, currencies etc) served over a REST API so you don't have to have them locally in your applications.
+A curation of Countries data including (dial codes, states, cities, currencies, capitals etc) served over a REST API so you don't have to have them locally in your applications.
 This means lighter application sizes.
 ## SETUP LOCALLY
 ```sh
@@ -17,7 +17,7 @@ now visit the site on port 3000 (default) or whatever port was set as the `PORT`
 ## USAGE
 The API does not require any form of Authentication or token.
 
-----------
+---------------------
 ### GET ALL COUNTRIES AND CITIES
 
 - Endpoint: `/api/v0.1/countries`
@@ -504,4 +504,76 @@ OR
 ```
 
 
+--------------------------------------------------------
 
+
+### GET COUNTRIES WITH CAPITAL
+
+- Endpoint: `/api/v0.1/countries/capital`
+    - Action: `GET`
+    - HEADERS: `{'Content-Type': 'application/json'}`
+- RESPONSE:
+
+```json
+{
+  "error": false,
+  "msg": "countries and capitals retrieved",
+  "data": [
+    {
+      "name": "Bangladesh",
+      "capital": "Dhaka"
+    },
+    {
+      "name": "Belgium",
+      "capital": "Brussels"
+    },
+    {
+      "name": "Burkina Faso",
+      "capital": "Ouagadougou"
+    },
+    {
+      "name": "Bulgaria",
+      "capital": "Sofia"
+    },
+    {
+      "name": "Bosnia and Herzegovina",
+      "capital": "Sarajevo"
+    },
+    {
+      "name": "Barbados",
+      "capital": "Bridgetown"
+    },
+    {
+      "name": "Wallis and Futuna",
+      "capital": "Mata Utu"
+    },
+    ...
+```
+
+
+--------------------------------------------------------
+
+
+### GET SINGLE COUNTRY WITH CAPITAL
+
+- Endpoint: `/api/v0.1/countries/capital`
+    - Action: `POST`
+    - HEADERS: `{'Content-Type': 'application/json'}`
+- PARAMS:
+```json
+{
+	"country": "nigeria"
+}
+```
+- RESPONSE:
+
+```json
+{
+  "error": false,
+  "msg": "countries and capitals retrieved",
+  "data": {
+    "name": "Nigeria",
+    "capital": "Abuja"
+  }
+}
+```

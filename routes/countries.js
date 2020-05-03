@@ -7,6 +7,9 @@ router.get('/', CountryController.getCountriesAndCities);
 router.post('/cities', CountryController.getCitiesByCountry);
 router.get('/codes', CountryController.getCountriesAndCodes);
 
+router.get('/capital', CountryController.getCountriesCapital);
+router.post('/capital', CountryController.getCountryCapital);
+
 router.get('/flag/images', CountryController.getCountriesFlagImages);
 router.post('/flag/images', CountryController.getCountryFlagImage);
 router.get('/flag/unicode', CountryController.getCountriesUnicodeFlag);
