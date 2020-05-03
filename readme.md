@@ -1,5 +1,7 @@
 # COUNTRIES AND CITIES API
 
+A curation of Countries data including (dial codes, states, cities, currencies etc) served over a REST API so you don't have to have them locally in your applications.
+This means lighter application sizes.
 ## SETUP LOCALLY
 ```sh
 $ git clone https://github.com/MartinsOnuoha/countriesAndCitiesAPI countries
@@ -168,7 +170,7 @@ The API does not require any form of Authentication or token.
 
 -----------------------------------
 
-### GET COUNTRIES AND CODES
+### GET COUNTRIES AND DIAL CODES
 
 - Endpoint: `/api/v0.1/countries/codes`
     - Action: `GET`
@@ -430,3 +432,76 @@ OR
   }
 }
 ```
+
+--------------------------------------------------------
+
+
+### GET COUNTRIES WITH UNICODE FLAG
+
+- Endpoint: `/api/v0.1/countries/flag/unicode`
+    - Action: `GET`
+    - HEADERS: `{'Content-Type': 'application/json'}`
+- RESPONSE:
+
+```json
+{
+  "error": false,
+  "msg": "countries and unicode flags retrieved",
+  "data": [
+    {
+      "name": "Bangladesh",
+      "unicodeFlag": "🇧🇩"
+    },
+    {
+      "name": "Belgium",
+      "unicodeFlag": "🇧🇪"
+    },
+    {
+      "name": "Burkina Faso",
+      "unicodeFlag": "🇧🇫"
+    },
+    {
+      "name": "Bulgaria",
+      "unicodeFlag": "🇧🇬"
+    },
+    {
+      "name": "Bosnia and Herzegovina",
+      "unicodeFlag": "🇧🇦"
+    },
+    {
+      "name": "Barbados",
+      "unicodeFlag": "🇧🇧"
+    },
+  ]
+}
+```
+
+--------------------------------------------------------
+
+
+### GET SINGLE COUNTRY WITH UNICODE FLAG
+
+- Endpoint: `/api/v0.1/countries/flag/unicode`
+    - Action: `POST`
+    - HEADERS: `{'Content-Type': 'application/json'}`
+- PARAMS:
+```json
+{
+	"country": "nigeria"
+}
+```
+- RESPONSE:
+
+```json
+{
+  "error": false,
+  "msg": "countries and unicode flags retrieved",
+  "data": {
+    "name": "Nigeria",
+    "unicodeFlag": "🇳🇬"
+  }
+}
+```
+
+
+
