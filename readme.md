@@ -1,24 +1,34 @@
-# COUNTRIES AND CITIES API
+# Countries Data API
 
-A curation of Countries data including (dial codes, states, cities, currencies, capitals etc) served over a REST API so you don't have to have them locally in your applications.
-This means lighter application sizes.
-## SETUP LOCALLY
-```sh
-$ git clone https://github.com/MartinsOnuoha/countriesAndCitiesAPI countries
-
-$ cd countries
-
-$ npm i
-
-$ npm start
-```
-now visit the site on port 3000 (default) or whatever port was set as the `PORT` environment variable
+>A curation of Countries data including (dial codes, states, cities, currencies, capitals etc) served over a REST API so you don't have to have them locally in your applications.
+>This means lighter application sizes.
 
 ## USAGE
 The API does not require any form of Authentication or token.
 
+## Table of Endpoints
+
+- [Countries Data API](#countries-data-api)
+  - [USAGE](#usage)
+  - [Table of Endpoints](#table-of-endpoints)
+    - [Get All Countries and Cities](#get-all-countries-and-cities)
+    - [Get Cities By Country Name](#get-cities-by-country-name)
+    - [Get Countries And Dial Codes](#get-countries-and-dial-codes)
+    - [Get Countries And Positions (Longitude, Latitude)](#get-countries-and-positions-longitude-latitude)
+    - [Get Single Country's Position](#get-single-countrys-position)
+    - [Get All Countries Within Specific Longitude / Latitude Range](#get-all-countries-within-specific-longitude--latitude-range)
+    - [Get All Countries With Flag Images](#get-all-countries-with-flag-images)
+    - [Get Single Country With Flag Image](#get-single-country-with-flag-image)
+    - [Get Countries With Unicode Flag](#get-countries-with-unicode-flag)
+    - [Get Single Country With Unicode Flag](#get-single-country-with-unicode-flag)
+    - [Get Countries With Capital](#get-countries-with-capital)
+    - [Get Single Country With Capital](#get-single-country-with-capital)
+
+
+
 ---------------------
-### GET ALL COUNTRIES AND CITIES
+
+### Get All Countries and Cities
 
 - Endpoint: `/api/v0.1/countries`
     - Action: `GET`
@@ -58,7 +68,7 @@ The API does not require any form of Authentication or token.
 ```
 -----------------------------------
 
-### GET CITIES BY COUNTRY
+### Get Cities By Country Name
 
 - Endpoint: `/api/v0.1/countries/cities`
     - Action: `POST`
@@ -170,7 +180,7 @@ The API does not require any form of Authentication or token.
 
 -----------------------------------
 
-### GET COUNTRIES AND DIAL CODES
+### Get Countries And Dial Codes
 
 - Endpoint: `/api/v0.1/countries/codes`
     - Action: `GET`
@@ -220,7 +230,7 @@ The API does not require any form of Authentication or token.
 --------------------------------------------------------
 
 
-### GET COUNTRIES AND POSITIONS (Longitude, Latitude)
+### Get Countries And Positions (Longitude, Latitude)
 
 - Endpoint: `/api/v0.1/countries/positions`
     - Action: `GET`
@@ -267,7 +277,7 @@ The API does not require any form of Authentication or token.
 --------------------------------------------------------
 
 
-### GET SINGLE COUNTRY'S POSITION
+### Get Single Country's Position
 
 - Endpoint: `/api/v0.1/countries/positions`
     - Action: `POST`
@@ -296,7 +306,7 @@ The API does not require any form of Authentication or token.
 --------------------------------------------------------
 
 
-### GET ALL COUNTRIES WITHIN SPECIFIC LONGITUDE / LATITUDE RANGE
+### Get All Countries Within Specific Longitude / Latitude Range
 
 - Endpoint: `/api/v0.1/countries/positions/range`
     - Action: `POST`
@@ -367,7 +377,7 @@ OR
 --------------------------------------------------------
 
 
-### GET ALL COUNTRIES WITH FLAG IMAGES
+### Get All Countries With Flag Images
 
 - Endpoint: `/api/v0.1/countries/flag/images`
     - Action: `GET`
@@ -409,7 +419,7 @@ OR
 --------------------------------------------------------
 
 
-### GET SINGLE COUNTRY WITH FLAG IMAGE
+### Get Single Country With Flag Image
 
 - Endpoint: `/api/v0.1/countries/flag/images`
     - Action: `POST`
@@ -436,7 +446,7 @@ OR
 --------------------------------------------------------
 
 
-### GET COUNTRIES WITH UNICODE FLAG
+### Get Countries With Unicode Flag
 
 - Endpoint: `/api/v0.1/countries/flag/unicode`
     - Action: `GET`
@@ -479,7 +489,7 @@ OR
 --------------------------------------------------------
 
 
-### GET SINGLE COUNTRY WITH UNICODE FLAG
+### Get Single Country With Unicode Flag
 
 - Endpoint: `/api/v0.1/countries/flag/unicode`
     - Action: `POST`
@@ -507,7 +517,7 @@ OR
 --------------------------------------------------------
 
 
-### GET COUNTRIES WITH CAPITAL
+### Get Countries With Capital
 
 - Endpoint: `/api/v0.1/countries/capital`
     - Action: `GET`
@@ -554,7 +564,7 @@ OR
 --------------------------------------------------------
 
 
-### GET SINGLE COUNTRY WITH CAPITAL
+### Get Single Country With Capital
 
 - Endpoint: `/api/v0.1/countries/capital`
     - Action: `POST`
