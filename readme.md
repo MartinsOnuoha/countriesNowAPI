@@ -23,6 +23,7 @@ The API does not require any form of Authentication or token.
     - [Get Single Country With Unicode Flag](#get-single-country-with-unicode-flag)
     - [Get Countries With Capital](#get-countries-with-capital)
     - [Get Single Country With Capital](#get-single-country-with-capital)
+    - [Get Countries and Currencies](#get-countries-and-currencies)
 
 
 
@@ -586,4 +587,40 @@ OR
     "capital": "Abuja"
   }
 }
+```
+
+
+
+--------------------------------------------------------
+
+
+### Get Countries and Currencies
+
+- Endpoint: `/api/v0.1/countries/currency`
+    - Action: `GET`
+    - HEADERS: `{'Content-Type': 'application/json'}`
+- RESPONSE:
+```json
+{
+  "error": false,
+  "msg": "countries and currencies retrieved",
+  "data": [
+    {
+      "name": "Bangladesh",
+      "currency": "BDT"
+    },
+    {
+      "name": "Belgium",
+      "currency": "EUR"
+    },
+    {
+      "name": "Burkina Faso",
+      "currency": "XOF"
+    },
+    {
+      "name": "Bulgaria",
+      "currency": "BGN"
+    },
+    ...
+
 ```

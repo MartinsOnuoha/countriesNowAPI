@@ -4,6 +4,8 @@ const CountriesAndFlag = require('../model/countriesAndFlag')
 const CountriesAndCodes = require('../model/countriesAndCodes')
 const positions = CountriesAndCodes.map(x => ({ name: x.name, long: x.longitude, lat: x.latitude }))
 
+const Respond = require('../helpers/respond');
+
 class CountryController {
     /**
      * Get all countries and cities
@@ -180,7 +182,11 @@ class CountryController {
             data: CountriesAndUnicodes.map(x => ({ name: x.Name, unicodeFlag: x.Unicode })).find(x => x.name.toLowerCase() === country.toLowerCase())
         });
     }
-
+    /**
+     * Get countries and their capital
+     * @param {Object} req request object
+     * @param {Object} res response object
+     */
     static getCountriesCapital(req, res) {
         return res.status(200).json({
             error: false,
@@ -188,21 +194,27 @@ class CountryController {
             data: CountriesAndUnicodes.map(x => ({ name: x.Name, capital: x.Capital }))
         });
     }
-
-
+    /**
+     * Get single country and capital
+     * @param {Object} req request object
+     * @param {Object} res response object
+     */
     static getCountryCapital(req, res) {
         const { country } = req.body;
         if (!country) {
-            return res.status(400).json({
-                error: true,
-                msg: 'missing param (country)'
-            })
+            return Respond.error(res, 'missing param (country)', 400);
         }
-        return res.status(200).json({
-            error: false,
-            msg: 'countries and capitals retrieved',
-            data: CountriesAndUnicodes.map(x => ({ name: x.Name, capital: x.Capital })).find(x => x.name.toLowerCase() === country.toLowerCase()),
-        });
+        const data = CountriesAndUnicodes.map(x => ({ name: x.Name, capital: x.Capital })).find(x => x.name.toLowerCase() === country.toLowerCase())
+        return Respond.success(res, 'countries and capitals retrieved', data);
+    }
+    /**
+     * Get countries and their currencies
+     * @param {Object} req request object
+     * @param {Object} res response object
+     */
+    static getCountriesAndCurrency(req, res) {
+        const data = CountriesAndUnicodes.map(x => ({ name: x.Name, currency: x.Currency }))
+        return Respond.success(res, 'countries and currencies retrieved', data);
     }
 }
 
