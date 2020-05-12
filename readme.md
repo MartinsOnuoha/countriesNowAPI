@@ -392,29 +392,28 @@ OR
   "data": [
     {
       "name": "Afghanistan",
-      "flag": "https://upload.wikimedia.org/wikipedia/commons/9/9a/Flag_of_Afghanistan.svg"
+      "flag": "https://upload.wikimedia.org/wikipedia/commons/9/9a/Flag_of_Afghanistan.svg",
+      "Iso2": "AF",
+      "Iso3": "AFG"
     },
     {
       "name": "Albania",
-      "flag": "https://upload.wikimedia.org/wikipedia/commons/3/36/Flag_of_Albania.svg"
+      "flag": "https://upload.wikimedia.org/wikipedia/commons/3/36/Flag_of_Albania.svg",
+      "Iso2": "AL",
+      "Iso3": "ALB"
     },
     {
       "name": "Algeria",
-      "flag": "https://upload.wikimedia.org/wikipedia/commons/7/77/Flag_of_Algeria.svg"
+      "flag": "https://upload.wikimedia.org/wikipedia/commons/7/77/Flag_of_Algeria.svg",
+      "Iso2": "DZ",
+      "Iso3": "DZA"
     },
     {
       "name": "Andorra",
-      "flag": "https://upload.wikimedia.org/wikipedia/commons/1/19/Flag_of_Andorra.svg"
+      "flag": "https://upload.wikimedia.org/wikipedia/commons/1/19/Flag_of_Andorra.svg",
+      "Iso2": "AD",
+      "Iso3": "AND"
     },
-    {
-      "name": "Angola",
-      "flag": "https://upload.wikimedia.org/wikipedia/commons/9/9d/Flag_of_Angola.svg"
-    },
-    {
-      "name": "Anguilla",
-      "flag": "https://upload.wikimedia.org/wikipedia/commons/b/b4/Flag_of_Anguilla.svg"
-    },
-    ...
 ```
 
 --------------------------------------------------------

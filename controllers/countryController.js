@@ -1,7 +1,8 @@
 const CountriesAndCities = require('../model/countriesAndCities')
 const CountriesAndUnicodes = require('../model/countriesAndUnicodes')
 const CountriesAndFlag = require('../model/countriesAndFlag')
-const CountriesAndCodes = require('../model/countriesAndCodes')
+const CountriesAndCodes = require('../model/countriesAndCodes');
+const Finder = require('../helpers/finder');
 const positions = CountriesAndCodes.map(x => ({ name: x.name, long: x.longitude, lat: x.latitude }))
 
 const Respond = require('../helpers/respond');
@@ -125,10 +126,28 @@ class CountryController {
      * @param {Object} res response object
      */
     static getCountriesFlagImages(req, res) {
+
         return res.status(200).json({
             error: false,
             msg: 'flags images retrieved',
-            data: CountriesAndFlag.map(x => ({ name: x.name, flag: x.flag }))
+            // data: CountriesAndFlag.map(x => ({
+            //     name: x.name,
+            //     flag: x.flag,
+            // })),
+            data: CountriesAndFlag.map(x => {
+
+                let code = Finder.findCountryByName(x.name, CountriesAndUnicodes, 'Name')
+
+                const dataObj = {
+                    name: x.name,
+                    flag: x.flag,
+                    Iso2: code ? code.Iso2 : null,
+                    Iso3: code ? code.Iso3 : null,
+                }
+                return dataObj
+                // code: Finder.findCountryByName(x.name, ).
+
+            })
         });
     }
     /**
