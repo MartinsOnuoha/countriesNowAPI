@@ -6,8 +6,11 @@
 ## USAGE
 The API does not require any form of Authentication or token.
 
-## Table of Endpoints
 
+------------------------- 
+
+
+## Table of Endpoints
 - [Countries Data API](#countries-data-api)
   - [USAGE](#usage)
   - [Table of Endpoints](#table-of-endpoints)
