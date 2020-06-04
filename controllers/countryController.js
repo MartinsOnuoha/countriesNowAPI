@@ -3,9 +3,9 @@ const CountriesAndUnicodes = require('../model/countriesAndUnicodes')
 const CountriesAndFlag = require('../model/countriesAndFlag')
 const CountriesAndCodes = require('../model/countriesAndCodes');
 const Finder = require('../helpers/finder');
-const positions = CountriesAndCodes.map(x => ({ name: x.name, long: x.longitude, lat: x.latitude }))
-
 const Respond = require('../helpers/respond');
+
+const positions = CountriesAndCodes.map(x => ({ name: x.name, long: x.longitude, lat: x.latitude }))
 
 class CountryController {
     /**
@@ -14,11 +14,7 @@ class CountryController {
      * @param {Object} res response object
      */
     static getCountriesAndCities(req, res) {
-        return res.status(200).json({
-            error: false,
-            msg: 'countries and cities retrieved',
-            data: CountriesAndCities
-        })
+        return Respond.success(res, 'countries and cities retrieved', CountriesAndCities);
     }
     /**
      * Get cities of a specified country
@@ -28,24 +24,14 @@ class CountryController {
     static getCitiesByCountry(req, res) {
         const { country } = req.body
         if (!country) {
-            return res.status(400).json({
-                error: true,
-                msg: 'missing param (country)'
-            })
+            return Respond.error(res, 'missing param (country)', 400);
         }
-        const countryFound = CountriesAndCities.find(x => x.country.toLowerCase() == country.toLowerCase())
+        const data = CountriesAndCities.find(x => x.country.toLowerCase() == country.toLowerCase())
 
-        if (!countryFound) {
-            return res.status(404).json({
-                error: true,
-                msg: 'country not found'
-            })
+        if (!data) {
+            return Respond.error(res, 'country not found', 404);
         }
-        return res.status(200).json({
-            error: false,
-            msg: `cities in ${country} retrieved`,
-            data: countryFound.cities
-        })
+        return Respond.success(res, `cities in ${country} retrieved`, data.cities);
     }
     /**
      * Get all countries, code and dial codes
@@ -53,11 +39,8 @@ class CountryController {
      * @param {Object} res response object
      */
     static getCountriesAndCodes(req, res) {
-        return res.status(200).json({
-            error: false,
-            msg: 'countries and codes retrieved',
-            data: CountriesAndCodes.map(x => ({ name: x.name, code: x.code, dial_code: x.dial_code }))
-        });
+        const data = CountriesAndCodes.map(x => ({ name: x.name, code: x.code, dial_code: x.dial_code }));
+        return Respond.success(res, 'countries and codes retrieved', data);
     }
     /**
      * Get countries and positions
@@ -65,11 +48,7 @@ class CountryController {
      * @param {Object} res response object
      */
     static getCountriesPosition(req, res) {
-        return res.status(200).json({
-            error: false,
-            msg: 'countries and positions retrieved',
-            data: positions
-        })
+        return Respond.success(res, 'countries and positions retrieved', positions);
     }
     /**
      * Get a single country's position
@@ -79,23 +58,13 @@ class CountryController {
     static getSinglePosition(req, res) {
         const { country } = req.body;
         if (!country) {
-            return res.status(400).json({
-                error: true,
-                msg: 'missing param (country)'
-            })
+            return Respond.error(res, 'missing param (country)', 400);
         }
         const data = positions.find(x => x.name.toLowerCase() === country.toLowerCase())
-        
-        // Just incase there is no country with the provided name
         if (!data) {
-            Respond.error(res, 'Country not found', 404);
-            return;
+            return Respond.error(res, 'Country not found', 404);
         }
-        return res.status(200).json({
-            error: false,
-            msg: 'country position retrieved',
-            data
-    	});
+        return Respond.success(res, 'country position retrieved', data);
     }
     /**
      * Get countries by position range
@@ -104,10 +73,9 @@ class CountryController {
      */
     static getPositionRange(req, res) {
         const { type, min, max } = req.body;
-        !type || !min || !max ? res.status(400).json({
-            error: true,
-            msg: 'missing param (type, min, max)'
-        }) : false
+        if (!type || !min || !max) {
+            return Respond.error(res, 'missing param (type, min, max)', 400)
+        }
         let result = positions;
         switch (type) {
             case 'lat':
@@ -120,12 +88,7 @@ class CountryController {
                 result = positions
                 break;
         }
-
-        return res.status(200).json({
-            error: true,
-            msg: `countries between ${type} of (${min} and ${max})`,
-            data: result
-        });
+        return Respond.success(res, `countries between ${type} of (${min} and ${max})`, result);
     }
     /**
      * get all countries with their flag images
@@ -133,29 +96,18 @@ class CountryController {
      * @param {Object} res response object
      */
     static getCountriesFlagImages(req, res) {
+        const data = CountriesAndFlag.map(x => {
+            let code = Finder.findCountryByName(x.name, CountriesAndUnicodes, 'Name')
+            const dataObj = {
+                name: x.name,
+                flag: x.flag,
+                Iso2: code ? code.Iso2 : null,
+                Iso3: code ? code.Iso3 : null,
+            }
+            return dataObj
 
-        return res.status(200).json({
-            error: false,
-            msg: 'flags images retrieved',
-            // data: CountriesAndFlag.map(x => ({
-            //     name: x.name,
-            //     flag: x.flag,
-            // })),
-            data: CountriesAndFlag.map(x => {
-
-                let code = Finder.findCountryByName(x.name, CountriesAndUnicodes, 'Name')
-
-                const dataObj = {
-                    name: x.name,
-                    flag: x.flag,
-                    Iso2: code ? code.Iso2 : null,
-                    Iso3: code ? code.Iso3 : null,
-                }
-                return dataObj
-                // code: Finder.findCountryByName(x.name, ).
-
-            })
         });
+        return Respond.success(res, 'flags images retrieved', data);
     }
     /**
      * Get single country with flag image
@@ -165,17 +117,13 @@ class CountryController {
     static getCountryFlagImage(req, res) {
         const { country } = req.body;
         if (!country) {
-            return res.status(400).json({
-                error: true,
-                msg: 'missing param (country)'
-            })
+            return Respond.error(res, 'missing param (country)', 400)
         }
-
-        return res.status(200).json({
-            error: false,
-            msg: 'country and flag retrieved',
-            data: CountriesAndFlag.map(x => ({ name: x.name, flag: x.flag })).find(x => x.name.toLowerCase() === country.toLowerCase())
-        });
+        const data = CountriesAndFlag.map(x => ({ name: x.name, flag: x.flag })).find(x => x.name.toLowerCase() === country.toLowerCase());
+        if (!data) {
+            return Respond.error(res, 'no records found', 404)
+        }
+        return Respond.success(res, 'country and flag retrieved', data);
     }
     /**
      * Get countries and unicode flags
@@ -183,11 +131,8 @@ class CountryController {
      * @param {Object} res response object
      */
     static getCountriesUnicodeFlag(req, res) {
-        return res.status(200).json({
-            error: false,
-            msg: 'countries and unicode flags retrieved',
-            data: CountriesAndUnicodes.map(x => ({ name: x.Name, unicodeFlag: x.Unicode }))
-        });
+        const data = CountriesAndUnicodes.map(x => ({ name: x.Name, unicodeFlag: x.Unicode }));
+        return Respond.success(res, 'countries and unicode flags retrieved', data);
     }
     /**
      * Get a country and unicode flag
@@ -197,16 +142,10 @@ class CountryController {
     static getCountryUnicodeFlag(req, res) {
         const { country } = req.body;
         if (!country) {
-            return res.status(400).json({
-                error: true,
-                msg: 'missing param (country)'
-            });
+            return Respond.error(res, 'missing param (country)', 400);
         }
-        return res.status(200).json({
-            error: false,
-            msg: 'countries and unicode flags retrieved',
-            data: CountriesAndUnicodes.map(x => ({ name: x.Name, unicodeFlag: x.Unicode })).find(x => x.name.toLowerCase() === country.toLowerCase())
-        });
+        const data = CountriesAndUnicodes.map(x => ({ name: x.Name, unicodeFlag: x.Unicode })).find(x => x.name.toLowerCase() === country.toLowerCase())
+        return Respond.success(res, 'countries and unicode flags retrieved', data)
     }
     /**
      * Get countries and their capital
@@ -214,11 +153,8 @@ class CountryController {
      * @param {Object} res response object
      */
     static getCountriesCapital(req, res) {
-        return res.status(200).json({
-            error: false,
-            msg: 'countries and capitals retrieved',
-            data: CountriesAndUnicodes.map(x => ({ name: x.Name, capital: x.Capital }))
-        });
+        const data = CountriesAndUnicodes.map(x => ({ name: x.Name, capital: x.Capital }));
+        return Respond.success(res, 'countries and capitals retrieved', data)
     }
     /**
      * Get single country and capital
