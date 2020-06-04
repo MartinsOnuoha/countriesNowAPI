@@ -84,11 +84,18 @@ class CountryController {
                 msg: 'missing param (country)'
             })
         }
+        const data = positions.find(x => x.name.toLowerCase() === country.toLowerCase())
+        
+        // Just incase there is no country with the provided name
+        if (!data) {
+            Respond.error(res, 'Country not found', 404);
+            return;
+        }
         return res.status(200).json({
             error: false,
             msg: 'country position retrieved',
-            data: positions.find(x => x.name.toLowerCase() === country)
-        });
+            data
+    	});
     }
     /**
      * Get countries by position range
