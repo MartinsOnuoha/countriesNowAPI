@@ -88,15 +88,8 @@ class CountryController {
         
         // Just incase there is no country with the provided name
         if (!data) {
-<<<<<<< HEAD
             Respond.error(res, 'Country not found', 404);
             return;
-=======
-            return res.status(404).json({
-                error: true,
-                msg: 'Country not found'
-            })
->>>>>>> 6c84f02... fix(countryController/getSinglePosition): fixes get single position controller
         }
         return res.status(200).json({
             error: false,
