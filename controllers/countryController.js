@@ -3,9 +3,9 @@ const CountriesAndUnicodes = require('../model/countriesAndUnicodes')
 const CountriesAndFlag = require('../model/countriesAndFlag')
 const CountriesAndCodes = require('../model/countriesAndCodes');
 const Finder = require('../helpers/finder');
-const positions = CountriesAndCodes.map(x => ({ name: x.name, long: x.longitude, lat: x.latitude }))
-
 const Respond = require('../helpers/respond');
+
+const positions = CountriesAndCodes.map(x => ({ name: x.name, long: x.longitude, lat: x.latitude }))
 
 class CountryController {
     /**
@@ -14,11 +14,7 @@ class CountryController {
      * @param {Object} res response object
      */
     static getCountriesAndCities(req, res) {
-        return res.status(200).json({
-            error: false,
-            msg: 'countries and cities retrieved',
-            data: CountriesAndCities
-        })
+        return Respond.success(res, 'countries and cities retrieved', CountriesAndCities);
     }
     /**
      * Get cities of a specified country
@@ -28,24 +24,14 @@ class CountryController {
     static getCitiesByCountry(req, res) {
         const { country } = req.body
         if (!country) {
-            return res.status(400).json({
-                error: true,
-                msg: 'missing param (country)'
-            })
+            return Respond.error(res, 'missing param (country)', 400);
         }
-        const countryFound = CountriesAndCities.find(x => x.country.toLowerCase() == country.toLowerCase())
+        const data = CountriesAndCities.find(x => x.country.toLowerCase() == country.toLowerCase())
 
-        if (!countryFound) {
-            return res.status(404).json({
-                error: true,
-                msg: 'country not found'
-            })
+        if (!data) {
+            return Respond.error(res, 'country not found', 404);
         }
-        return res.status(200).json({
-            error: false,
-            msg: `cities in ${country} retrieved`,
-            data: countryFound.cities
-        })
+        return Respond.success(res, `cities in ${country} retrieved`, data.cities);
     }
     /**
      * Get all countries, code and dial codes
@@ -72,10 +58,7 @@ class CountryController {
     static getSinglePosition(req, res) {
         const { country } = req.body;
         if (!country) {
-            return res.status(400).json({
-                error: true,
-                msg: 'missing param (country)'
-            })
+            return Respond.error(res, 'missing param (country)', 400);
         }
         const data = positions.find(x => x.name.toLowerCase() === country.toLowerCase())
         if (!data) {
