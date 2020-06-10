@@ -27,6 +27,7 @@ The API does not require any form of Authentication or token.
     - [Get Countries With Capital](#get-countries-with-capital)
     - [Get Single Country With Capital](#get-single-country-with-capital)
     - [Get Countries and Currencies](#get-countries-and-currencies)
+    - [Get Countries Information With Selectors](#get-countries-information-with-selectors)
 
 
 
@@ -625,4 +626,47 @@ OR
     },
     ...
 
+```
+
+
+--------------------------------------------------------
+
+
+### Get Countries Information With Selectors
+
+- Endpoint: `/api/v0.1/countries/info?returns=unicodeFlag,currency,flag`
+    - Action: `GET`
+    - HEADERS: `{'Content-Type': 'application/json'}`
+    - QUERY: the returns parameter must be a comma-separated list of data attributes. e.g unicodeFlag,currency,flag. unicodeFlag fetches unicode flag, currency fetches currency, flag fetches link to svg image of flag.
+- RESPONSE:
+```json
+{
+  "error": false,
+  "msg": "countries details: 'unicodeFlag,currency,flag' have been retrieved",
+  "data": [
+    {
+      "name": "Bangladesh",
+      "currency": "BDT",
+      "unicodeFlag": "🇧🇩",
+      "flag": "https://upload.wikimedia.org/wikipedia/commons/f/f9/Flag_of_Bangladesh.svg"
+    },
+    {
+      "name": "Belgium",
+      "currency": "EUR",
+      "unicodeFlag": "🇧🇪",
+      "flag": "https://upload.wikimedia.org/wikipedia/commons/6/65/Flag_of_Belgium.svg"
+    },
+    {
+      "name": "Burkina Faso",
+      "currency": "XOF",
+      "unicodeFlag": "🇧🇫",
+      "flag": "https://upload.wikimedia.org/wikipedia/commons/3/31/Flag_of_Burkina_Faso.svg"
+    },
+    {
+      "name": "Bulgaria",
+      "currency": "BGN",
+      "unicodeFlag": "🇧🇬",
+      "flag": "https://upload.wikimedia.org/wikipedia/commons/9/9a/Flag_of_Bulgaria.svg"
+    },
+    ...
 ```
