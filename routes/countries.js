@@ -8,6 +8,7 @@ router.post('/cities', CountryController.getCitiesByCountry);
 router.get('/codes', CountryController.getCountriesAndCodes);
 
 router.get('/currency', CountryController.getCountriesAndCurrency);
+router.get('/info', CountryController.getCountriesInfo);
 
 router.get('/capital', CountryController.getCountriesCapital);
 router.post('/capital', CountryController.getCountryCapital);

@@ -178,6 +178,33 @@ class CountryController {
         const data = CountriesAndUnicodes.map(x => ({ name: x.Name, currency: x.Currency }))
         return Respond.success(res, 'countries and currencies retrieved', data);
     }
+    /**
+     * Get countries information by specifying required data
+     * @param {Object} req request object
+     * @param {Object} res response object
+     */
+    static getCountriesInfo(req, res) {
+        const {returns = ""} = req.query;
+
+        if(!returns) return Respond.error(res, "you must specify data to fetch e.g ?returns=unicode,currency,image", 400);
+        const params = returns.trim().split(",").map(x => x.trim());
+
+        // TODO: Add more data selectors
+        const fetchCurrency = params.includes("currency");
+        const fetchImage = params.includes("flag");
+        const fetchUnicode = params.includes("unicodeFlag");
+
+        const data = CountriesAndUnicodes.map(x => {
+            const countryAndFlag = fetchImage && CountriesAndFlag.find(c => c.name.toLowerCase() === x.Name.toLowerCase());
+            return ({
+            name: x.Name,
+            currency: (fetchCurrency && x.Currency) || undefined,
+            unicodeFlag: (fetchUnicode && x.Unicode) || undefined,
+            flag: (countryAndFlag && countryAndFlag.flag) || undefined,
+        })
+    })
+    return Respond.success(res, `countries details: '${returns}' have been retrieved`, data);
+    }
 }
 
 module.exports = CountryController
