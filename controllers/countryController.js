@@ -4,7 +4,9 @@ const CountriesAndFlag = require('../model/countriesAndFlag')
 const CountriesAndCodes = require('../model/countriesAndCodes');
 const Finder = require('../helpers/finder');
 const Respond = require('../helpers/respond');
+const { getCountriesPopulation } = require('./dataHub/apiController');
 
+const countryPopulation = getCountriesPopulation();
 const positions = CountriesAndCodes.map(x => ({ name: x.name, long: x.longitude, lat: x.latitude }))
 
 class CountryController {
@@ -197,13 +199,36 @@ class CountryController {
         const data = CountriesAndUnicodes.map(x => {
             const countryAndFlag = fetchImage && CountriesAndFlag.find(c => c.name.toLowerCase() === x.Name.toLowerCase());
             return ({
-            name: x.Name,
-            currency: (fetchCurrency && x.Currency) || undefined,
-            unicodeFlag: (fetchUnicode && x.Unicode) || undefined,
-            flag: (countryAndFlag && countryAndFlag.flag) || undefined,
+                name: x.Name,
+                currency: (fetchCurrency && x.Currency) || undefined,
+                unicodeFlag: (fetchUnicode && x.Unicode) || undefined,
+                flag: (countryAndFlag && countryAndFlag.flag) || undefined,
+            })
         })
-    })
-    return Respond.success(res, `countries details: '${returns}' have been retrieved`, data);
+        return Respond.success(res, `countries details: '${returns}' have been retrieved`, data);
+    }
+    /**
+     * Get all countries and respective population
+     * @param {Object} req request object
+     * @param {Object} res response object
+     */
+    static async getPopulation(req, res) {
+        const data = await countryPopulation;
+        return Respond.success(res, 'all countries and population 1961 - 2018', data);
+    }
+    /**
+     * Get population of a specific country
+     * @param {Object} req request object
+     * @param {Object} res response object
+     */
+    static async getPopulationByCountry(req, res) {
+        const { country } = req.body;
+        if (!country) {
+            return Respond.error(res, 'missing param (country)', 404);
+        }
+        const data = await countryPopulation;
+        const filtered = data.find(x => country.trim().toLowerCase() === x.country.trim().toLowerCase());
+        return Respond.success(res, `${country} with population`, filtered);
     }
 }
 

@@ -7,7 +7,7 @@
 The API does not require any form of Authentication or token.
 
 
-------------------------- 
+-------------------------
 
 
 ## Table of Endpoints
@@ -28,6 +28,8 @@ The API does not require any form of Authentication or token.
     - [Get Single Country With Capital](#get-single-country-with-capital)
     - [Get Countries and Currencies](#get-countries-and-currencies)
     - [Get Countries Information With Selectors](#get-countries-information-with-selectors)
+    - [Get All Countries and Population Count From (1961) - (2018)](#get-all-countries-and-population-count-from-1961---2018)
+    - [Get Single Country and Population Count From (1961) - (2018)](#get-single-country-and-population-count-from-1961---2018)
 
 
 
@@ -669,4 +671,606 @@ OR
       "flag": "https://upload.wikimedia.org/wikipedia/commons/9/9a/Flag_of_Bulgaria.svg"
     },
     ...
+```
+
+--------------------------------------------------------
+
+### Get All Countries and Population Count From (1961) - (2018)
+
+- Endpoint: `/api/v0.1/countries/population`
+    - Action: `GET`
+    - HEADERS: `{'Content-Type': 'application/json'}`
+- RESPONSE:
+```json
+{
+    "error": false,
+    "msg": "all countries and population 1961 - 2018",
+    "data": [
+        {
+            "country": "Arab World",
+            "code": "ARB",
+            "populationCounts": [
+                {
+                    "year": 1961,
+                    "value": 94724510
+                },
+                {
+                    "year": 1984,
+                    "value": 186035305
+                },
+                {
+                    "year": 1985,
+                    "value": 191650331
+                },
+                {
+                    "year": 1986,
+                    "value": 197338142
+                },
+
+                {
+                    "year": 2004,
+                    "value": 307862843
+                },
+                {
+                    "year": 2005,
+                    "value": 314965793
+                },
+                {
+                    "year": 2006,
+                    "value": 322452754
+                },
+                {
+                    "year": 2007,
+                    "value": 330290716
+                },
+                {
+                    "year": 2008,
+                    "value": 338395961
+                },
+                {
+                    "year": 2009,
+                    "value": 346629220
+                },
+                {
+                    "year": 2010,
+                    "value": 354890042
+                },
+                {
+                    "year": 2011,
+                    "value": 363158703
+                },
+                {
+                    "year": 2012,
+                    "value": 371443547
+                },
+                {
+                    "year": 2013,
+                    "value": 379705719
+                },
+                {
+                    "year": 2014,
+                    "value": 387907748
+                },
+                {
+                    "year": 2015,
+                    "value": 396028278
+                },
+                {
+                    "year": 2016,
+                    "value": 404024433
+                },
+                {
+                    "year": 2017,
+                    "value": 411898965
+                },
+                {
+                    "year": 2018,
+                    "value": 419790588
+                }
+            ]
+        },
+        {
+            "country": "Caribbean small states",
+            "code": "CSS",
+            "populationCounts": [
+                {
+                    "year": 1961,
+                    "value": 4274060
+                },
+                {
+                    "year": 1962,
+                    "value": 4353628
+                },
+                {
+                    "year": 1963,
+                    "value": 4432217
+                },
+                {
+                    "year": 1964,
+                    "value": 4508198
+                },
+                {
+                    "year": 1965,
+                    "value": 4580374
+                },
+                {
+                    "year": 1966,
+                    "value": 4648367
+                },
+                {
+                    "year": 1967,
+                    "value": 4712526
+                },
+                {
+                    "year": 1968,
+                    "value": 4773902
+                },
+                {
+                    "year": 1969,
+                    "value": 4833842
+                },
+                {
+                    "year": 1970,
+                    "value": 4893454
+                },
+                {
+                    "year": 1971,
+                    "value": 4953087
+                },
+                {
+                    "year": 1972,
+                    "value": 5012612
+                },
+                {
+                    "year": 1973,
+                    "value": 5071954
+                },
+                {
+                    "year": 1974,
+                    "value": 5130833
+                },
+                {
+                    "year": 1975,
+                    "value": 5189153
+                },
+                {
+                    "year": 1976,
+                    "value": 5246563
+                },
+                {
+                    "year": 1977,
+                    "value": 5303307
+                },
+                {
+                    "year": 1978,
+                    "value": 5360561
+                },
+                {
+                    "year": 1979,
+                    "value": 5419884
+                },
+                {
+                    "year": 1980,
+                    "value": 5482206
+                },
+                {
+                    "year": 1981,
+                    "value": 5548512
+                },
+                {
+                    "year": 2009,
+                    "value": 6925452
+                },
+                {
+                    "year": 2010,
+                    "value": 6973206
+                },
+                {
+                    "year": 2011,
+                    "value": 7022387
+                },
+                {
+                    "year": 2012,
+                    "value": 7072665
+                },
+                {
+                    "year": 2013,
+                    "value": 7123332
+                },
+                {
+                    "year": 2014,
+                    "value": 7173435
+                },
+                {
+                    "year": 2015,
+                    "value": 7222212
+                },
+                {
+                    "year": 2016,
+                    "value": 7269386
+                },
+                {
+                    "year": 2017,
+                    "value": 7314990
+                },
+                {
+                    "year": 2018,
+                    "value": 7358965
+                }
+            ]
+        },
+        {
+            "country": "Central Europe and the Baltics",
+            "code": "CEB",
+            "populationCounts": [
+                {
+                    "year": 1961,
+                    "value": 92232738
+                },
+                {
+                    "year": 1962,
+                    "value": 93009498
+                },
+                {
+                    "year": 1963,
+                    "value": 93840016
+                },
+                {
+                    "year": 1964,
+                    "value": 94715795
+                },
+                {
+                    "year": 1965,
+                    "value": 95440988
+                },
+                {
+                    "year": 1966,
+                    "value": 96146336
+                },
+                {
+                    "year": 1967,
+                    "value": 97043270
+                },
+                {
+                    "year": 1968,
+                    "value": 97884022
+                },
+                {
+                    "year": 1969,
+                    "value": 98606630
+                },
+                {
+                    "year": 1970,
+                    "value": 99134548
+                },
+                {
+                    "year": 1971,
+                    "value": 99635258
+                },
+                {
+                    "year": 1972,
+                    "value": 100357161
+                },
+                {
+                    "year": 1973,
+                    "value": 101112680
+                },
+                {
+                    "year": 1974,
+                    "value": 101939916
+                },
+                {
+                    "year": 1975,
+                    "value": 102860571
+                },
+                {
+                    "year": 1976,
+                    "value": 103776068
+                },
+                {
+                    "year": 1977,
+                    "value": 104616884
+                },
+                {
+                    "year": 1978,
+                    "value": 105329397
+                },
+                {
+                    "year": 1979,
+                    "value": 105948616
+                },
+                {
+                    "year": 1980,
+                    "value": 106576687
+                },
+                {
+                    "year": 1981,
+                    "value": 107191491
+                },
+                {
+                    "year": 1982,
+                    "value": 107770028
+                },
+                {
+                    "year": 1983,
+                    "value": 108326149
+                },
+                {
+                    "year": 1984,
+                    "value": 108853466
+                },
+                {
+                    "year": 1985,
+                    "value": 109360713
+                },
+                {
+                    "year": 1993,
+                    "value": 110041924
+                },
+                {
+                    "year": 1994,
+                    "value": 110021594
+                },
+            ]
+        },
+```
+
+-------------------------------------------------------------
+
+### Get Single Country and Population Count From (1961) - (2018)
+
+- Endpoint: `/api/v0.1/countries/population`
+- Action: `POST`
+- HEADERS: `{'Content-Type': 'application/json'}`
+- PARAMS:
+```json
+{
+  "country": "Nigeria"
+}
+```
+- RESPONSE:
+```json
+
+{
+    "error": false,
+    "msg": "Nigeria with population",
+    "data": {
+        "country": "Nigeria",
+        "code": "NGA",
+        "populationCounts": [
+            {
+                "year": 1961,
+                "value": 46063563
+            },
+            {
+                "year": 1962,
+                "value": 47029822
+            },
+            {
+                "year": 1963,
+                "value": 48032934
+            },
+            {
+                "year": 1964,
+                "value": 49066760
+            },
+            {
+                "year": 1965,
+                "value": 50127921
+            },
+            {
+                "year": 1966,
+                "value": 51217973
+            },
+            {
+                "year": 1967,
+                "value": 52342233
+            },
+            {
+                "year": 1968,
+                "value": 53506196
+            },
+            {
+                "year": 1969,
+                "value": 54717039
+            },
+            {
+                "year": 1970,
+                "value": 55982144
+            },
+            {
+                "year": 1971,
+                "value": 57296983
+            },
+            {
+                "year": 1972,
+                "value": 58665808
+            },
+            {
+                "year": 1973,
+                "value": 60114625
+            },
+            {
+                "year": 1974,
+                "value": 61677177
+            },
+            {
+                "year": 1975,
+                "value": 63374298
+            },
+            {
+                "year": 1976,
+                "value": 65221378
+            },
+            {
+                "year": 1977,
+                "value": 67203128
+            },
+            {
+                "year": 1978,
+                "value": 69271917
+            },
+            {
+                "year": 1979,
+                "value": 71361131
+            },
+            {
+                "year": 1980,
+                "value": 73423633
+            },
+            {
+                "year": 1981,
+                "value": 75440502
+            },
+            {
+                "year": 1982,
+                "value": 77427546
+            },
+            {
+                "year": 1983,
+                "value": 79414840
+            },
+            {
+                "year": 1984,
+                "value": 81448755
+            },
+            {
+                "year": 1985,
+                "value": 83562785
+            },
+            {
+                "year": 1986,
+                "value": 85766399
+            },
+            {
+                "year": 1987,
+                "value": 88048032
+            },
+            {
+                "year": 1988,
+                "value": 90395271
+            },
+            {
+                "year": 1989,
+                "value": 92788027
+            },
+            {
+                "year": 1990,
+                "value": 95212450
+            },
+            {
+                "year": 1991,
+                "value": 97667632
+            },
+            {
+                "year": 1992,
+                "value": 100161710
+            },
+            {
+                "year": 1993,
+                "value": 102700753
+            },
+            {
+                "year": 1994,
+                "value": 105293700
+            },
+            {
+                "year": 1995,
+                "value": 107948335
+            },
+            {
+                "year": 1996,
+                "value": 110668794
+            },
+            {
+                "year": 1997,
+                "value": 113457663
+            },
+            {
+                "year": 1998,
+                "value": 116319759
+            },
+            {
+                "year": 1999,
+                "value": 119260063
+            },
+            {
+                "year": 2000,
+                "value": 122283850
+            },
+            {
+                "year": 2001,
+                "value": 125394046
+            },
+            {
+                "year": 2002,
+                "value": 128596076
+            },
+            {
+                "year": 2003,
+                "value": 131900631
+            },
+            {
+                "year": 2004,
+                "value": 135320422
+            },
+            {
+                "year": 2005,
+                "value": 138865016
+            },
+            {
+                "year": 2006,
+                "value": 142538308
+            },
+            {
+                "year": 2007,
+                "value": 146339977
+            },
+            {
+                "year": 2008,
+                "value": 150269623
+            },
+            {
+                "year": 2009,
+                "value": 154324933
+            },
+            {
+                "year": 2010,
+                "value": 158503197
+            },
+            {
+                "year": 2011,
+                "value": 162805071
+            },
+            {
+                "year": 2012,
+                "value": 167228767
+            },
+            {
+                "year": 2013,
+                "value": 171765769
+            },
+            {
+                "year": 2014,
+                "value": 176404902
+            },
+            {
+                "year": 2015,
+                "value": 181137448
+            },
+            {
+                "year": 2016,
+                "value": 185960289
+            },
+            {
+                "year": 2017,
+                "value": 190873311
+            },
+            {
+                "year": 2018,
+                "value": 195874740
+            }
+        ]
+    }
+}
 ```
