@@ -4,9 +4,11 @@ const CountriesAndFlag = require('../model/countriesAndFlag')
 const CountriesAndCodes = require('../model/countriesAndCodes');
 const Finder = require('../helpers/finder');
 const Respond = require('../helpers/respond');
-const { getCountriesPopulation } = require('./dataHub/apiController');
+const { getCountriesPopulation, getCitiesPopulation } = require('./dataHub/apiController');
+const { latestYear, greaterThan, lessThan, withRange, orderCountryData, orderCityData } = require('../helpers/utils');
 
 const countryPopulation = getCountriesPopulation();
+const citiesPopulation = getCitiesPopulation();
 const positions = CountriesAndCodes.map(x => ({ name: x.name, long: x.longitude, lat: x.latitude }))
 
 class CountryController {
@@ -99,7 +101,7 @@ class CountryController {
      */
     static getCountriesFlagImages(req, res) {
         const data = CountriesAndFlag.map(x => {
-            let code = Finder.findCountryByName(x.name, CountriesAndUnicodes, 'Name')
+            let code = Finder.findCountryByParam(x.name, CountriesAndUnicodes, 'Name')
             const dataObj = {
                 name: x.name,
                 flag: x.flag,
@@ -224,11 +226,98 @@ class CountryController {
     static async getPopulationByCountry(req, res) {
         const { country } = req.body;
         if (!country) {
-            return Respond.error(res, 'missing param (country)', 404);
+            return Respond.error(res, 'missing param (country)', 400);
         }
         const data = await countryPopulation;
         const filtered = data.find(x => country.trim().toLowerCase() === x.country.trim().toLowerCase());
+        if (!filtered)
+            return Respond.error(res, 'country data not found', 404);
         return Respond.success(res, `${country} with population`, filtered);
+    }
+    /**
+     * Filter countries population data
+     * allowed queries { year: Number, limit: Number, gt: Number, lt: Number, order: String, orderBy: String }
+     * @param {Object} req request object
+     * @param {Object} res response object
+     */
+    static async filterCountryPopulation (req, res) {
+        const data = await countryPopulation;
+        const {
+            year = latestYear(data),
+            limit = data.length,
+            gt = false,
+            lt = false,
+            order = 'asc',
+            orderBy = 'population'
+        } = req.body
+
+        if (typeof limit !== 'number')
+            return Respond.error(res, 'invalid payload format')
+
+
+        const selectedYear = orderCountryData(data.map(x => ({
+            country: x.country,
+            code: x.code,
+            populationCounts: x.populationCounts.find(y => y.year === year)
+        })), order, orderBy)
+        const result = gt && !lt ? greaterThan(selectedYear, gt) : lt && !gt ? lessThan(selectedYear, lt) : gt && lt ? withRange(selectedYear, gt, lt) : selectedYear
+        const applyLimit = result.splice(0, limit)
+
+        return Respond.success(res, 'filtered result', applyLimit)
+    }
+    /**
+     * get cities and population data
+     * @param {Object} req request object
+     * @param {Object} res response object
+     */
+    static async getCitiesPopulation (req, res) {
+        const data = await citiesPopulation
+        return Respond.success(res, 'all cities with population', data);
+    }
+    /**
+     * get cities and population data
+     * @param {Object} req request object
+     * @param {Object} res response object
+     */
+    static async getPopulationByCity (req, res) {
+        const { city } = req.body;
+        if (!city) {
+            return Respond.error(res, 'missing param (city)', 404);
+        }
+        const data = await citiesPopulation;
+        const filtered = data.find(x => city.trim().toLowerCase() === x.city.trim().toLowerCase());
+        if (!filtered)
+            return Respond.error(res, 'city data not found', 404);
+        return Respond.success(res, `${city} with population`, filtered);
+    }
+
+
+    static async filterCitiesPopulation (req, res) {
+        const data = await citiesPopulation;
+        const {
+            limit = data.length,
+            order = 'asc',
+            orderBy = 'population',
+            country = false
+        } = req.body
+
+        if (typeof limit !== 'number')
+            return Respond.error(res, 'invalid payload format')
+
+        let result = orderCityData(data.map(x => ({
+            city: x.city,
+            country: x.country,
+            populationCounts: x.populationCounts
+        })), order, orderBy)
+        if (country) {
+            result = result.filter(x => x.country.toLowerCase() === country.toLowerCase());
+        }
+        // remove unnecessary information from dataHub
+        if (result[0].city === 'null') { result.shift() }
+        // add limit
+        result = result.splice(0, limit)
+
+        return Respond.success(res, 'filtered result', result)
     }
 }
 

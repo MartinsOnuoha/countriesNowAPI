@@ -7,8 +7,7 @@ class Finder {
      * @param {Array} arr the array to check
      * @param {param} param the parameter
      */
-
-    static findCountryByName(name, arr, param) {
+    static findCountryByParam(name, arr, param) {
         return arr.find(x => x[`${param}`].toLowerCase() === name.toLowerCase());
     }
 }

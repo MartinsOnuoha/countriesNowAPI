@@ -28,8 +28,14 @@ The API does not require any form of Authentication or token.
     - [Get Single Country With Capital](#get-single-country-with-capital)
     - [Get Countries and Currencies](#get-countries-and-currencies)
     - [Get Countries Information With Selectors](#get-countries-information-with-selectors)
+  - [Population (Countries)](#population-countries)
     - [Get All Countries and Population Count From (1961) - (2018)](#get-all-countries-and-population-count-from-1961---2018)
     - [Get Single Country and Population Count From (1961) - (2018)](#get-single-country-and-population-count-from-1961---2018)
+    - [Filter Countries Population Data](#filter-countries-population-data)
+  - [Population (Cities)](#population-cities)
+    - [Get All Cities and Population Count](#get-all-cities-and-population-count)
+    - [Get Single City and Population Count](#get-single-city-and-population-count)
+    - [Filter Cities Population Data](#filter-cities-population-data)
 
 
 
@@ -526,8 +532,8 @@ OR
 ### Get Countries With Capital
 
 - Endpoint: `/api/v0.1/countries/capital`
-    - Action: `GET`
-    - HEADERS: `{'Content-Type': 'application/json'}`
+- Action: `GET`
+- HEADERS: `{'Content-Type': 'application/json'}`
 - RESPONSE:
 
 ```json
@@ -602,8 +608,8 @@ OR
 ### Get Countries and Currencies
 
 - Endpoint: `/api/v0.1/countries/currency`
-    - Action: `GET`
-    - HEADERS: `{'Content-Type': 'application/json'}`
+- Action: `GET`
+- HEADERS: `{'Content-Type': 'application/json'}`
 - RESPONSE:
 ```json
 {
@@ -637,9 +643,9 @@ OR
 ### Get Countries Information With Selectors
 
 - Endpoint: `/api/v0.1/countries/info?returns=unicodeFlag,currency,flag`
-    - Action: `GET`
-    - HEADERS: `{'Content-Type': 'application/json'}`
-    - QUERY: the returns parameter must be a comma-separated list of data attributes. e.g unicodeFlag,currency,flag. unicodeFlag fetches unicode flag, currency fetches currency, flag fetches link to svg image of flag.
+- Action: `GET`
+- HEADERS: `{'Content-Type': 'application/json'}`
+- QUERY: the returns parameter must be a comma-separated list of data attributes. e.g unicodeFlag,currency,flag. unicodeFlag fetches unicode flag, currency fetches currency, flag fetches link to svg image of flag.
 - RESPONSE:
 ```json
 {
@@ -675,11 +681,14 @@ OR
 
 --------------------------------------------------------
 
+## Population (Countries)
+> Data related to country and population
+
 ### Get All Countries and Population Count From (1961) - (2018)
 
 - Endpoint: `/api/v0.1/countries/population`
-    - Action: `GET`
-    - HEADERS: `{'Content-Type': 'application/json'}`
+- Action: `GET`
+- HEADERS: `{'Content-Type': 'application/json'}`
 - RESPONSE:
 ```json
 {
@@ -1273,4 +1282,404 @@ OR
         ]
     }
 }
+```
+-------------------------------------------------------------
+
+### Filter Countries Population Data
+
+> This endpoint allows you filter what you want from the long response of population data.
+> Parameters:
+>   - year (Number): You can get the population for a particular year
+>   - limit (Number): Don't want all of the countries? You can limit the response to the first 2, 3, 10, 20 etc.
+>   - lt (Number): this field represents "less than", you can get only countries with a population less than the "lt" value
+>   - gt (Number): this field represents "greater than", you can get only countries with a population greater than the "lt" value
+>   - lt, gt (Number): When both fields are provided, the endpoint returns a range between (lt, gt): with the formular gt < population < lt
+>   - orderBy (String): You can order the response by country name or population value by providing "name" or "population"
+>       - allowed: ['name', 'population']
+>       - default: 'population'
+>   - order (String): specify the order you'd like the response in by providing "asc" or "dsc" (ascending and descending respectively)
+>
+
+- Endpoint: `/api/v0.1/countries/population/filter`
+- Action: `POST`
+- HEADERS: `{'Content-Type': 'application/json'}`
+- PARAMS:
+```json
+{
+	"year": 2000,
+	"limit": 40,
+	"lt": 651348588,
+	"gt": 6513485,
+	"orderBy": "name",
+	"order": "dsc"
+}
+```
+- RESPONSE:
+```json
+{
+  "error": false,
+  "msg": "filtered result",
+  "data": [
+    {
+      "country": "Zimbabwe",
+      "code": "ZWE",
+      "populationCounts": {
+        "year": 2000,
+        "value": 11881477
+      }
+    },
+    {
+      "country": "Zambia",
+      "code": "ZMB",
+      "populationCounts": {
+        "year": 2000,
+        "value": 10415944
+      }
+    },
+    {
+      "country": "Yemen, Rep.",
+      "code": "YEM",
+      "populationCounts": {
+        "year": 2000,
+        "value": 17409072
+      }
+    },
+    {
+      "country": "Vietnam",
+      "code": "VNM",
+      "populationCounts": {
+        "year": 2000,
+        "value": 79910412
+      }
+    },
+    {
+      "country": "Venezuela, RB",
+      "code": "VEN",
+      "populationCounts": {
+        "year": 2000,
+        "value": 24192446
+      }
+    },
+    {
+      "country": "Uzbekistan",
+      "code": "UZB",
+      "populationCounts": {
+        "year": 2000,
+        "value": 24650400
+      }
+    },
+    {
+      "country": "United States",
+      "code": "USA",
+      "populationCounts": {
+        "year": 2000,
+        "value": 282162411
+      }
+    },
+    {
+      "country": "United Kingdom",
+      "code": "GBR",
+      "populationCounts": {
+        "year": 2000,
+        "value": 58892514
+      }
+    },
+    {
+      "country": "Ukraine",
+      "code": "UKR",
+      "populationCounts": {
+        "year": 2000,
+        "value": 49175848
+      }
+    },
+    {
+      "country": "Uganda",
+      "code": "UGA",
+      "populationCounts": {
+        "year": 2000,
+        "value": 23650172
+      }
+    }
+  ]
+}
+```
+
+-------------------------------------------------------------
+
+## Population (Cities)
+> Date related to Cities and Population
+
+### Get All Cities and Population Count
+
+- Endpoint: `/api/v0.1/countries/population/cities`
+- Action: `GET`
+- HEADERS: `{'Content-Type': 'application/json'}`
+- RESPONSE:
+```json
+
+{
+  "error": false,
+  "msg": "all cities with population",
+  "data": [
+    {
+      "city": "MARIEHAMN",
+      "country": "Åland Islands",
+      "populationCounts": [
+        {
+          "year": "2013",
+          "value": "11370",
+          "sex": "Both Sexes",
+          "reliabilty": "Final figure, complete"
+        },
+        {
+          "year": "2000",
+          "value": "10488",
+          "sex": "Both Sexes",
+          "reliabilty": "Final figure, complete"
+        }
+      ]
+    },
+    {
+      "city": "Durrës",
+      "country": "Albania",
+      "populationCounts": [
+        {
+          "year": "2011",
+          "value": "113249",
+          "sex": "Both Sexes",
+          "reliabilty": "Final figure, complete"
+        }
+      ]
+    },
+    {
+      "city": "TIRANA",
+      "country": "Albania",
+      "populationCounts": [
+        {
+          "year": "2011",
+          "value": "418495",
+          "sex": "Both Sexes",
+          "reliabilty": "Final figure, complete"
+        },
+        {
+          "year": "2003",
+          "value": "392863",
+          "sex": "Both Sexes",
+          "reliabilty": "Final figure, complete"
+        }
+      ]
+    },
+    {
+      "city": "Annaba",
+      "country": "Algeria",
+      "populationCounts": [
+        {
+          "year": "1998",
+          "value": "352523",
+          "sex": "Both Sexes",
+          "reliabilty": "Final figure, complete"
+        }
+      ]
+    },
+    {
+```
+
+-------------------------------------------------------------
+
+### Get Single City and Population Count
+
+- Endpoint: `/api/v0.1/countries/population/cities`
+- Action: `POST`
+- HEADERS: `{'Content-Type': 'application/json'}`
+- PARAMS:
+```json
+{
+    "city": "Enugu"
+}
+```
+
+- RESPONSE:
+```json
+{
+  "error": false,
+  "msg": "Enugu with population",
+  "data": {
+    "city": "Enugu",
+    "country": "Nigeria",
+    "populationCounts": [
+      {
+        "year": "1991",
+        "value": "407756",
+        "sex": "Both Sexes",
+        "reliabilty": "Final figure, complete"
+      }
+    ]
+  }
+}
+```
+-------------------------------------------------------------
+
+### Filter Cities Population Data
+
+> This endpoint allows you filter what you want from the long response of population data.
+> Parameters:
+>   - limit (Number): Don't want all of the countries? You can limit the response to the first 2, 3, 10, 20 etc.
+>   - orderBy (String): You can order the response by country name or population value by providing "name" or "population"
+>       - allowed: ['name', 'population']
+>       - default: 'population'
+>   - order (String): specify the order you'd like the response in by providing "asc" or "dsc" (ascending and descending respectively)
+>   - country (String): show only cities that belong to a country
+
+- Endpoint: `/api/v0.1/countries/population/cities/filter`
+- Action: `POST`
+- HEADERS: `{'Content-Type': 'application/json'}`
+- PARAMS:
+```json
+{
+	"limit": 10,
+	"orderBy": "population",
+    "order": "dsc",
+    "country": "nigeria"
+}
+```
+
+- RESPONSE:
+```json
+{
+  "error": false,
+  "msg": "filtered result",
+  "data": [
+    {
+      "city": "Damaturu",
+      "country": "Nigeria",
+      "populationCounts": [
+        {
+          "year": "1991",
+          "value": "141897",
+          "sex": "Both Sexes",
+          "reliabilty": "Final figure, complete"
+        }
+      ]
+    },
+    {
+      "city": "Effon-Alaiye",
+      "country": "Nigeria",
+      "populationCounts": [
+        {
+          "year": "1991",
+          "value": "158977",
+          "sex": "Both Sexes",
+          "reliabilty": "Final figure, complete"
+        }
+      ]
+    },
+    {
+      "city": "Enugu",
+      "country": "Nigeria",
+      "populationCounts": [
+        {
+          "year": "1991",
+          "value": "407756",
+          "sex": "Both Sexes",
+          "reliabilty": "Final figure, complete"
+        }
+      ]
+    },
+    {
+      "city": "Gboko",
+      "country": "Nigeria",
+      "populationCounts": [
+        {
+          "year": "1991",
+          "value": "101281",
+          "sex": "Both Sexes",
+          "reliabilty": "Final figure, complete"
+        }
+      ]
+    },
+    {
+      "city": "Gombe",
+      "country": "Nigeria",
+      "populationCounts": [
+        {
+          "year": "1991",
+          "value": "163604",
+          "sex": "Both Sexes",
+          "reliabilty": "Final figure, complete"
+        }
+      ]
+    },
+    {
+      "city": "Gusau",
+      "country": "Nigeria",
+      "populationCounts": [
+        {
+          "year": "1991",
+          "value": "132393",
+          "sex": "Both Sexes",
+          "reliabilty": "Final figure, complete"
+        }
+      ]
+    },
+    {
+      "city": "Ibadan",
+      "country": "Nigeria",
+      "populationCounts": [
+        {
+          "year": "1991",
+          "value": "1835300",
+          "sex": "Both Sexes",
+          "reliabilty": "Final figure, complete"
+        }
+      ]
+    },
+    {
+      "city": "Ife",
+      "country": "Nigeria",
+      "populationCounts": [
+        {
+          "year": "1991",
+          "value": "186856",
+          "sex": "Both Sexes",
+          "reliabilty": "Final figure, complete"
+        }
+      ]
+    },
+    {
+      "city": "Ijebu-Ode",
+      "country": "Nigeria",
+      "populationCounts": [
+        {
+          "year": "1991",
+          "value": "124313",
+          "sex": "Both Sexes",
+          "reliabilty": "Final figure, complete"
+        }
+      ]
+    },
+    {
+      "city": "Ikare",
+      "country": "Nigeria",
+      "populationCounts": [
+        {
+          "year": "1991",
+          "value": "103843",
+          "sex": "Both Sexes",
+          "reliabilty": "Final figure, complete"
+        }
+      ]
+    },
+    {
+      "city": "Ikire",
+      "country": "Nigeria",
+      "populationCounts": [
+        {
+          "year": "1991",
+          "value": "111435",
+          "sex": "Both Sexes",
+          "reliabilty": "Final figure, complete"
+        }
+      ]
+    }
+
 ```

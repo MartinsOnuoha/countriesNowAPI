@@ -24,4 +24,9 @@ router.post('/positions/range', CountryController.getPositionRange);
 
 router.get('/population', CountryController.getPopulation);
 router.post('/population', CountryController.getPopulationByCountry);
+router.get('/population', CountryController.getPopulationByCountry);
+router.post('/population/filter', CountryController.filterCountryPopulation);
+router.get('/population/cities', CountryController.getCitiesPopulation);
+router.post('/population/cities', CountryController.getPopulationByCity);
+router.post('/population/cities/filter', CountryController.filterCitiesPopulation);
 module.exports = router;

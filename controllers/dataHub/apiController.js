@@ -1,6 +1,9 @@
 const ApiService = require('../../services/apiService');
 const dataHubBaseUrl = 'https://pkgstore.datahub.io/core/';
 
+/**
+ * get countries and population data
+ */
 const getCountriesPopulation = () => {
   const url = 'population/population_json/data/315178266aa86b71057e993f98faf886/population_json.json'
   const apiService = new ApiService(dataHubBaseUrl);
@@ -9,14 +12,37 @@ const getCountriesPopulation = () => {
       // format data
       const result = data.reduce((accumulator, item) => {
           let key = item['Country Name']
-          !accumulator[key] ? accumulator[key] = [] : accumulator[key].push(item);
+          !accumulator[key] ? accumulator[key] = [item] : accumulator[key].push(item);
           return accumulator;
         }, {});
       const final = Object.entries(result).map((x, i) => ({ country: x[0], code: x[1][0]['Country Code'], populationCounts: x[1].map(y => ({ year: y.Year, value: y.Value })) }))
       return final;
   })
 }
+/**
+ * get cities and population data
+ */
+const getCitiesPopulation = () => {
+  const url = 'population-city/unsd-citypopulation-year-both_json/data/063b2f68e9867349c11dd88bb311c0d9/unsd-citypopulation-year-both_json.json'
+  const apiService = new ApiService(dataHubBaseUrl);
+
+  return apiService.getData(url).then((data) => {
+      // format data
+      const result = data.reduce((accumulator, item) => {
+          let key = item['City']
+          !accumulator[key] ? accumulator[key] = [item] : accumulator[key].push(item);
+          return accumulator;
+        }, {});
+        const final = Object.entries(result).map((x, i) => ({
+          city: x[0],
+          country: x[1][0]['Country or Area'],
+          populationCounts: x[1].map(y => ({ year: y.Year, value: y.Value, sex: y.Sex, reliabilty: y.Reliability }))
+        }))
+        return final
+  })
+}
 
 module.exports = {
-  getCountriesPopulation
+  getCountriesPopulation,
+  getCitiesPopulation
 }
