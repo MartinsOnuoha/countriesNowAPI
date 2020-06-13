@@ -8,6 +8,7 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
+    "axios": "^0.19.2",
     "body-parser": "^1.19.0",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
@@ -17,5 +18,7 @@
     "http-errors": "~1.6.3",
     "morgan": "~1.9.1"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "locus": "^2.0.4"
+  }
 }

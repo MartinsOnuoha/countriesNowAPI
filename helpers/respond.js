@@ -5,7 +5,7 @@ class Respond {
    * @param {String} msg message string for error response
    * @param {Number} status Status code
    */
-  static error(res, msg = 'an error occurred', status) {
+  static error(res, msg = 'an error occurred', status = 422) {
     return res.status(status).json({
       error: true,
       msg,
