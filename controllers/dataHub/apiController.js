@@ -1,5 +1,5 @@
 const ApiService = require('../../services/apiService');
-const dataHubBaseUrl = 'https://pkgstore.datahub.io/core/';
+const dataHubBaseUrl = process.env.DATA_HUB;
 
 /**
  * get countries and population data

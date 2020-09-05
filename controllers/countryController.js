@@ -14,16 +14,16 @@ const positions = CountriesAndCodes.map(x => ({ name: x.name, long: x.longitude,
 class CountryController {
     /**
      * Get all countries and cities
-     * @param {Object} req request object
-     * @param {Object} res response object
+     * @param {RequestObject} req request object
+     * @param {ResponseObject} res response object
      */
     static getCountriesAndCities(req, res) {
         return Respond.success(res, 'countries and cities retrieved', CountriesAndCities);
     }
     /**
      * Get cities of a specified country
-     * @param {Object} req request obeject
-     * @param {Object} res response object
+     * @param {RequestObject} req request obeject
+     * @param {ResponseObject} res response object
      */
     static getCitiesByCountry(req, res) {
         const { country } = req.body
@@ -39,8 +39,8 @@ class CountryController {
     }
     /**
      * Get all countries, code and dial codes
-     * @param {Object} req request object
-     * @param {Object} res response object
+     * @param {RequestObject} req request object
+     * @param {ResponseObject} res response object
      */
     static getCountriesAndCodes(req, res) {
         const data = CountriesAndCodes.map(x => ({ name: x.name, code: x.code, dial_code: x.dial_code }));
@@ -48,16 +48,16 @@ class CountryController {
     }
     /**
      * Get countries and positions
-     * @param {Object} req request object
-     * @param {Object} res response object
+     * @param {RequestObject} req request object
+     * @param {ResponseObject} res response object
      */
     static getCountriesPosition(req, res) {
         return Respond.success(res, 'countries and positions retrieved', positions);
     }
     /**
      * Get a single country's position
-     * @param {Object} req request object
-     * @param {Object} res response object
+     * @param {RequestObject} req request object
+     * @param {ResponseObject} res response object
      */
     static getSinglePosition(req, res) {
         const { country } = req.body;
@@ -72,8 +72,8 @@ class CountryController {
     }
     /**
      * Get countries by position range
-     * @param {Object} req request object
-     * @param {Object} res response object
+     * @param {RequestObject} req request object
+     * @param {ResponseObject} res response object
      */
     static getPositionRange(req, res) {
         const { type, min, max } = req.body;
@@ -95,18 +95,32 @@ class CountryController {
         return Respond.success(res, `countries between ${type} of (${min} and ${max})`, result);
     }
     /**
-     * get all countries with their flag images
-     * @param {Object} req request object
-     * @param {Object} res response object
+     * get all countries and their ISON Code
+     * @param {RequestObject} req
+     * @param {ResponseObject} res
      */
-    static getCountriesFlagImages(req, res) {
+    static getCountriesAndISO(req, res) {
         const data = CountriesAndFlag.map(x => {
             let code = Finder.findCountryByParam(x.name, CountriesAndUnicodes, 'Name')
             const dataObj = {
                 name: x.name,
-                flag: x.flag,
                 Iso2: code ? code.Iso2 : null,
                 Iso3: code ? code.Iso3 : null,
+            }
+            return dataObj
+        });
+        return Respond.success(res, 'countries and ISO codes retrieved', data);
+    }
+    /**
+     * get all countries with their flag images
+     * @param {RequestObject} req request object
+     * @param {ResponseObject} res response object
+     */
+    static getCountriesFlagImages(req, res) {
+        const data = CountriesAndFlag.map(x => {
+            const dataObj = {
+                name: x.name,
+                flag: x.flag,
             }
             return dataObj
 
@@ -115,8 +129,8 @@ class CountryController {
     }
     /**
      * Get single country with flag image
-     * @param {Object} req request object
-     * @param {Object} res response object
+     * @param {RequestObject} req request object
+     * @param {ResponseObject} res response object
      */
     static getCountryFlagImage(req, res) {
         const { country } = req.body;
@@ -131,8 +145,8 @@ class CountryController {
     }
     /**
      * Get countries and unicode flags
-     * @param {Object} req request object
-     * @param {Object} res response object
+     * @param {RequestObject} req request object
+     * @param {ResponseObject} res response object
      */
     static getCountriesUnicodeFlag(req, res) {
         const data = CountriesAndUnicodes.map(x => ({ name: x.Name, unicodeFlag: x.Unicode }));
@@ -140,8 +154,8 @@ class CountryController {
     }
     /**
      * Get a country and unicode flag
-     * @param {Object} req request object
-     * @param {Object} res response object
+     * @param {RequestObject} req request object
+     * @param {ResponseObject} res response object
      */
     static getCountryUnicodeFlag(req, res) {
         const { country } = req.body;
@@ -153,8 +167,8 @@ class CountryController {
     }
     /**
      * Get countries and their capital
-     * @param {Object} req request object
-     * @param {Object} res response object
+     * @param {RequestObject} req request object
+     * @param {ResponseObject} res response object
      */
     static getCountriesCapital(req, res) {
         const data = CountriesAndUnicodes.map(x => ({ name: x.Name, capital: x.Capital }));
@@ -162,8 +176,8 @@ class CountryController {
     }
     /**
      * Get single country and capital
-     * @param {Object} req request object
-     * @param {Object} res response object
+     * @param {RequestObject} req request object
+     * @param {ResponseObject} res response object
      */
     static getCountryCapital(req, res) {
         const { country } = req.body;
@@ -171,12 +185,12 @@ class CountryController {
             return Respond.error(res, 'missing param (country)', 400);
         }
         const data = CountriesAndUnicodes.map(x => ({ name: x.Name, capital: x.Capital })).find(x => x.name.toLowerCase() === country.toLowerCase())
-        return Respond.success(res, 'countries and capitals retrieved', data);
+        return Respond.success(res, 'country and capitals retrieved', data);
     }
     /**
      * Get countries and their currencies
-     * @param {Object} req request object
-     * @param {Object} res response object
+     * @param {RequestObject} req request object
+     * @param {ResponseObject} res response object
      */
     static getCountriesAndCurrency(req, res) {
         const data = CountriesAndUnicodes.map(x => ({ name: x.Name, currency: x.Currency }))
@@ -184,8 +198,8 @@ class CountryController {
     }
     /**
      * Get countries information by specifying required data
-     * @param {Object} req request object
-     * @param {Object} res response object
+     * @param {RequestObject} req request object
+     * @param {ResponseObject} res response object
      */
     static getCountriesInfo(req, res) {
         const {returns = ""} = req.query;
@@ -211,8 +225,8 @@ class CountryController {
     }
     /**
      * Get all countries and respective population
-     * @param {Object} req request object
-     * @param {Object} res response object
+     * @param {RequestObject} req request object
+     * @param {ResponseObject} res response object
      */
     static async getPopulation(req, res) {
         const data = await countryPopulation;
@@ -220,8 +234,8 @@ class CountryController {
     }
     /**
      * Get population of a specific country
-     * @param {Object} req request object
-     * @param {Object} res response object
+     * @param {RequestObject} req request object
+     * @param {ResponseObject} res response object
      */
     static async getPopulationByCountry(req, res) {
         const { country } = req.body;
@@ -237,8 +251,8 @@ class CountryController {
     /**
      * Filter countries population data
      * allowed queries { year: Number, limit: Number, gt: Number, lt: Number, order: String, orderBy: String }
-     * @param {Object} req request object
-     * @param {Object} res response object
+     * @param {RequestObject} req request object
+     * @param {ResponseObject} res response object
      */
     static async filterCountryPopulation (req, res) {
         const data = await countryPopulation;
@@ -267,17 +281,17 @@ class CountryController {
     }
     /**
      * get cities and population data
-     * @param {Object} req request object
-     * @param {Object} res response object
+     * @param {RequestObject} req request object
+     * @param {ResponseObject} res response object
      */
     static async getCitiesPopulation (req, res) {
         const data = await citiesPopulation
         return Respond.success(res, 'all cities with population', data);
     }
     /**
-     * get cities and population data
-     * @param {Object} req request object
-     * @param {Object} res response object
+     * get single city and its population data
+     * @param {RequestObject} req request object
+     * @param {ResponseObject} res response object
      */
     static async getPopulationByCity (req, res) {
         const { city } = req.body;
@@ -290,8 +304,11 @@ class CountryController {
             return Respond.error(res, 'city data not found', 404);
         return Respond.success(res, `${city} with population`, filtered);
     }
-
-
+    /**
+     * filter cities and population data
+     * @param {RequestObject} req
+     * @param {ResponseObject} res
+     */
     static async filterCitiesPopulation (req, res) {
         const data = await citiesPopulation;
         const {

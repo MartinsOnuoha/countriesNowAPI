@@ -13,7 +13,7 @@ class ApiService {
     this.baseUrl = baseUrl
     this.api = axios.create({
       baseURL: baseUrl,
-      timeout: 5000
+      timeout: 10000
     })
   }
   /**

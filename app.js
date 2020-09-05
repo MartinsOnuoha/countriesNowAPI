@@ -1,19 +1,21 @@
 require('dotenv').config()
 
-const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const bodyParser = require("body-parser");
 const logger = require('morgan');
-
 const corsConfig = require("./config/cors");
-
+const swaggerUi = require('swagger-ui-express')
 
 const indexRouter = require('./routes/index');
 const countryRouter = require('./routes/countries');
 
-var app = express();
+const app = express();
+
+const openApiDocumentation = require('./swagger/openApiDocumentation');
+
+app.use('/swagger-docs', swaggerUi.serve, swaggerUi.setup(openApiDocumentation));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -78,7 +80,7 @@ if (app.get('env') === 'development') {
 } else {
   port = process.env.PORT;
 }
-const server = app.listen(process.env.TEST_PORT);
+// const server = app.listen(process.env.TEST_PORT);
 
 app.listen(port, () => {
   console.log(`Listening on port ${port}`);
