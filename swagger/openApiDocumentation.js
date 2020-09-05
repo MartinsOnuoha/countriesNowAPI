@@ -30,7 +30,8 @@ module.exports = {
       post: CITIES_METHODS.getCities
     },
     '/codes': {
-      get: CODES_METHODS.getCodes
+      get: CODES_METHODS.getCodes,
+      post: CODES_METHODS.getSingleContryDialCode
     },
     '/iso': {
       get: CODES_METHODS.getISO
