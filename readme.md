@@ -1,7 +1,9 @@
-# CountriesNow API
+# [CountriesNow API](https://countriesnow.space/)
 
 > A curation of Countries data including (dial codes, states, cities, currencies, capitals etc) served over a REST API so you don't have to have them locally in your applications.
 > This means lighter application sizes as you wouldn't have to install another package to use geo data.
+
+![landing page](https://raw.githubusercontent.com/MartinsOnuoha/countriesAndCitiesAPI/chore/update-readme/public/img/landing.png)
 
 ## USAGE
 
