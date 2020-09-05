@@ -1,17 +1,24 @@
-# Countries Data API
+# CountriesNow API
 
->A curation of Countries data including (dial codes, states, cities, currencies, capitals etc) served over a REST API so you don't have to have them locally in your applications.
->This means lighter application sizes.
+> A curation of Countries data including (dial codes, states, cities, currencies, capitals etc) served over a REST API so you don't have to have them locally in your applications.
+> This means lighter application sizes as you wouldn't have to install another package to use geo data.
 
 ## USAGE
+
 The API does not require any form of Authentication or token.
 
+- Read Docs on: [Postman](https://documenter.getpostman.com/view/1134062/T1LJjU52?version=latest)
+- Try it out on: [Swagger](https://countriesnow.space/swagger-docs)
 
 -------------------------
 
-
 ## Table of Endpoints
-- [Countries Data API](#countries-data-api)
+
+> **NOTE**: We have moved API documentation to [Postman](https://documenter.getpostman.com/view/1134062/T1LJjU52?version=latest).
+> Test Endpoints with Swagger [Here](https://countriesnow.space/swagger-docs)
+> Feel free to keep using this readme (documentation might be discontinued on the readme in the future)
+
+- [CountriesNow API](#countriesnow-api)
   - [USAGE](#usage)
   - [Table of Endpoints](#table-of-endpoints)
     - [Get All Countries and Cities](#get-all-countries-and-cities)
@@ -37,16 +44,15 @@ The API does not require any form of Authentication or token.
     - [Get Single City and Population Count](#get-single-city-and-population-count)
     - [Filter Cities Population Data](#filter-cities-population-data)
 
-
-
----------------------
+-------------------------
 
 ### Get All Countries and Cities
 
 - Endpoint: `/api/v0.1/countries`
-    - Action: `GET`
-    - HEADERS: `{'Content-Type': 'application/json'}`
+- Action: `GET`
+- HEADERS: `{'Content-Type': 'application/json'}`
 - RESPONSE:
+
 ```json
 {
     "error": false,
@@ -79,20 +85,24 @@ The API does not require any form of Authentication or token.
     ]
 }
 ```
------------------------------------
+
+-------------------------
 
 ### Get Cities By Country Name
 
 - Endpoint: `/api/v0.1/countries/cities`
-    - Action: `POST`
-    - HEADERS: `{'Content-Type': 'application/json'}`
+- Action: `POST`
+- HEADERS: `{'Content-Type': 'application/json'}`
 - PARAMS:
+
 ```json
 {
     "country": "Nigeria"
 }
 ```
+
 - RESPONSE:
+
 ```json
 {
     "error": false,
@@ -190,15 +200,15 @@ The API does not require any form of Authentication or token.
 
 ```
 
-
------------------------------------
+-------------------------
 
 ### Get Countries And Dial Codes
 
 - Endpoint: `/api/v0.1/countries/codes`
-    - Action: `GET`
-    - HEADERS: `{'Content-Type': 'application/json'}`
+- Action: `GET`
+- HEADERS: `{'Content-Type': 'application/json'}`
 - RESPONSE:
+
 ```json
 {
   "error": false,
@@ -240,14 +250,13 @@ The API does not require any form of Authentication or token.
 
 ```
 
---------------------------------------------------------
-
+-------------------------
 
 ### Get Countries And Positions (Longitude, Latitude)
 
 - Endpoint: `/api/v0.1/countries/positions`
-    - Action: `GET`
-    - HEADERS: `{'Content-Type': 'application/json'}`
+- Action: `GET`
+- HEADERS: `{'Content-Type': 'application/json'}`
 - RESPONSE:
 
 ```json
@@ -286,21 +295,21 @@ The API does not require any form of Authentication or token.
 
 ```
 
-
---------------------------------------------------------
-
+-------------------------
 
 ### Get Single Country's Position
 
 - Endpoint: `/api/v0.1/countries/positions`
-    - Action: `POST`
-    - HEADERS: `{'Content-Type': 'application/json'}`
+- Action: `POST`
+- HEADERS: `{'Content-Type': 'application/json'}`
 - PARAMS:
+
 ```json
 {
     "country": "Nigeria"
 }
 ```
+
 - RESPONSE:
 
 ```json
@@ -316,30 +325,33 @@ The API does not require any form of Authentication or token.
 
 ```
 
---------------------------------------------------------
-
+-------------------------
 
 ### Get All Countries Within Specific Longitude / Latitude Range
 
 - Endpoint: `/api/v0.1/countries/positions/range`
-    - Action: `POST`
-    - HEADERS: `{'Content-Type': 'application/json'}`
+- Action: `POST`
+- HEADERS: `{'Content-Type': 'application/json'}`
 - PARAMS:
+
 ```json
 {
-	"type": "long",
-	"min": 1,
-	"max": 40
+ "type": "long",
+ "min": 1,
+ "max": 40
 }
+```
 
 OR
 
+```json
 {
-	"type": "lat",
-	"min": 1,
-	"max": 40
+ "type": "lat",
+ "min": 1,
+ "max": 40
 }
 ```
+
 - RESPONSE:
 
 ```json
@@ -386,15 +398,13 @@ OR
 
 ```
 
-
---------------------------------------------------------
-
+-------------------------
 
 ### Get All Countries With Flag Images
 
 - Endpoint: `/api/v0.1/countries/flag/images`
-    - Action: `GET`
-    - HEADERS: `{'Content-Type': 'application/json'}`
+- Action: `GET`
+- HEADERS: `{'Content-Type': 'application/json'}`
 - RESPONSE:
 
 ```json
@@ -428,20 +438,21 @@ OR
     },
 ```
 
---------------------------------------------------------
-
+-------------------------
 
 ### Get Single Country With Flag Image
 
 - Endpoint: `/api/v0.1/countries/flag/images`
-    - Action: `POST`
-    - HEADERS: `{'Content-Type': 'application/json'}`
+- Action: `POST`
+- HEADERS: `{'Content-Type': 'application/json'}`
 - PARAMS:
+
 ```json
 {
-	"country": "nigeria"
+ "country": "nigeria"
 }
 ```
+
 - RESPONSE:
 
 ```json
@@ -455,14 +466,13 @@ OR
 }
 ```
 
---------------------------------------------------------
-
+-------------------------
 
 ### Get Countries With Unicode Flag
 
 - Endpoint: `/api/v0.1/countries/flag/unicode`
-    - Action: `GET`
-    - HEADERS: `{'Content-Type': 'application/json'}`
+- Action: `GET`
+- HEADERS: `{'Content-Type': 'application/json'}`
 - RESPONSE:
 
 ```json
@@ -498,20 +508,21 @@ OR
 }
 ```
 
---------------------------------------------------------
-
+-------------------------
 
 ### Get Single Country With Unicode Flag
 
 - Endpoint: `/api/v0.1/countries/flag/unicode`
-    - Action: `POST`
-    - HEADERS: `{'Content-Type': 'application/json'}`
+- Action: `POST`
+- HEADERS: `{'Content-Type': 'application/json'}`
 - PARAMS:
+
 ```json
 {
-	"country": "nigeria"
+ "country": "nigeria"
 }
 ```
+
 - RESPONSE:
 
 ```json
@@ -525,9 +536,7 @@ OR
 }
 ```
 
-
---------------------------------------------------------
-
+-------------------------
 
 ### Get Countries With Capital
 
@@ -572,21 +581,21 @@ OR
     ...
 ```
 
-
---------------------------------------------------------
-
+-------------------------
 
 ### Get Single Country With Capital
 
 - Endpoint: `/api/v0.1/countries/capital`
-    - Action: `POST`
-    - HEADERS: `{'Content-Type': 'application/json'}`
+- Action: `POST`
+- HEADERS: `{'Content-Type': 'application/json'}`
 - PARAMS:
+
 ```json
 {
-	"country": "nigeria"
+ "country": "nigeria"
 }
 ```
+
 - RESPONSE:
 
 ```json
@@ -600,10 +609,7 @@ OR
 }
 ```
 
-
-
---------------------------------------------------------
-
+-------------------------
 
 ### Get Countries and Currencies
 
@@ -611,6 +617,7 @@ OR
 - Action: `GET`
 - HEADERS: `{'Content-Type': 'application/json'}`
 - RESPONSE:
+
 ```json
 {
   "error": false,
@@ -636,9 +643,7 @@ OR
 
 ```
 
-
---------------------------------------------------------
-
+-------------------------
 
 ### Get Countries Information With Selectors
 
@@ -647,6 +652,7 @@ OR
 - HEADERS: `{'Content-Type': 'application/json'}`
 - QUERY: the returns parameter must be a comma-separated list of data attributes. e.g unicodeFlag,currency,flag. unicodeFlag fetches unicode flag, currency fetches currency, flag fetches link to svg image of flag.
 - RESPONSE:
+
 ```json
 {
   "error": false,
@@ -679,9 +685,10 @@ OR
     ...
 ```
 
---------------------------------------------------------
+-------------------------
 
 ## Population (Countries)
+
 > Data related to country and population
 
 ### Get All Countries and Population Count From (1961) - (2018)
@@ -690,6 +697,7 @@ OR
 - Action: `GET`
 - HEADERS: `{'Content-Type': 'application/json'}`
 - RESPONSE:
+
 ```json
 {
     "error": false,
@@ -1024,7 +1032,7 @@ OR
         },
 ```
 
--------------------------------------------------------------
+-------------------------
 
 ### Get Single Country and Population Count From (1961) - (2018)
 
@@ -1032,12 +1040,15 @@ OR
 - Action: `POST`
 - HEADERS: `{'Content-Type': 'application/json'}`
 - PARAMS:
+
 ```json
 {
   "country": "Nigeria"
 }
 ```
+
 - RESPONSE:
+
 ```json
 
 {
@@ -1283,38 +1294,43 @@ OR
     }
 }
 ```
--------------------------------------------------------------
+
+-------------------------
 
 ### Filter Countries Population Data
 
 > This endpoint allows you filter what you want from the long response of population data.
 > Parameters:
->   - year (Number): You can get the population for a particular year
->   - limit (Number): Don't want all of the countries? You can limit the response to the first 2, 3, 10, 20 etc.
->   - lt (Number): this field represents "less than", you can get only countries with a population less than the "lt" value
->   - gt (Number): this field represents "greater than", you can get only countries with a population greater than the "lt" value
->   - lt, gt (Number): When both fields are provided, the endpoint returns a range between (lt, gt): with the formular gt < population < lt
->   - orderBy (String): You can order the response by country name or population value by providing "name" or "population"
->       - allowed: ['name', 'population']
->       - default: 'population'
->   - order (String): specify the order you'd like the response in by providing "asc" or "dsc" (ascending and descending respectively)
+>
+> - year (Number): You can get the population for a particular year
+> - limit (Number): Don't want all of the countries? You can limit the response to the first 2, 3, 10, 20 etc.
+> - lt (Number): this field represents "less than", you can get only countries with a population less than the "lt" value
+> - gt (Number): this field represents "greater than", you can get only countries with a population greater than the "lt" value
+> - lt, gt (Number): When both fields are provided, the endpoint returns a range between (lt, gt): with the formular gt < population < lt
+> - orderBy (String): You can order the response by country name or population value by providing "name" or "population"
+>   - allowed: ['name', 'population']
+>   - default: 'population'
+> - order (String): specify the order you'd like the response in by providing "asc" or "dsc" (ascending and descending respectively)
 >
 
 - Endpoint: `/api/v0.1/countries/population/filter`
 - Action: `POST`
 - HEADERS: `{'Content-Type': 'application/json'}`
 - PARAMS:
+
 ```json
 {
-	"year": 2000,
-	"limit": 40,
-	"lt": 651348588,
-	"gt": 6513485,
-	"orderBy": "name",
-	"order": "dsc"
+ "year": 2000,
+ "limit": 40,
+ "lt": 651348588,
+ "gt": 6513485,
+ "orderBy": "name",
+ "order": "dsc"
 }
 ```
+
 - RESPONSE:
+
 ```json
 {
   "error": false,
@@ -1404,9 +1420,10 @@ OR
 }
 ```
 
--------------------------------------------------------------
+-------------------------
 
 ## Population (Cities)
+
 > Date related to Cities and Population
 
 ### Get All Cities and Population Count
@@ -1415,6 +1432,7 @@ OR
 - Action: `GET`
 - HEADERS: `{'Content-Type': 'application/json'}`
 - RESPONSE:
+
 ```json
 
 {
@@ -1484,7 +1502,7 @@ OR
     {
 ```
 
--------------------------------------------------------------
+-------------------------
 
 ### Get Single City and Population Count
 
@@ -1492,6 +1510,7 @@ OR
 - Action: `POST`
 - HEADERS: `{'Content-Type': 'application/json'}`
 - PARAMS:
+
 ```json
 {
     "city": "Enugu"
@@ -1499,6 +1518,7 @@ OR
 ```
 
 - RESPONSE:
+
 ```json
 {
   "error": false,
@@ -1517,33 +1537,37 @@ OR
   }
 }
 ```
--------------------------------------------------------------
+
+-------------------------
 
 ### Filter Cities Population Data
 
 > This endpoint allows you filter what you want from the long response of population data.
 > Parameters:
->   - limit (Number): Don't want all of the countries? You can limit the response to the first 2, 3, 10, 20 etc.
->   - orderBy (String): You can order the response by country name or population value by providing "name" or "population"
->       - allowed: ['name', 'population']
->       - default: 'population'
->   - order (String): specify the order you'd like the response in by providing "asc" or "dsc" (ascending and descending respectively)
->   - country (String): show only cities that belong to a country
+>
+> - limit (Number): Don't want all of the countries? You can limit the response to the first 2, 3, 10, 20 etc.
+> - orderBy (String): You can order the response by country name or population value by providing "name" or "population"
+>   - allowed: ['name', 'population']
+>   - default: 'population'
+> - order (String): specify the order you'd like the response in by providing "asc" or "dsc" (ascending and descending respectively)
+> - country (String): show only cities that belong to a country
 
 - Endpoint: `/api/v0.1/countries/population/cities/filter`
 - Action: `POST`
 - HEADERS: `{'Content-Type': 'application/json'}`
 - PARAMS:
+
 ```json
 {
-	"limit": 10,
-	"orderBy": "population",
-    "order": "dsc",
-    "country": "nigeria"
+ "limit": 10,
+ "orderBy": "population",
+ "order": "dsc",
+ "country": "nigeria"
 }
 ```
 
 - RESPONSE:
+
 ```json
 {
   "error": false,
