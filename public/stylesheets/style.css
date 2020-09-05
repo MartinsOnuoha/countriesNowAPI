@@ -64,7 +64,13 @@ button:focus {outline:0;}
   box-shadow: 0 1px 3px rgba(0,0,0,0.02), 0 1px 2px rgba(0,0,0,0.14);
   transition: all 0.3s cubic-bezier(.25,.8,.25,1);
 }
-
+.content__actions {
+  display: flex;
+  justify-content: center;
+}
+.content__actions button {
+  margin: 3px;
+}
 .renderjson {
   font-family: 'Fira Mono', monospace;
   background-color: #303030;
