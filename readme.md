@@ -26,6 +26,7 @@ The API does not require any form of Authentication or token.
     - [Get All Countries and Cities](#get-all-countries-and-cities)
     - [Get Cities By Country Name](#get-cities-by-country-name)
     - [Get Countries And Dial Codes](#get-countries-and-dial-codes)
+    - [Get Single Country's Dial Codes](#get-single-countrys-dial-codes)
     - [Get Countries And Positions (Longitude, Latitude)](#get-countries-and-positions-longitude-latitude)
     - [Get Single Country's Position](#get-single-countrys-position)
     - [Get All Countries Within Specific Longitude / Latitude Range](#get-all-countries-within-specific-longitude--latitude-range)
@@ -249,6 +250,36 @@ The API does not require any form of Authentication or token.
     {
       "name": "Anguilla",
     ...
+
+```
+
+-------------------------
+
+### Get Single Country's Dial Codes
+
+- Endpoint: `/api/v0.1/countries/codes`
+- Action: `POST`
+- HEADERS: `{'Content-Type': 'application/json'}`
+- PARAMS:
+
+```json
+{
+  "country": "Nigeria"
+}
+```
+
+- RESPONSE:
+
+```json
+{
+  "error": false,
+  "msg": "Nigeria dial code retrieved",
+  "data": {
+    "name": "Nigeria",
+    "code": "NG",
+    "dial_code": "+234"
+  }
+}
 
 ```
 

@@ -6,6 +6,7 @@ const CountryController  = require('../controllers/countryController');
 router.get('/', CountryController.getCountriesAndCities);
 router.post('/cities', CountryController.getCitiesByCountry);
 router.get('/codes', CountryController.getCountriesAndCodes);
+router.post('/codes', CountryController.getSingleContryDialCode);
 router.get('/currency', CountryController.getCountriesAndCurrency);
 router.get('/iso', CountryController.getCountriesAndISO);
 router.get('/info', CountryController.getCountriesInfo);

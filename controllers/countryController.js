@@ -47,6 +47,19 @@ class CountryController {
         return Respond.success(res, 'countries and codes retrieved', data);
     }
     /**
+     * get a single country's dail code
+     * @param {RequestObject} req request object
+     * @param {ResponseObject} res response obejct
+     */
+    static getSingleContryDialCode(req, res) {
+        const { country } = req.body
+        const data = CountriesAndCodes.map(x => ({ name: x.name, code: x.code, dial_code: x.dial_code })).find(x => x.name.toLowerCase() === country.trim().toLowerCase())
+        if (data) {
+            return Respond.success(res, `${country} dial code retrieved`, data)
+        }
+        return Respond.error(res, 'country not found', 404)
+    }
+    /**
      * Get countries and positions
      * @param {RequestObject} req request object
      * @param {ResponseObject} res response object
