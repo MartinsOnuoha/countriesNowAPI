@@ -6,3 +6,4 @@ node_modules/*
 .vscode/*
 _readthedocs/build/*
 .DS_Store
+public/.DS_Store
