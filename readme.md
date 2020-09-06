@@ -2,10 +2,26 @@
 
 > A curation of Countries data including (dial codes, states, cities, currencies, capitals etc) served over a REST API so you don't have to have them locally in your applications.
 > This means lighter application sizes as you wouldn't have to install another package to use geo data.
+>
+> - The Data Curated was made possible, thanks to this 🔥 [gist](https://gist.github.com/Keeguon/2310008) and [datahub](datahub.io)
+> - and still needs improvement
 
 ![landing page](https://raw.githubusercontent.com/MartinsOnuoha/countriesAndCitiesAPI/chore/update-readme/public/img/landing.png)
 
 ## USAGE
+
+```javascript
+const BASE_URL = 'https://countriesnow.space/api/v0.1/countries'
+
+let getCountries = async () => {
+  const response = await fetch(`${BASE_URL}`).then(response => response.json())
+  const { data } = response
+
+  data.forEach((country) => {
+    console.log(country) // {"country": "Afghanistan", "cities": [ "Herat", "Kabul", "Kandahar", "Molah", ...]}
+  })
+}
+```
 
 The API does not require any form of Authentication or token.
 
