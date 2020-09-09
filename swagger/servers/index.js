@@ -1,5 +1,5 @@
 const devServer = {
-  url: 'http://localhost:3000/api/v0.1/countries',
+  url: 'https://countriesnow.space/api/v0.1/countries',
   description: 'dev server',
   port: {
     enum: ['5000', '3000'],
@@ -8,7 +8,7 @@ const devServer = {
 };
 
 const prodServer = {
-  url: 'https://country-cities.herokuapp.com/api/v0.1/countries',
+  url: 'https://countriesnow.space/api/v0.1/countries',
   description: 'prod server'
 }
 
