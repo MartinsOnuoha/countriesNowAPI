@@ -3,10 +3,10 @@ module.exports = {
   description: 'payload for single country',
   properties: {
     country: {
-      $ref: '#/components/schemas/countryName'
-    }
+      $ref: '#/components/schemas/countryName',
+    },
   },
   example: {
-    country: 'Nigeria'
-  }
-}
+    country: 'Nigeria',
+  },
+};

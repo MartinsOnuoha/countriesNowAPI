@@ -4,10 +4,10 @@ const methods = {
     description: 'get all countries with their longitude and latitude',
     parameters: [],
     responses: {
-      '200': {
-        description: 'countries and positions retrieved'
-      }
-    }
+      200: {
+        description: 'countries and positions retrieved',
+      },
+    },
   },
   getSingleCityPopulation: {
     tags: ['Population'],
@@ -17,27 +17,27 @@ const methods = {
       content: {
         'application/json': {
           schema: {
-            $ref: '#/components/schemas/cityPayload'
-          }
-        }
+            $ref: '#/components/schemas/cityPayload',
+          },
+        },
       },
-      required: true
+      required: true,
     },
     responses: {
-      '200': {
-        description: 'single city and its population data retrieved'
-      }
-    }
+      200: {
+        description: 'single city and its population data retrieved',
+      },
+    },
   },
   getCountryPopulation: {
     tags: ['Population'],
     description: 'Get all countries and respective population',
     parameters: [],
     responses: {
-      '200': {
-        description: 'countries and population retrieved'
-      }
-    }
+      200: {
+        description: 'countries and population retrieved',
+      },
+    },
   },
   getSingleCountryPopulation: {
     tags: ['Population'],
@@ -47,17 +47,17 @@ const methods = {
       content: {
         'application/json': {
           schema: {
-            $ref: '#/components/schemas/countryPayload'
-          }
-        }
+            $ref: '#/components/schemas/countryPayload',
+          },
+        },
       },
-      required: true
+      required: true,
     },
     responses: {
-      '200': {
-        description: 'single country and population data retrieved'
-      }
-    }
+      200: {
+        description: 'single country and population data retrieved',
+      },
+    },
   },
   filterCountryPopulation: {
     tags: ['Population'],
@@ -67,17 +67,17 @@ const methods = {
       content: {
         'application/json': {
           schema: {
-            $ref: '#/components/schemas/countryPopulationFilterPayload'
-          }
-        }
+            $ref: '#/components/schemas/countryPopulationFilterPayload',
+          },
+        },
       },
-      required: true
+      required: true,
     },
     responses: {
-      '200': {
-        description: 'filtered result'
-      }
-    }
+      200: {
+        description: 'filtered result',
+      },
+    },
   },
   filterCityPopulation: {
     tags: ['Population'],
@@ -87,18 +87,18 @@ const methods = {
       content: {
         'application/json': {
           schema: {
-            $ref: '#/components/schemas/cityPopulationFilterPayload'
-          }
-        }
+            $ref: '#/components/schemas/cityPopulationFilterPayload',
+          },
+        },
       },
-      required: true
+      required: true,
     },
     responses: {
-      '200': {
-        description: 'filtered result'
-      }
-    }
+      200: {
+        description: 'filtered result',
+      },
+    },
   },
-}
+};
 
-module.exports = methods
+module.exports = methods;

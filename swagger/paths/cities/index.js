@@ -3,10 +3,10 @@ const methods = {
     tags: ['Cities'],
     description: 'Get all countries and thier cities',
     responses: {
-      '200': {
-        description: 'countries and cities retrieved'
-      }
-    }
+      200: {
+        description: 'countries and cities retrieved',
+      },
+    },
   },
   getCities: {
     tags: ['Cities'],
@@ -16,19 +16,18 @@ const methods = {
       content: {
         'application/json': {
           schema: {
-            $ref: '#/components/schemas/countryPayload'
-          }
-        }
+            $ref: '#/components/schemas/countryPayload',
+          },
+        },
       },
-      required: true
+      required: true,
     },
     responses: {
-      '200': {
-        description: 'cities in Nigeria retrieved'
-      }
-    }
-  }
-}
+      200: {
+        description: 'cities in Nigeria retrieved',
+      },
+    },
+  },
+};
 
-
-module.exports = methods
+module.exports = methods;

@@ -1,10 +1,27 @@
+:root {
+  --primary-color: #FBEDE0;
+  --font-family: 'Playfair Display', serif;
+  --fira-font: 'Fira Mono', monospace;
+  --no-value: 0;
+  --b-radius: 7px;
+  --two-hundred-px: 200px;
+  --success-color: #8BC34A;
+  --white-color: #FFFFFF;
+  --amber-color: #FF9800;
+  --black-color: #000000;
+  --grey-color: #303030;
+  --ligth-box-shadow: 0 1px 3px rgba(0,0,0,0.02), 0 1px 2px rgba(0,0,0,0.14);
+}
+
 ::selection {
-  background: #fbede0; /* WebKit/Blink Browsers */
+  background: var(--primary-color); /* WebKit/Blink Browsers */
 }
 body {
   width: 100%;
-  font-family: 'Playfair Display', serif;
-  background: #FBEDE0;
+  font-family: var(--font-family);
+  background: var(--primary-color);
+  padding: var(--no-value);
+  margin: var(--no-value);
 }
 .font-weight-light {
   font-weight: 200;
@@ -15,19 +32,20 @@ body {
 .countryNow {
   display: grid;
   place-items: center;
-  margin-top: 10px;
+  /* margin-top: -5rem; */
+  height: 100vh;
 }
 .card {
-  height: 200px;
-  width: 200px;
-  border-radius: 7px;
+  height: var(--two-hundred-px);
+  width: var(--two-hundred-px);
+  border-radius: var(--b-radius);
 }
 .center {
   display: grid;
   place-items: center;
 }
 .logo-img {
-  border-radius: 7px;
+  border-radius: var(--b-radius);
 }
 .content {
   padding: 10px;
@@ -36,49 +54,99 @@ body {
   padding: 10px 30px 10px 30px;
   cursor: pointer;
   font-size: 15px;
-  border: 0;
+  border: var(--no-value);
 }
 .bg-black {
-  background-color: #000;
-  color: #FFF;
+  background-color: var(--black-color);
+  color: var(--white-color);
   transition: ease;
 }
 .bg-black:hover {
-  background-color: #FF9800;
-  color: #FBEDE0;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.02), 0 1px 2px rgba(0,0,0,0.14);
+  background-color: var(--amber-color);
+  color: var(--primary-color);
+  box-shadow: var(--ligth-box-shadow);
 }
 .bg-white {
-  background-color: #fff;
+  background-color: var(--white-color);
   color: #5a393e;
 }
 button.bg-white:hover {
-  background-color: #8BC34A;
+  background-color: var(--success-color);
   color: #FFF;
 }
 button {
-  font-family: 'Playfair Display', serif;
+  font-family: var(--font-family);
 }
 button:focus {outline:0;}
 .shadow-1 {
-  box-shadow: 0 1px 3px rgba(0,0,0,0.02), 0 1px 2px rgba(0,0,0,0.14);
+  box-shadow: var(--no-value) 1px 3px rgba(0,0,0,0.02), var(--no-value) 1px 2px rgba(0,0,0,0.14);
   transition: all 0.3s cubic-bezier(.25,.8,.25,1);
 }
-
 .renderjson {
-  font-family: 'Fira Mono', monospace;
-  background-color: #303030;
+  font-family: var(--fira-font);
+  background-color: var(--grey-color);
   font-size: 12px;
   padding: 10px;
 }
-.renderjson a              { text-decoration: none; }
-.renderjson .disclosure    { color: crimson;
-                             font-size: 150%; }
-.renderjson .syntax        { color: grey; }
-.renderjson .string        { color: red; }
-.renderjson .number        { color: cyan; }
-.renderjson .boolean       { color: plum; }
-.renderjson .key           { color: lightblue; }
-.renderjson .keyword       { color: lightgoldenrodyellow; }
-.renderjson .object.syntax { color: lightseagreen; }
-.renderjson .array.syntax  { color: lightsalmon; }
+.renderjson a { text-decoration: none; }
+.renderjson .disclosure {
+  color: crimson;
+  font-size: 150%;
+}
+.renderjson .syntax {
+  color: grey;
+}
+.renderjson .string {
+  color: red;
+}
+.renderjson .number {
+  color: cyan;
+}
+.renderjson .boolean {
+  color: plum;
+}
+.renderjson .key {
+  color: lightblue;
+}
+.renderjson .keyword {
+  color: lightgoldenrodyellow;
+}
+.renderjson .object.syntax {
+  color: lightseagreen;
+}
+.renderjson .array.syntax {
+  color: lightsalmon;
+}
+
+@media screen
+  and (min-device-width: 1200px)
+  and (max-device-width: 1600px)
+  and (-webkit-min-device-pixel-ratio: 1) {
+    .content {
+      margin-top: -5rem;
+    }
+}
+/** Mobile */
+@media only screen
+  and (min-device-width: 320px)
+  and (max-device-width: 480px)
+  and (-webkit-min-device-pixel-ratio: 2) {
+    .renderjson {
+      max-width: 330px !important;
+      overflow-x: scroll;
+    }
+    .font-weight-light {
+      font-size: 28px;
+      font-weight: 200;
+    }
+    .card {
+      height: 110px;
+      width: 110px;
+    }
+    .card img {
+      width: 5rem;
+    }
+    .countryNow {
+      margin-top: 1rem;
+    }
+}

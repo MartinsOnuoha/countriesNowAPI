@@ -4,10 +4,10 @@ const methods = {
     description: 'get all countries with their longitude and latitude',
     parameters: [],
     responses: {
-      '200': {
-        description: 'countries and positions retrieved'
-      }
-    }
+      200: {
+        description: 'countries and positions retrieved',
+      },
+    },
   },
   getPositionSingle: {
     tags: ['Location'],
@@ -17,17 +17,17 @@ const methods = {
       content: {
         'application/json': {
           schema: {
-            $ref: '#/components/schemas/countryPayload'
-          }
-        }
+            $ref: '#/components/schemas/countryPayload',
+          },
+        },
       },
-      required: true
+      required: true,
     },
     responses: {
-      '200': {
-        description: 'country position retrieved'
-      }
-    }
+      200: {
+        description: 'country position retrieved',
+      },
+    },
   },
   getPositionRange: {
     tags: ['Location'],
@@ -37,18 +37,18 @@ const methods = {
       content: {
         'application/json': {
           schema: {
-            $ref: '#/components/schemas/positionRange'
-          }
-        }
+            $ref: '#/components/schemas/positionRange',
+          },
+        },
       },
-      required: true
+      required: true,
     },
     responses: {
-      '200': {
-        description: 'countries between long of (1 and 40)'
-      }
-    }
-  }
-}
+      200: {
+        description: 'countries between long of (1 and 40)',
+      },
+    },
+  },
+};
 
-module.exports = methods
+module.exports = methods;

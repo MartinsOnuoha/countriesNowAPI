@@ -3,23 +3,23 @@ module.exports = {
   description: 'payload for single country',
   properties: {
     year: {
-      $ref: '#/components/schemas/year'
+      $ref: '#/components/schemas/year',
     },
     limit: {
-      $ref: '#/components/schemas/limit'
+      $ref: '#/components/schemas/limit',
     },
     lt: {
-      $ref: '#/components/schemas/lt'
+      $ref: '#/components/schemas/lt',
     },
     gt: {
-      $ref: '#/components/schemas/gt'
+      $ref: '#/components/schemas/gt',
     },
     orderBy: {
-      $ref: '#/components/schemas/orderBy'
+      $ref: '#/components/schemas/orderBy',
     },
     order: {
-      $ref: '#/components/schemas/order'
-    }
+      $ref: '#/components/schemas/order',
+    },
   },
   example: {
     year: 2000,
@@ -27,6 +27,6 @@ module.exports = {
     lt: 651348588,
     gt: 6513485,
     orderBy: 'name',
-    order: 'dsc'
-  }
-}
+    order: 'dsc',
+  },
+};

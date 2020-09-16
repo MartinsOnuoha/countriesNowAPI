@@ -1,3 +1,4 @@
+/* eslint-disable */
 // Copyright © 2013-2014 David Caldwell <david@porkrind.org>
 //
 // Permission to use, copy, modify, and/or distribute this software for any

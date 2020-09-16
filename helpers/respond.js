@@ -9,8 +9,9 @@ class Respond {
     return res.status(status).json({
       error: true,
       msg,
-    })
+    });
   }
+
   /**
    * Success Response
    * @param {Object} res response object
@@ -21,8 +22,8 @@ class Respond {
     return res.status(200).json({
       error: false,
       msg,
-      data
-    })
+      data,
+    });
   }
 }
 
