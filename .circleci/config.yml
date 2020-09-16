@@ -13,12 +13,11 @@ jobs:
             ls -la
       - run:
           name: Update npm
-          command: npm i npm@latest -g
+          command: sudo npm i npm@latest -g
       - run:
           name: 'Install packages'
-          command: |
-            npm install
+          command: npm install
       - run:
-          name: Install and Make
-          command: npm install && make test-coverage
+          name: Make Test Coverage
+          command: make test-coverage
       - coveralls/upload
