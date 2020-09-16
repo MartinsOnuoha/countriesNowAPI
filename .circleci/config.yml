@@ -8,6 +8,17 @@ jobs:
     steps:
       - checkout
       - run:
+          name: List code directory
+          command: |
+            ls -la
+      - run:
+          name: Update npm
+          command: npm i npm@latest -g
+      - run:
+          name: 'Install packages'
+          command: |
+            npm install
+      - run:
           name: Install and Make
           command: npm install && make test-coverage
       - coveralls/upload
