@@ -1,10 +1,9 @@
+/* eslint-disable no-nested-ternary */
 /**
  * Get the latest year provided by API
  * @param {Array} data array object
  */
-const latestYear = (data) => {
-  return data[0].populationCounts[data[0].populationCounts.length - 1].year
-}
+const latestYear = (data) => data[0].populationCounts[data[0].populationCounts.length - 1].year;
 /**
  * Order country data
  * @param {Array} data array object to sort
@@ -14,21 +13,21 @@ const latestYear = (data) => {
 const orderCountryData = (data, type = 'asc', orderBy = 'population') => {
   if (orderBy.trim().toLowerCase() === 'name') {
     return data.sort((a, b) => {
-      let casedA = a.country.toUpperCase()
-      let casedB = b.country.toUpperCase()
+      const casedA = a.country.toUpperCase();
+      const casedB = b.country.toUpperCase();
 
       return (casedA < casedB) && type === 'asc' ? -1
         : (casedA > casedB) && type === 'asc' ? 1
-        : (casedA < casedB) && type === 'dsc' ? 1
-        : (casedA > casedB) && type === 'dsc' ? -1
-        : 0
-    })
+          : (casedA < casedB) && type === 'dsc' ? 1
+            : (casedA > casedB) && type === 'dsc' ? -1
+              : 0;
+    });
   }
   if (type.trim().toLowerCase() === 'dsc') {
-    return data.sort((a, b) => b.populationCounts.value - a.populationCounts.value)
+    return data.sort((a, b) => b.populationCounts.value - a.populationCounts.value);
   }
-  return data.sort((a, b) => a.populationCounts.value - b.populationCounts.value)
-}
+  return data.sort((a, b) => a.populationCounts.value - b.populationCounts.value);
+};
 /**
  * Order City data
  * @param {Array} data array object to sort
@@ -38,46 +37,40 @@ const orderCountryData = (data, type = 'asc', orderBy = 'population') => {
 const orderCityData = (data, type = 'asc', orderBy = 'population') => {
   if (orderBy.trim().toLowerCase() === 'name') {
     return data.sort((a, b) => {
-      let casedA = a.city.toUpperCase()
-      let casedB = b.city.toUpperCase()
+      const casedA = a.city.toUpperCase();
+      const casedB = b.city.toUpperCase();
 
       return (casedA < casedB) && type === 'asc' ? -1
         : (casedA > casedB) && type === 'asc' ? 1
-        : (casedA < casedB) && type === 'dsc' ? 1
-        : (casedA > casedB) && type === 'dsc' ? -1
-        : 0
-    })
+          : (casedA < casedB) && type === 'dsc' ? 1
+            : (casedA > casedB) && type === 'dsc' ? -1
+              : 0;
+    });
   }
   if (type.trim().toLowerCase() === 'dsc') {
-    return data.sort((a, b) => b.populationCounts[0].value - a.populationCounts[0].value)
+    return data.sort((a, b) => b.populationCounts[0].value - a.populationCounts[0].value);
   }
-  return data.sort((a, b) => a.populationCounts[0].value - b.populationCounts[0].value)
-}
+  return data.sort((a, b) => a.populationCounts[0].value - b.populationCounts[0].value);
+};
 /**
  * get population data greater than provided range
  * @param {Array} data array object to filters
  * @param {Number} range value to filter by
  */
-const greaterThan = (data, range) => {
-  return data.filter(x => x.populationCounts.value > range)
-}
+const greaterThan = (data, range) => data.filter((x) => x.populationCounts.value > range);
 /**
  * get population data less than provided range
  * @param {Array} data array object to filter
  * @param {Number} range
  */
-const lessThan = (data, range) => {
-  return data.filter(x => x.populationCounts.value < range)
-}
+const lessThan = (data, range) => data.filter((x) => x.populationCounts.value < range);
 /**
  * get population data within a range
  * @param {Array} data array object to filters
  * @param {Number} gt values in array should be greater than gt
  * @param {Number} lt values in array should be less than lt
  */
-const withRange = (data, gt, lt) => {
-  return data.filter(x => x.populationCounts.value > gt && x.populationCounts.value < lt)
-}
+const withRange = (data, gt, lt) => data.filter((x) => x.populationCounts.value > gt && x.populationCounts.value < lt);
 
 module.exports = {
   latestYear,
@@ -85,5 +78,5 @@ module.exports = {
   orderCityData,
   greaterThan,
   lessThan,
-  withRange
-}
+  withRange,
+};

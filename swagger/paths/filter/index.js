@@ -8,17 +8,16 @@ const methods = {
         in: 'query',
         required: true,
         schema: {
-          $ref: '#/components/schemas/returns'
-        }
-      }
+          $ref: '#/components/schemas/returns',
+        },
+      },
     ],
     responses: {
-      '200': {
-        description: 'countries details: \'currency,flag,unicodeFlag\' have been retrieved'
-      }
-    }
-  }
-}
+      200: {
+        description: 'countries details: \'currency,flag,unicodeFlag\' have been retrieved',
+      },
+    },
+  },
+};
 
-
-module.exports = methods
+module.exports = methods;

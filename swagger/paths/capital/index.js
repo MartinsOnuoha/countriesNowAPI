@@ -3,10 +3,10 @@ const methods = {
     tags: ['Capital'],
     description: 'Get all countries and thier capital',
     responses: {
-      '200': {
-        description: 'countries and capitals retrieved'
-      }
-    }
+      200: {
+        description: 'countries and capitals retrieved',
+      },
+    },
   },
   getCapitalSingle: {
     tags: ['Capital'],
@@ -16,19 +16,18 @@ const methods = {
       content: {
         'application/json': {
           schema: {
-            $ref: '#/components/schemas/countryPayload'
-          }
-        }
+            $ref: '#/components/schemas/countryPayload',
+          },
+        },
       },
-      required: true
+      required: true,
     },
     responses: {
-      '200': {
-        description: 'country and capitals retrieved'
-      }
-    }
-  }
-}
+      200: {
+        description: 'country and capitals retrieved',
+      },
+    },
+  },
+};
 
-
-module.exports = methods
+module.exports = methods;

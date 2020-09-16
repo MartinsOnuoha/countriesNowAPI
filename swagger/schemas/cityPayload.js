@@ -3,10 +3,10 @@ module.exports = {
   description: 'payload for single city',
   properties: {
     country: {
-      $ref: '#/components/schemas/cityName'
-    }
+      $ref: '#/components/schemas/cityName',
+    },
   },
   example: {
-    city: 'lagos'
-  }
-}
+    city: 'lagos',
+  },
+};

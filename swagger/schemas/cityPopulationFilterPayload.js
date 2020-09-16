@@ -3,22 +3,22 @@ module.exports = {
   description: 'payload for single country',
   properties: {
     country: {
-      $ref: '#/components/schemas/countryName'
+      $ref: '#/components/schemas/countryName',
     },
     limit: {
-      $ref: '#/components/schemas/limit'
+      $ref: '#/components/schemas/limit',
     },
     orderBy: {
-      $ref: '#/components/schemas/orderBy'
+      $ref: '#/components/schemas/orderBy',
     },
     order: {
-      $ref: '#/components/schemas/order'
-    }
+      $ref: '#/components/schemas/order',
+    },
   },
   example: {
     country: 'nigeria',
     limit: 10,
     orderBy: 'name',
-    order: 'asc'
-  }
-}
+    order: 'asc',
+  },
+};

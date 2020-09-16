@@ -4,10 +4,10 @@ const methods = {
     description: 'get all countries with their flag images url',
     parameters: [],
     responses: {
-      '200': {
-        description: 'flags images retrieved'
-      }
-    }
+      200: {
+        description: 'flags images retrieved',
+      },
+    },
   },
   getFlagImagesSingle: {
     tags: ['Flag'],
@@ -17,27 +17,27 @@ const methods = {
       content: {
         'application/json': {
           schema: {
-            $ref: '#/components/schemas/countryPayload'
-          }
-        }
+            $ref: '#/components/schemas/countryPayload',
+          },
+        },
       },
-      required: true
+      required: true,
     },
     responses: {
-      '200': {
-        description: 'country and flag retrieved'
-      }
-    }
+      200: {
+        description: 'country and flag retrieved',
+      },
+    },
   },
   getFlagUnicode: {
     tags: ['Flag'],
     description: 'get all countries with their flag in unicode format',
     parameters: [],
     responses: {
-      '200': {
-        description: 'countries and unicode flags retrieved'
-      }
-    }
+      200: {
+        description: 'countries and unicode flags retrieved',
+      },
+    },
   },
   getFlagUnicodeSingle: {
     tags: ['Flag'],
@@ -47,18 +47,18 @@ const methods = {
       content: {
         'application/json': {
           schema: {
-            $ref: '#/components/schemas/countryPayload'
-          }
-        }
+            $ref: '#/components/schemas/countryPayload',
+          },
+        },
       },
-      required: true
+      required: true,
     },
     responses: {
-      '200': {
-        description: 'countries and unicode flags retrieved'
-      }
-    }
-  }
-}
+      200: {
+        description: 'countries and unicode flags retrieved',
+      },
+    },
+  },
+};
 
-module.exports = methods
+module.exports = methods;

@@ -1,20 +1,13 @@
 version: 2.1
+orbs:
+  coveralls: coveralls/coveralls@1.0.6
 jobs:
   build:
     docker:
-      - image: circleci/node:10-browsers
+      - image: 'circleci/node:10.0.0'
     steps:
       - checkout
       - run:
-          name: Get branch code
-          command: |
-            echo 'Branch code fetched'
-            echo 'This is the delivery pipeline'
-      - run:
-          name: List code directory
-          command: |
-            ls -la
-      - run:
-          name: 'Install packages'
-          command: |
-            npm install
+          name: Install and Make
+          command: npm install && make test-coverage
+      - coveralls/upload
