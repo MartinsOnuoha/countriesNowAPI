@@ -11,6 +11,22 @@
 
 > The API does not require any form of Authentication or token.
 
+```javascript
+
+const BASE_URL = 'https://countriesnow.space/api/v0.1/countries'
+
+let getCountries = async () => {
+  const response = await fetch(`${BASE_URL}`).then(response => response.json())
+  const { data } = response
+
+  data.forEach((country) => {
+    console.log(country) // {"country": "Afghanistan", "cities": [ "Herat", "Kabul", "Kandahar", "Molah", ...]}
+  })
+}
+```
+
+The API does not require any form of Authentication or token.
+
 - Read Docs on: [Postman](https://documenter.getpostman.com/view/1134062/T1LJjU52?version=latest)
 - Try it out on: [Swagger](https://countriesnow.space/swagger-docs)
 

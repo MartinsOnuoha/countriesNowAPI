@@ -80,8 +80,8 @@ module.exports = {
     },
     '/states': {
       get: STATE_METHODS.getCountriesStates,
-      post: STATE_METHODS.getSingleCountryStates
-    }
+      post: STATE_METHODS.getSingleCountryStates,
+    },
   },
   components: {
     schemas: SCHEMAS,

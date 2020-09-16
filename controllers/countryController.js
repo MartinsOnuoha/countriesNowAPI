@@ -26,7 +26,7 @@ const CountriesAndISO = CountriesAndFlag.map((x) => {
   return dataObj;
 });
 const CountriesAndCurrencies = CountriesAndUnicodes.map((x) => ({ name: x.Name, currency: x.Currency }));
-const CountriesAndStatesFormatted = CountriesAndStates.map(x => ({ name: x.name, iso3: x.iso3, states: x.states.map(y => ({ name: y.name, state_code: y.state_code })) }))
+const CountriesAndStatesFormatted = CountriesAndStates.map((x) => ({ name: x.name, iso3: x.iso3, states: x.states.map((y) => ({ name: y.name, state_code: y.state_code })) }));
 
 class CountryController {
   /**
@@ -443,6 +443,7 @@ class CountryController {
     console.log(data);
     return Respond.success(res, 'countries state and cities', data);
   }
+
   /**
    * get countries and their states
    * @param {Request} req
@@ -452,6 +453,7 @@ class CountryController {
     const data = CountriesAndStatesFormatted;
     return Respond.success(res, 'countries and states retrieved', data);
   }
+
   /**
    * get a single country's states
    * @param {Request} req
@@ -462,7 +464,7 @@ class CountryController {
     if (!country) {
       return Respond.error(res, 'missing param (country)', 400);
     }
-    let data = Object.values(CountriesAndStatesFormatted).find(x => x.name.toLowerCase() === country.toLowerCase());
+    const data = Object.values(CountriesAndStatesFormatted).find((x) => x.name.toLowerCase() === country.toLowerCase());
     if (!data) {
       return Respond.error(res, 'country not found', 404);
     }
