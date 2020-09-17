@@ -20,5 +20,3 @@ jobs:
       - run:
           name: Run Tests
           command: npm run integration:test
-      - coveralls/upload:
-          path_to_lcov: ./coverage/lcov.info
