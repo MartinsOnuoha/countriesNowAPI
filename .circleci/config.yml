@@ -18,6 +18,6 @@ jobs:
           name: 'Install packages'
           command: npm install
       - run:
-          name: Make Test Coverage
-          command: make
+          name: Run Tests
+          command: npm run integration:test
       - coveralls/upload
