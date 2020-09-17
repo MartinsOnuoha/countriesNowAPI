@@ -43,17 +43,17 @@ const methods = {
       content: {
         'application/json': {
           schema: {
-            $ref: '#/components/schemas/countryPayload'
-          }
-        }
+            $ref: '#/components/schemas/countryPayload',
+          },
+        },
       },
-      required: true
+      required: true,
     },
     responses: {
-      '200': {
-        description: 'country\'s dial code retrieved'
-      }
-    }
+      200: {
+        description: 'country\'s dial code retrieved',
+      },
+    },
   },
   getISO: {
     tags: ['Codes'],

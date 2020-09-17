@@ -19,5 +19,5 @@ jobs:
           command: npm install
       - run:
           name: Make Test Coverage
-          command: make test-coverage
+          command: make
       - coveralls/upload
