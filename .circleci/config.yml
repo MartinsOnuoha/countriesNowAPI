@@ -20,4 +20,11 @@ jobs:
       - run:
           name: Run Tests
           command: npm run integration:test
-      - coveralls/upload
+      - coveralls/upload:
+          path_to_lcov:
+            description: >
+              Local path to the lcov output file produced by your test suite. An error
+              will be thrown if the file can't be found. This is the file that will be
+              sent to the Coveralls API.
+            type: string
+            default: ./coverage/lcov.info
