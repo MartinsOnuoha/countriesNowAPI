@@ -36,7 +36,7 @@ describe('Population', () => {
     it('it should require "country" param to get single country and its states data', (done) => {
       chai.request(server)
         .post(`${basePath}/states`)
-        .send({  })
+        .send({ })
         .end((err, res) => {
           res.should.have.status(400);
           should.not.exist(err);
@@ -70,8 +70,8 @@ describe('Population', () => {
   describe('/POST', () => {
     it('it should get a single country and its states data', (done) => {
       const payload = {
-        country: 'Nigeria'
-      }
+        country: 'Nigeria',
+      };
       chai.request(server)
         .post(`${basePath}/states`)
         .send(payload)
@@ -89,5 +89,4 @@ describe('Population', () => {
         });
     });
   });
-
 });

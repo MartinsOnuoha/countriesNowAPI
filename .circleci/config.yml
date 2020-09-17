@@ -8,6 +8,15 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Install and Make
-          command: npm install && make test-coverage
-      - coveralls/upload
+          name: List code directory
+          command: |
+            ls -la
+      - run:
+          name: Update npm
+          command: sudo npm i npm@latest -g
+      - run:
+          name: 'Install packages'
+          command: rm -rf node_modules && npm install
+      - run:
+          name: Run Tests
+          command: npm run integration:test
