@@ -16,7 +16,7 @@ jobs:
           command: sudo npm i npm@latest -g
       - run:
           name: 'Install packages'
-          command: rm -rf node_modules && rm package-lock.json && npm install
+          command: rm -rf node_modules && npm install
       - run:
           name: Run Tests
           command: npm run integration:test
