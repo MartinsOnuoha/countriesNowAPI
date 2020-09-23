@@ -1,22 +1,49 @@
 version: 2.1
 orbs:
   coveralls: coveralls/coveralls@1.0.6
+  node: circleci/node@1.1
 jobs:
   build:
     docker:
-      - image: 'circleci/node:10.0.0'
+      - image: 'circleci/node:10.16.0'
+    working_directory: ~/countriesNowAPI
+    environment:
+      NODE_ENV: test
     steps:
       - checkout
-      - run:
-          name: List code directory
-          command: |
-            ls -la
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
       - run:
           name: Update npm
           command: sudo npm i npm@latest -g
       - run:
           name: 'Install packages'
-          command: rm -rf node_modules && npm install
+          command: npm install
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+      - run:
+          name: install-npm-wee
+          command: npm install
+      - save_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+          paths:
+            - ./node_modules
       - run:
           name: Run Tests
-          command: npm run integration:test
+          command: npm run test
+      # - run: # run code coverage report
+      #     name: code-coverage
+      #     command: npm run coveralls
+      # - coveralls/upload
+      - store_artifacts: # for display in Artifacts: https://circleci.com/docs/2.0/artifacts/
+          path: coverage
+          prefix: coverage
+      - store_test_results: # for display in Test Summary: https://circleci.com/docs/2.0/collect-test-data/
+          path: test-results
+      - run: # test what branch we're on.
+          name: "What branch am I on?"
+          command: echo ${CIRCLE_BRANCH}
+
+notify:
+  webhooks:
+    - url: https://coveralls.io/webhook?repo_token=cKZsgNfG7qvoq4dHBsIFpkHqIkiux8Sgt
