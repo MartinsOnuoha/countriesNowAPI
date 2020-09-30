@@ -7,3 +7,5 @@ node_modules/*
 _readthedocs/build/*
 .DS_Store
 public/.DS_Store
+coverage
+coverage/*
