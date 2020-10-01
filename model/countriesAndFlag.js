@@ -136,7 +136,7 @@ const CountriesAndFlag = [
   },
   {
     name: 'British Indian Ocean Territory',
-    flag: 'https://upload.wikimedia.org/wikipedia/commons/6/6e/Flag_of_the_British_Indian_Ocean_Territory.svg',
+    flag: 'https://upload.wikimedia.org/wikipedia/commons/6/65/Flag_of_the_Commissioner_of_the_British_Indian_Ocean_Territory.svg',
     number: '+246',
   },
   {
@@ -396,7 +396,7 @@ const CountriesAndFlag = [
   },
   {
     name: 'Guadeloupe',
-    flag: 'https://upload.wikimedia.org/wikipedia/commons/0/04/Flag_of_Guadeloupe_%28local%29.svg',
+    flag: 'https://upload.wikimedia.org/wikipedia/commons/7/7d/Flag_of_Guadeloupe_%28local%29_variant.svg',
     number: '+590',
   },
   {
@@ -446,7 +446,7 @@ const CountriesAndFlag = [
   },
   {
     name: 'Honduras',
-    flag: 'https://upload.wikimedia.org/wikipedia/commons/8/82/Flag_of_Honduras.svg',
+    flag: 'https://upload.wikimedia.org/wikipedia/commons/c/ca/Naval_Ensign_of_Honduras.svg',
     number: '+504',
   },
   {
@@ -631,7 +631,7 @@ const CountriesAndFlag = [
   },
   {
     name: 'Martinique',
-    flag: 'https://upload.wikimedia.org/wikipedia/commons/5/52/Flag_of_Martinique.svg',
+    flag: 'https://upload.wikimedia.org/wikipedia/commons/6/64/Snake_Flag_of_Martinique.svg',
     number: '+596',
   },
   {
@@ -711,7 +711,7 @@ const CountriesAndFlag = [
   },
   {
     name: 'New Caledonia',
-    flag: 'https://upload.wikimedia.org/wikipedia/commons/2/23/Flag_of_New_Caledonia.svg',
+    flag: 'https://upload.wikimedia.org/wikipedia/commons/2/26/Flags_of_New_Caledonia.svg',
     number: '+687',
   },
   {
@@ -951,7 +951,7 @@ const CountriesAndFlag = [
   },
   {
     name: 'Swaziland',
-    flag: 'https://upload.wikimedia.org/wikipedia/commons/1/1e/Flag_of_Swaziland.svg',
+    flag: 'https://upload.wikimedia.org/wikipedia/commons/f/fb/Flag_of_Eswatini.svg',
     number: '+268',
   },
   {
