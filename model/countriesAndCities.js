@@ -103,6 +103,25 @@ const CountriesAndCities = [
     ],
   },
   {
+    country: 'anguila',
+    cities: [
+      "The Valley",
+      "Blowing Point Village",
+      "Sandy Ground Village",
+      "Sandy Hill",
+      "East End Village",
+      "George Hill",
+      "Island Harbour",
+      "North Hill Village",
+      "North Side",
+      "South Hill Village",
+      "Stoney Ground",
+      "Farrington",
+      "The Quarter",
+      "West End Village",
+    ]
+  },
+  {
     country: 'Antigua and Barbuda',
     cities: [
       'All Saints',
