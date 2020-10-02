@@ -32,4 +32,6 @@ router.post('/population/cities/filter', CountryController.filterCitiesPopulatio
 router.get('/states', CountryController.getCountriesState);
 router.post('/states', CountryController.getSingleCountryStates);
 
+router.get("/random",CountryController.getRandomCountry);
+
 module.exports = router;
