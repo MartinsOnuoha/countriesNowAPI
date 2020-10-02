@@ -4,6 +4,7 @@ const CountriesAndUnicodes = require('../model/countriesAndUnicodes');
 const CountriesAndFlag = require('../model/countriesAndFlag');
 const CountriesAndCodes = require('../model/countriesAndCodes');
 const CountriesAndStates = require('../model/countriesAndState');
+const CountriesStateCity = require('../model/countriesStateCity');
 const Finder = require('../helpers/finder');
 const Respond = require('../helpers/respond');
 const { getCountriesPopulation, getCitiesPopulation } = require('./dataHub');
@@ -27,7 +28,7 @@ const CountriesAndISO = CountriesAndFlag.map((x) => {
 });
 const CountriesAndCurrencies = CountriesAndUnicodes.map((x) => ({ name: x.Name, currency: x.Currency }));
 const CountriesAndStatesFormatted = CountriesAndStates.map((x) => ({ name: x.name, iso3: x.iso3, states: x.states.map((y) => ({ name: y.name, state_code: y.state_code })) }));
-
+const CountriesStateCityFormatted = CountriesStateCity.map((x) => ({ name: x.name, states: x.states }));
 class CountryController {
   /**
    * Get all countries and cities
@@ -469,6 +470,29 @@ class CountryController {
       return Respond.error(res, 'country not found', 404);
     }
     return Respond.success(res, `states in ${country} retrieved`, data);
+  }
+
+  static async getStateCities(req, res) {
+    let { country, state } = req.body;
+    if (!country) {
+      return Respond.error(res, 'missing param (country)', 400);
+    }
+    if (!state) {
+      return Respond.error(res, 'missing param (state)', 400);
+    }
+    
+    const countryData = Object.values(CountriesStateCityFormatted).find((x) => x.name.toLowerCase() === country.toLowerCase());
+    if (!countryData) {
+      return Respond.error(res, 'country not found', 404);
+    }
+    const statesInCountry = countryData.states;
+    const statesFormatted = statesInCountry.map((x) => ({ name: x.name, cities: x.cities }));
+    const stateData = Object.values(statesFormatted).find((x) => x.name.toLowerCase() === state.toLowerCase());
+    if (!stateData) {
+      return Respond.error(res, 'state not found', 404);
+    }
+    const cityList = stateData.cities.map((city) => city.name);
+    return Respond.success(res, `cities in state ${state} of country ${country} retrieved`, cityList);
   }
 }
 
