@@ -12,6 +12,7 @@ const FLAG_METHODS = require('./paths/flags');
 const LOCATION_METHODS = require('./paths/location');
 const POPULATION_METHODS = require('./paths/population');
 const STATE_METHODS = require('./paths/states');
+const RANDOM_METHODS = require('./paths/random');
 
 module.exports = {
   openapi: '3.0.1',
@@ -81,6 +82,9 @@ module.exports = {
     '/states': {
       get: STATE_METHODS.getCountriesStates,
       post: STATE_METHODS.getSingleCountryStates,
+    },
+    '/random':{
+      get: RANDOM_METHODS.getRandomCountry,
     },
   },
   components: {
