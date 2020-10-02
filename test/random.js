@@ -35,20 +35,3 @@ describe("Random",()=>{
         })    
     })
 })
-/*
-it('it should get all countries and their capital', (done) => {
-      chai.request(server)
-        .get(`${basePath}/capital`)
-        .end((err, res) => {
-          res.should.have.status(200);
-          should.not.exist(err);
-          res.body.should.be.a('object');
-          res.body.should.have.property('error').eql(false);
-          res.body.should.have.property('data');
-          res.body.should.have.property('data').be.a('array');
-          res.body.data.length.should.not.equal(0);
-
-          done();
-        });
-    });
-*/
