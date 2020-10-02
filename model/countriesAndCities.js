@@ -103,7 +103,7 @@ const CountriesAndCities = [
     ],
   },
   {
-    country: 'anguila',
+    country: 'Anguilla',
     cities: [
       "The Valley",
       "Blowing Point Village",
