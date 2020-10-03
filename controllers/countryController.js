@@ -472,6 +472,11 @@ class CountryController {
     return Respond.success(res, `states in ${country} retrieved`, data);
   }
 
+  /**
+   * Get list of cities in a state
+   * @param {Request} req 
+   * @param {Response} res 
+   */
   static async getStateCities(req, res) {
     let { country, state } = req.body;
     if (!country) {
