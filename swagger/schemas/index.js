@@ -18,6 +18,8 @@ const positionRange = require('./positionRange');
 const cityPayload = require('./cityPayload');
 const countryPopulationFilterPayload = require('./countryPopulationFilterPayload');
 const cityPopulationFilterPayload = require('./cityPopulationFilterPayload');
+const countryStatePayload = require('./countryStatePayload');
+const stateName = require('./stateName');
 
 module.exports = {
   lt,
@@ -35,4 +37,6 @@ module.exports = {
   cityPayload,
   countryPopulationFilterPayload,
   cityPopulationFilterPayload,
+  countryStatePayload,
+  stateName,
 };
