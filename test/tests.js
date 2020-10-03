@@ -8,3 +8,4 @@ require('./currencies');
 require('./flag');
 require('./location');
 require('./states');
+require('./cityInState');
