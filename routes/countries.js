@@ -31,5 +31,6 @@ router.post('/population/cities', CountryController.getPopulationByCity);
 router.post('/population/cities/filter', CountryController.filterCitiesPopulation);
 router.get('/states', CountryController.getCountriesState);
 router.post('/states', CountryController.getSingleCountryStates);
+router.post('/state/cities', CountryController.getStateCities);
 
 module.exports = router;

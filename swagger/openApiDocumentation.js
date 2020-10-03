@@ -12,6 +12,7 @@ const FLAG_METHODS = require('./paths/flags');
 const LOCATION_METHODS = require('./paths/location');
 const POPULATION_METHODS = require('./paths/population');
 const STATE_METHODS = require('./paths/states');
+const COUNTRY_STATE_CITY_METHOD = require('./paths/countriesStateCity');
 
 module.exports = {
   openapi: '3.0.1',
@@ -82,6 +83,9 @@ module.exports = {
       get: STATE_METHODS.getCountriesStates,
       post: STATE_METHODS.getSingleCountryStates,
     },
+    '/state/cities': {
+      post: COUNTRY_STATE_CITY_METHOD.getStateCities
+    }
   },
   components: {
     schemas: SCHEMAS,
