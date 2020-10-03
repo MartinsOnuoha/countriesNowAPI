@@ -470,6 +470,11 @@ class CountryController {
     }
     return Respond.success(res, `states in ${country} retrieved`, data);
   }
-}
+  
+  static getRandomCountry(req,res){
+    const randomCountry = CountriesAndCodes[Math.floor(Math.random()*CountriesAndCodes.length)];
+    return Respond.success(res,"retrieved random country",randomCountry);
+  }
 
+}
 module.exports = CountryController;
