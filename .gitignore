@@ -9,3 +9,4 @@ _readthedocs/build/*
 public/.DS_Store
 coverage
 coverage/*
+./coverage

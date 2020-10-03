@@ -500,5 +500,11 @@ class CountryController {
     return Respond.success(res, `cities in state ${state} of country ${country} retrieved`, cityList);
   }
 }
+  
+  static getRandomCountry(req,res){
+    const randomCountry = CountriesAndCodes[Math.floor(Math.random()*CountriesAndCodes.length)];
+    return Respond.success(res,"retrieved random country",randomCountry);
+  }
 
+}
 module.exports = CountryController;

@@ -33,4 +33,6 @@ router.get('/states', CountryController.getCountriesState);
 router.post('/states', CountryController.getSingleCountryStates);
 router.post('/state/cities', CountryController.getStateCities);
 
+router.get("/random",CountryController.getRandomCountry);
+
 module.exports = router;

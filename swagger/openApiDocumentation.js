@@ -13,6 +13,7 @@ const LOCATION_METHODS = require('./paths/location');
 const POPULATION_METHODS = require('./paths/population');
 const STATE_METHODS = require('./paths/states');
 const COUNTRY_STATE_CITY_METHOD = require('./paths/countriesStateCity');
+const RANDOM_METHODS = require('./paths/random');
 
 module.exports = {
   openapi: '3.0.1',
@@ -86,6 +87,9 @@ module.exports = {
     '/state/cities': {
       post: COUNTRY_STATE_CITY_METHOD.getStateCities
     }
+    '/random':{
+      get: RANDOM_METHODS.getRandomCountry,
+    },
   },
   components: {
     schemas: SCHEMAS,
