@@ -499,7 +499,6 @@ class CountryController {
     const cityList = stateData.cities.map((city) => city.name);
     return Respond.success(res, `cities in state ${state} of country ${country} retrieved`, cityList);
   }
-}
   
   static getRandomCountry(req,res){
     const randomCountry = CountriesAndCodes[Math.floor(Math.random()*CountriesAndCodes.length)];

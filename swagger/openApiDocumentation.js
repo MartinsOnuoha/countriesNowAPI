@@ -86,7 +86,7 @@ module.exports = {
     },
     '/state/cities': {
       post: COUNTRY_STATE_CITY_METHOD.getStateCities
-    }
+    },
     '/random':{
       get: RANDOM_METHODS.getRandomCountry,
     },
