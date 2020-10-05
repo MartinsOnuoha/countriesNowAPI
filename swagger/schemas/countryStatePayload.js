@@ -14,4 +14,3 @@ module.exports = {
     state: 'Badakhshan'
   },
 };
-  
