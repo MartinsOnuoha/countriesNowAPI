@@ -1,6 +1,6 @@
 module.exports = {
-	type: 'string',
-	description: 'name of a state',
-	example: 'Badakhshan',
+  type: 'string',
+  description: 'name of a state',
+  example: 'Badakhshan',
 };
   
