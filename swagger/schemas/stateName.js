@@ -3,4 +3,3 @@ module.exports = {
   description: 'name of a state',
   example: 'Badakhshan',
 };
-  
