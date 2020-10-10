@@ -9,7 +9,8 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "integration:test": "mocha --timeout 50000 --exit ./test/tests.js",
-    "test": "set NODE_OPTIONS=--max_old_space_size=4096 && cross-env NODE_ENV=test nyc --reporter=lcov --reporter=text --reporter=html mocha ./test/tests.js --timeout 50000 --exit",
+    "report": "nyc report --reporter=lcov --reporter=text --reporter=html",
+    "test": "mocha ./test/tests.js --timeout 50000 --exit",
     "make:commit": "./node_modules/.bin/cz",
     "coveralls": "nyc report --reporter=text-lcov | coveralls"
   },
