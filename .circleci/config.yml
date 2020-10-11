@@ -5,7 +5,7 @@ orbs:
 jobs:
   build:
     docker:
-      - image: 'circleci/node:10.16.0'
+      - image: 'circleci/node:14.2.0'
     working_directory: ~/countriesNowAPI
     environment:
       NODE_ENV: test
@@ -29,6 +29,9 @@ jobs:
           paths:
             - ./node_modules
       - run:
+          name: 'Run NYC Report'
+          command: npm run report
+      - run:
           name: Run Tests
           command: npm run test
       # - run: # run code coverage report
@@ -46,4 +49,4 @@ jobs:
 
 notify:
   webhooks:
-    - url: https://coveralls.io/webhook?repo_token=cKZsgNfG7qvoq4dHBsIFpkHqIkiux8Sgt
+    - url: https://coveralls.io/webhook?repo_token=${COVERALLS_REPO_TOKEN}
