@@ -491,7 +491,10 @@ class CountryController {
       return Respond.error(res, 'country not found', 404);
     }
     const statesInCountry = countryData.states;
-    const statesFormatted = statesInCountry.map((x) => ({ name: x.name, cities: x.cities }));
+    const statesFormatted = statesInCountry.map((x) => ({ 
+      name: x.name.trim().toLowerCase().endsWith('state') ? x.name.toLowerCase().replace('state', '').trim() : x.name, 
+      cities: x.cities 
+    }));
     const stateData = Object.values(statesFormatted).find((x) => x.name.toLowerCase() === state.toLowerCase());
     if (!stateData) {
       return Respond.error(res, 'state not found', 404);
