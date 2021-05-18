@@ -53640,7 +53640,7 @@ const CountriesAndCities = [
     ],
   },
   {
-    country: 'Serbia and Montenegro',
+    country: 'Serbia',
     cities: [
       'Ada',
       'Aleksinac',
