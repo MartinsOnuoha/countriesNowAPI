@@ -545,7 +545,7 @@ const CountriesAndFlag = [
     number: '+996',
   },
   {
-    name: 'Lao People\'s Democratic Republic',
+    name: 'Laos',
     flag: 'https://upload.wikimedia.org/wikipedia/commons/5/56/Flag_of_Laos.svg',
     number: '+856',
   },
@@ -585,7 +585,7 @@ const CountriesAndFlag = [
     number: '+352',
   },
   {
-    name: 'Macao',
+    name: 'Macau',
     flag: 'https://upload.wikimedia.org/wikipedia/commons/6/63/Flag_of_Macau.svg',
     number: '+853',
   },

@@ -1071,7 +1071,7 @@ const CountriesAndUnicodes = [
   },
   {
     Iso2: "MO",
-    Name: "Macao",
+    Name: "Macau",
     Iso3: "MAC",
     Unicode: "🇲🇴",
     Dial: "853",

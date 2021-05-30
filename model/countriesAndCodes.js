@@ -351,7 +351,7 @@ const CountriesAndCodes = [
     name: 'Kyrgyzstan', dial_code: '+996', code: 'KG', latitude: 41, longitude: 75,
   },
   {
-    name: 'Lao People\'s Democratic Republic', dial_code: '+856', code: 'LA', latitude: 18, longitude: 105,
+    name: 'Laos', dial_code: '+856', code: 'LA', latitude: 18, longitude: 105,
   },
   {
     name: 'Latvia', dial_code: '+371', code: 'LV', latitude: 57, longitude: 25,
@@ -378,11 +378,12 @@ const CountriesAndCodes = [
     name: 'Luxembourg', dial_code: '+352', code: 'LU', latitude: 49.75, longitude: 6.1667,
   },
   {
-    name: 'Macao', dial_code: '+853', code: 'MO', latitude: 22.1667, longitude: 113.55,
+    name: 'Macau', dial_code: '+853', code: 'MO', latitude: 22.1667, longitude: 113.55,
   },
   {
     name: 'Macedonia, The Former Yugoslav Republic of', dial_code: '+389', code: 'MK', latitude: 41.8333, longitude: 22,
-  }, {
+  },
+  {
     name: 'Madagascar', dial_code: '+261', code: 'MG', latitude: -20, longitude: 47,
   },
   {
@@ -625,7 +626,7 @@ const CountriesAndCodes = [
     name: 'Switzerland', dial_code: '+41', code: 'CH', latitude: 47, longitude: 8,
   },
   {
-    name: 'Syrian Arab Republic', dial_code: '+963', code: 'SY', latitude: 35, longitude: 38,
+    name: 'Syria', dial_code: '+963', code: 'SY', latitude: 35, longitude: 38,
   },
   {
     name: 'Taiwan', dial_code: '+886', code: 'TW', latitude: 23.5, longitude: 121,
