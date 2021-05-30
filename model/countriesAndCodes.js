@@ -204,7 +204,7 @@ const CountriesAndCodes = [
     name: 'Ethiopia', dial_code: '+251', code: 'ET', latitude: 8, longitude: 38,
   },
   {
-    name: 'Falkland Islands (Malvinas)', dial_code: '+500', code: 'FK', latitude: -51.75, longitude: -59,
+    name: 'Falkland Islands', dial_code: '+500', code: 'FK', latitude: -51.75, longitude: -59,
   },
   {
     name: 'Faroe Islands', dial_code: '+298', code: 'FO', latitude: 62, longitude: -7,
@@ -217,9 +217,6 @@ const CountriesAndCodes = [
   },
   {
     name: 'France', dial_code: '+33', code: 'FR', latitude: 46, longitude: 2,
-  },
-  {
-    name: 'French Guiana', dial_code: '+594', code: 'GF', latitude: 4, longitude: -53,
   },
   {
     name: 'French Polynesia', dial_code: '+689', code: 'PF', latitude: -15, longitude: -140,
@@ -282,7 +279,7 @@ const CountriesAndCodes = [
     name: 'Heard Island and McDonald Islands', dial_code: '+672', code: 'HM', latitude: -53.1, longitude: 72.5167,
   },
   {
-    name: 'Holy See (Vatican City State)', dial_code: '+379', code: 'VA', latitude: 41.9, longitude: 12.45,
+    name: 'Vatican City State (Holy See)', dial_code: '+379', code: 'VA', latitude: 41.9, longitude: 12.45,
   },
   {
     name: 'Honduras', dial_code: '+504', code: 'HN', latitude: 15, longitude: -86.5,

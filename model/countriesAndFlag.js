@@ -140,7 +140,7 @@ const CountriesAndFlag = [
     number: '+246',
   },
   {
-    name: 'Brunei Darussalam',
+    name: 'Brunei',
     flag: 'https://upload.wikimedia.org/wikipedia/commons/9/9c/Flag_of_Brunei.svg',
     number: '+673',
   },
@@ -315,7 +315,7 @@ const CountriesAndFlag = [
     number: '+251',
   },
   {
-    name: 'Falkland Islands (Malvinas)',
+    name: 'Falkland Islands',
     flag: 'https://upload.wikimedia.org/wikipedia/commons/8/83/Flag_of_the_Falkland_Islands.svg',
     number: '+500',
   },
@@ -338,11 +338,6 @@ const CountriesAndFlag = [
     name: 'France',
     flag: 'https://upload.wikimedia.org/wikipedia/en/c/c3/Flag_of_France.svg',
     number: '+33',
-  },
-  {
-    name: 'French Guiana',
-    flag: 'https://upload.wikimedia.org/wikipedia/commons/2/29/Flag_of_French_Guiana.svg',
-    number: '+594',
   },
   {
     name: 'French Polynesia',
@@ -440,7 +435,7 @@ const CountriesAndFlag = [
     number: '+672',
   },
   {
-    name: 'Holy See (Vatican City State)',
+    name: 'Vatican City State (Holy See)',
     flag: 'https://upload.wikimedia.org/wikipedia/commons/0/00/Flag_of_the_Vatican_City.svg',
     number: '+379',
   },
@@ -965,7 +960,7 @@ const CountriesAndFlag = [
     number: '+41',
   },
   {
-    name: 'Syrian Arab Republic',
+    name: 'Syria',
     flag: 'https://upload.wikimedia.org/wikipedia/commons/5/53/Flag_of_Syria.svg',
     number: '+963',
   },

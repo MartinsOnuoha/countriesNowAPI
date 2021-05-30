@@ -7324,15 +7324,6 @@ const CountriesState = [
     ],
   },
   {
-    name: 'French Guiana',
-    iso3: 'GUF',
-    iso2: 'GF',
-    phone_code: '594',
-    capital: 'Cayenne',
-    currency: 'EUR',
-    states: [],
-  },
-  {
     name: 'French Polynesia',
     iso3: 'PYF',
     iso2: 'PF',
@@ -8072,7 +8063,7 @@ const CountriesState = [
     ],
   },
   {
-    name: 'Guernsey and Alderney',
+    name: 'Guernsey',
     iso3: 'GGY',
     iso2: 'GG',
     phone_code: '+44-1481',
@@ -8476,7 +8467,7 @@ const CountriesState = [
     ],
   },
   {
-    name: 'Heard and McDonald Islands',
+    name: 'Heard Island and McDonald Islands',
     iso3: 'HMD',
     iso2: 'HM',
     phone_code: ' ',
