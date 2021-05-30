@@ -17930,7 +17930,7 @@ const CountriesState = [
     ],
   },
   {
-    name: 'Reunion',
+    name: 'Réunion',
     iso3: 'REU',
     iso2: 'RE',
     phone_code: '262',

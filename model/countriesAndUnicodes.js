@@ -291,7 +291,7 @@ const CountriesAndUnicodes = [
   },
   {
     Iso2: "RE",
-    Name: "Reunion",
+    Name: "Réunion",
     Iso3: "REU",
     Unicode: "🇷🇪",
     Dial: "262",
