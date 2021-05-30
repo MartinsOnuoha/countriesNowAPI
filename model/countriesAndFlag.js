@@ -1075,7 +1075,7 @@ const CountriesAndFlag = [
     number: '+678',
   },
   {
-    name: 'Viet Nam',
+    name: 'Vietnam',
     flag: 'https://upload.wikimedia.org/wikipedia/commons/2/21/Flag_of_Vietnam.svg',
     number: '+84',
   },

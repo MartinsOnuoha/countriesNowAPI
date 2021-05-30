@@ -700,7 +700,7 @@ const CountriesAndCodes = [
     name: 'Venezuela, Bolivarian Republic of', dial_code: '+58', code: 'VE', latitude: 8, longitude: -66,
   },
   {
-    name: 'Viet Nam', dial_code: '+84', code: 'VN', latitude: 16, longitude: 106,
+    name: 'Vietnam', dial_code: '+84', code: 'VN', latitude: 16, longitude: 106,
   },
   {
     name: 'Virgin Islands, British', dial_code: '+1 284', code: 'VG', latitude: 18.5, longitude: -64.5,
