@@ -6206,7 +6206,7 @@ const CountriesState = [
     ],
   },
   {
-    name: 'East Timor',
+    name: 'Timor-Leste',
     iso3: 'TLS',
     iso2: 'TL',
     phone_code: '670',
@@ -20795,10 +20795,10 @@ const CountriesState = [
     ],
   },
   {
-    name: 'South Georgia',
+    name: 'South Georgia and the South Sandwich Islands',
     iso3: 'SGS',
     iso2: 'GS',
-    phone_code: '',
+    phone_code: '500',
     capital: 'Grytviken',
     currency: 'GBP',
     states: [],
@@ -26527,7 +26527,7 @@ const CountriesState = [
     states: [],
   },
   {
-    name: 'Wallis And Futuna Islands',
+    name: 'Wallis And Futuna',
     iso3: 'WLF',
     iso2: 'WF',
     phone_code: '681',

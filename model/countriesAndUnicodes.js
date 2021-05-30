@@ -281,7 +281,7 @@ const CountriesAndUnicodes = [
   },
   {
     Iso2: "TL",
-    Name: "East Timor",
+    Name: "Timor-Leste",
     Iso3: "TLS",
     Unicode: "🇹🇱",
     Dial: "670",
