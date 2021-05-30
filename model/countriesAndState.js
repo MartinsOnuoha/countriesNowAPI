@@ -6206,7 +6206,7 @@ const CountriesState = [
     ],
   },
   {
-    name: 'East Timor',
+    name: 'Timor-Leste',
     iso3: 'TLS',
     iso2: 'TL',
     phone_code: '670',
@@ -7324,15 +7324,6 @@ const CountriesState = [
     ],
   },
   {
-    name: 'French Guiana',
-    iso3: 'GUF',
-    iso2: 'GF',
-    phone_code: '594',
-    capital: 'Cayenne',
-    currency: 'EUR',
-    states: [],
-  },
-  {
     name: 'French Polynesia',
     iso3: 'PYF',
     iso2: 'PF',
@@ -8072,7 +8063,7 @@ const CountriesState = [
     ],
   },
   {
-    name: 'Guernsey and Alderney',
+    name: 'Guernsey',
     iso3: 'GGY',
     iso2: 'GG',
     phone_code: '+44-1481',
@@ -8476,7 +8467,7 @@ const CountriesState = [
     ],
   },
   {
-    name: 'Heard and McDonald Islands',
+    name: 'Heard Island and McDonald Islands',
     iso3: 'HMD',
     iso2: 'HM',
     phone_code: ' ',
@@ -17939,7 +17930,7 @@ const CountriesState = [
     ],
   },
   {
-    name: 'Reunion',
+    name: 'Réunion',
     iso3: 'REU',
     iso2: 'RE',
     phone_code: '262',
@@ -20804,10 +20795,10 @@ const CountriesState = [
     ],
   },
   {
-    name: 'South Georgia',
+    name: 'South Georgia and the South Sandwich Islands',
     iso3: 'SGS',
     iso2: 'GS',
-    phone_code: '',
+    phone_code: '500',
     capital: 'Grytviken',
     currency: 'GBP',
     states: [],
@@ -26536,7 +26527,7 @@ const CountriesState = [
     states: [],
   },
   {
-    name: 'Wallis And Futuna Islands',
+    name: 'Wallis And Futuna',
     iso3: 'WLF',
     iso2: 'WF',
     phone_code: '681',

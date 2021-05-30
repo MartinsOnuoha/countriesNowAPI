@@ -1,5 +1,4 @@
-/* eslint-disable no-unused-expressions */
-/* eslint-disable no-nested-ternary */
+/* eslint-disable no-unused-expressions, no-console, no-nested-ternary */
 
 require('dotenv').config();
 
@@ -74,18 +73,5 @@ app.use((req, res) => res.status(404).json({
   error: true,
   msg: 'you seem to be lost',
 }));
-
-// set port depending on environment
-let port;
-const environment = app.get('env');
-
-environment === 'development' ? port = 3000 || process.env.PORT
-  : environment === 'test' ? port = process.env.TEST_PORT
-    : port = process.env.PORT;
-
-app.listen(port, () => {
-  // eslint-disable-next-line no-console
-  console.log(`Listening on port ${port}`);
-});
 
 module.exports = app;

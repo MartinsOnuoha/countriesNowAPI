@@ -204,7 +204,7 @@ const CountriesAndCodes = [
     name: 'Ethiopia', dial_code: '+251', code: 'ET', latitude: 8, longitude: 38,
   },
   {
-    name: 'Falkland Islands (Malvinas)', dial_code: '+500', code: 'FK', latitude: -51.75, longitude: -59,
+    name: 'Falkland Islands', dial_code: '+500', code: 'FK', latitude: -51.75, longitude: -59,
   },
   {
     name: 'Faroe Islands', dial_code: '+298', code: 'FO', latitude: 62, longitude: -7,
@@ -217,9 +217,6 @@ const CountriesAndCodes = [
   },
   {
     name: 'France', dial_code: '+33', code: 'FR', latitude: 46, longitude: 2,
-  },
-  {
-    name: 'French Guiana', dial_code: '+594', code: 'GF', latitude: 4, longitude: -53,
   },
   {
     name: 'French Polynesia', dial_code: '+689', code: 'PF', latitude: -15, longitude: -140,
@@ -282,7 +279,7 @@ const CountriesAndCodes = [
     name: 'Heard Island and McDonald Islands', dial_code: '+672', code: 'HM', latitude: -53.1, longitude: 72.5167,
   },
   {
-    name: 'Holy See (Vatican City State)', dial_code: '+379', code: 'VA', latitude: 41.9, longitude: 12.45,
+    name: 'Vatican City State (Holy See)', dial_code: '+379', code: 'VA', latitude: 41.9, longitude: 12.45,
   },
   {
     name: 'Honduras', dial_code: '+504', code: 'HN', latitude: 15, longitude: -86.5,
@@ -354,7 +351,7 @@ const CountriesAndCodes = [
     name: 'Kyrgyzstan', dial_code: '+996', code: 'KG', latitude: 41, longitude: 75,
   },
   {
-    name: 'Lao People\'s Democratic Republic', dial_code: '+856', code: 'LA', latitude: 18, longitude: 105,
+    name: 'Laos', dial_code: '+856', code: 'LA', latitude: 18, longitude: 105,
   },
   {
     name: 'Latvia', dial_code: '+371', code: 'LV', latitude: 57, longitude: 25,
@@ -381,11 +378,12 @@ const CountriesAndCodes = [
     name: 'Luxembourg', dial_code: '+352', code: 'LU', latitude: 49.75, longitude: 6.1667,
   },
   {
-    name: 'Macao', dial_code: '+853', code: 'MO', latitude: 22.1667, longitude: 113.55,
+    name: 'Macau', dial_code: '+853', code: 'MO', latitude: 22.1667, longitude: 113.55,
   },
   {
     name: 'Macedonia, The Former Yugoslav Republic of', dial_code: '+389', code: 'MK', latitude: 41.8333, longitude: 22,
-  }, {
+  },
+  {
     name: 'Madagascar', dial_code: '+261', code: 'MG', latitude: -20, longitude: 47,
   },
   {
@@ -628,7 +626,7 @@ const CountriesAndCodes = [
     name: 'Switzerland', dial_code: '+41', code: 'CH', latitude: 47, longitude: 8,
   },
   {
-    name: 'Syrian Arab Republic', dial_code: '+963', code: 'SY', latitude: 35, longitude: 38,
+    name: 'Syria', dial_code: '+963', code: 'SY', latitude: 35, longitude: 38,
   },
   {
     name: 'Taiwan', dial_code: '+886', code: 'TW', latitude: 23.5, longitude: 121,
@@ -702,7 +700,7 @@ const CountriesAndCodes = [
     name: 'Venezuela, Bolivarian Republic of', dial_code: '+58', code: 'VE', latitude: 8, longitude: -66,
   },
   {
-    name: 'Viet Nam', dial_code: '+84', code: 'VN', latitude: 16, longitude: 106,
+    name: 'Vietnam', dial_code: '+84', code: 'VN', latitude: 16, longitude: 106,
   },
   {
     name: 'Virgin Islands, British', dial_code: '+1 284', code: 'VG', latitude: 18.5, longitude: -64.5,

@@ -8,7 +8,7 @@ const CountriesStateCity = require('../model/countriesStateCity');
 const Finder = require('../helpers/finder');
 const Respond = require('../helpers/respond');
 const { getCountriesPopulation, getCitiesPopulation } = require('./dataHub');
-const { getCountriesStateCities } = require('./github');
+const GithubService = require('./github');
 const {
   latestYear, greaterThan, lessThan, withRange, orderCountryData, orderCityData,
 } = require('../helpers/utils');
@@ -49,12 +49,18 @@ class CountryController {
     if (!country) {
       return Respond.error(res, 'missing param (country)', 400);
     }
-    const data = CountriesAndCities.find((x) => x.country.toLowerCase() === country.toLowerCase());
+    let DB1 = CountriesAndCities.find((x) => x.country.toLowerCase() === country.toLowerCase());
+    let DB2 = CountriesStateCityFormatted.find((x) => x.name.toLowerCase() === country.toLowerCase());
 
-    if (!data) {
+    if (!DB1 && !DB2) {
       return Respond.error(res, 'country not found', 404);
     }
-    return Respond.success(res, `cities in ${country} retrieved`, data.cities);
+    DB1 = DB1? DB1.cities : []
+    DB2 = DB2.states.reduce((acc, state) => acc.concat(state.cities), []).map(x => x.name)
+
+    let cities = [ ...new Set(DB1.concat(DB2)) ]
+    console.log(cities)
+    return Respond.success(res, `cities in ${country} retrieved`, cities);
   }
 
   /**
@@ -439,9 +445,10 @@ class CountryController {
    * @memberof CountryController
    */
   static async countriesCitiesStates(req, res) {
-    const data = await getCountriesStateCities();
+    const data = await GithubService.getCountriesStateCities();
     // eslint-disable-next-line no-console
     console.log(data);
+    // TODO: implement
     return Respond.success(res, 'countries state and cities', data);
   }
 
@@ -474,26 +481,26 @@ class CountryController {
 
   /**
    * Get list of cities in a state
-   * @param {Request} req 
-   * @param {Response} res 
+   * @param {Request} req
+   * @param {Response} res
    */
   static async getStateCities(req, res) {
-    let { country, state } = req.body;
+    const { country, state } = req.body;
     if (!country) {
       return Respond.error(res, 'missing param (country)', 400);
     }
     if (!state) {
       return Respond.error(res, 'missing param (state)', 400);
     }
-    
+
     const countryData = Object.values(CountriesStateCityFormatted).find((x) => x.name.toLowerCase() === country.toLowerCase());
     if (!countryData) {
       return Respond.error(res, 'country not found', 404);
     }
     const statesInCountry = countryData.states;
-    const statesFormatted = statesInCountry.map((x) => ({ 
-      name: x.name.trim().toLowerCase().endsWith('state') ? x.name.toLowerCase().replace('state', '').trim() : x.name, 
-      cities: x.cities 
+    const statesFormatted = statesInCountry.map((x) => ({
+      name: x.name.trim().toLowerCase().endsWith('state') ? x.name.toLowerCase().replace('state', '').trim() : x.name,
+      cities: x.cities,
     }));
     const stateData = Object.values(statesFormatted).find((x) => x.name.toLowerCase() === state.toLowerCase());
     if (!stateData) {
@@ -502,11 +509,10 @@ class CountryController {
     const cityList = stateData.cities.map((city) => city.name);
     return Respond.success(res, `cities in state ${state} of country ${country} retrieved`, cityList);
   }
-  
-  static getRandomCountry(req,res){
-    const randomCountry = CountriesAndCodes[Math.floor(Math.random()*CountriesAndCodes.length)];
-    return Respond.success(res,"retrieved random country",randomCountry);
-  }
 
+  static getRandomCountry(req, res) {
+    const randomCountry = CountriesAndCodes[Math.floor(Math.random() * CountriesAndCodes.length)];
+    return Respond.success(res, 'retrieved random country', randomCountry);
+  }
 }
 module.exports = CountryController;
