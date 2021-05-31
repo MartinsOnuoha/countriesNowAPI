@@ -307,7 +307,6 @@ class CountryController {
     const fetchDialCode = params.includes('dialcode');
     const fetchUnicode = params.includes('unicodeFlag');
 
-    console.log(fetchDialCode);
     const data = CountriesAndUnicodes.map((x) => {
       const countryAndFlag = fetchImage && CountriesAndFlag.find((c) => c.name.toLowerCase() === x.Name.toLowerCase());
       return ({
