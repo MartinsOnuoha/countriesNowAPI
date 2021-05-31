@@ -55,10 +55,10 @@ class CountryController {
     if (!DB1 && !DB2) {
       return Respond.error(res, 'country not found', 404);
     }
-    DB1 = DB1? DB1.cities : []
-    DB2 = DB2.states.reduce((acc, state) => acc.concat(state.cities), []).map(x => x.name)
+    DB1 = DB1 ? DB1.cities : [];
+    DB2 = DB2.states.reduce((acc, state) => acc.concat(state.cities), []).map((x) => x.name);
 
-    let cities = [ ...new Set(DB1.concat(DB2)) ]
+    const cities = [...new Set(DB1.concat(DB2))];
     return Respond.success(res, `cities in ${country} retrieved`, cities);
   }
 
@@ -304,6 +304,7 @@ class CountryController {
     // TODO: Add more data selectors
     const fetchCurrency = params.includes('currency');
     const fetchImage = params.includes('flag');
+    const fetchDialCode = params.includes('dialcode');
     const fetchUnicode = params.includes('unicodeFlag');
 
     const data = CountriesAndUnicodes.map((x) => {
@@ -313,6 +314,7 @@ class CountryController {
         currency: (fetchCurrency && x.Currency) || undefined,
         unicodeFlag: (fetchUnicode && x.Unicode) || undefined,
         flag: (countryAndFlag && countryAndFlag.flag) || undefined,
+        dialcode: (fetchDialCode && x.Dail) || undefined,
       });
     });
     return Respond.success(res, `countries details: '${returns}' have been retrieved`, data);
