@@ -304,7 +304,7 @@ class CountryController {
     // TODO: Add more data selectors
     const fetchCurrency = params.includes('currency');
     const fetchImage = params.includes('flag');
-    const fetchDialCode = params.includes('dialcode');
+    const fetchDialCode = params.includes('dialCode');
     const fetchUnicode = params.includes('unicodeFlag');
 
     const data = CountriesAndUnicodes.map((x) => {
@@ -314,7 +314,7 @@ class CountryController {
         currency: (fetchCurrency && x.Currency) || undefined,
         unicodeFlag: (fetchUnicode && x.Unicode) || undefined,
         flag: (countryAndFlag && countryAndFlag.flag) || undefined,
-        dialcode: (fetchDialCode && x.Dial) || undefined,
+        dialCode: (fetchDialCode && x.Dial) || undefined,
       });
     });
     return Respond.success(res, `countries details: '${returns}' have been retrieved`, data);
