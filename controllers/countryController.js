@@ -59,7 +59,6 @@ class CountryController {
     DB2 = DB2.states.reduce((acc, state) => acc.concat(state.cities), []).map(x => x.name)
 
     let cities = [ ...new Set(DB1.concat(DB2)) ]
-    console.log(cities)
     return Respond.success(res, `cities in ${country} retrieved`, cities);
   }
 
