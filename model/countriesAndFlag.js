@@ -431,7 +431,7 @@ const CountriesAndFlag = [
   },
   {
     name: 'Heard Island and McDonald Islands',
-    flag: 'https://upload.wikimedia.org/wikipedia/commons/f/fa/Flag_of_Antarctica.svg',
+    flag: 'https://upload.wikimedia.org/wikipedia/commons/4/41/Flag_of_Austria.svg',
     number: '+672',
   },
   {

@@ -16,88 +16,88 @@ chai.use(chaiHttp);
 describe('/POST', () => {
   it('it should require "country" param to get cities of particular state', (done) => {
     chai.request(server)
-    .post(`${basePath}/state/cities`)
-    .send({ })
-    .end((err, res) => {
-      res.should.have.status(400);
-      should.not.exist(err);
-      res.body.should.be.a('object');
-      res.body.should.have.property('error').eql(true);
-      res.body.should.have.property('msg');
-      res.body.should.have.property('msg').eql('missing param (country)');
+      .post(`${basePath}/state/cities`)
+      .send({ })
+      .end((err, res) => {
+        res.should.have.status(400);
+        should.not.exist(err);
+        res.body.should.be.a('object');
+        res.body.should.have.property('error').eql(true);
+        res.body.should.have.property('msg');
+        res.body.should.have.property('msg').eql('missing param (country)');
 
-      done();
-    });
+        done();
+      });
   });
 });
 
 describe('/POST', () => {
   it('it should require "state" param to get cities of particular state', (done) => {
     chai.request(server)
-    .post(`${basePath}/state/cities`)
-    .send({ country: 'Afghanistan' })
-    .end((err, res) => {
-      res.should.have.status(400);
-      should.not.exist(err);
-      res.body.should.be.a('object');
-      res.body.should.have.property('error').eql(true);
-      res.body.should.have.property('msg');
-      res.body.should.have.property('msg').eql('missing param (state)');
+      .post(`${basePath}/state/cities`)
+      .send({ country: 'Afghanistan' })
+      .end((err, res) => {
+        res.should.have.status(400);
+        should.not.exist(err);
+        res.body.should.be.a('object');
+        res.body.should.have.property('error').eql(true);
+        res.body.should.have.property('msg');
+        res.body.should.have.property('msg').eql('missing param (state)');
 
-      done();
-    });
+        done();
+      });
   });
 });
 
 describe('/POST', () => {
   it('it should require "state" param to get cities of particular state', (done) => {
     chai.request(server)
-    .post(`${basePath}/state/cities`)
-    .send({ country: 'Afghanistan' })
-    .end((err, res) => {
-      res.should.have.status(400);
-      should.not.exist(err);
-      res.body.should.be.a('object');
-      res.body.should.have.property('error').eql(true);
-      res.body.should.have.property('msg');
-      res.body.should.have.property('msg').eql('missing param (state)');
+      .post(`${basePath}/state/cities`)
+      .send({ country: 'Afghanistan' })
+      .end((err, res) => {
+        res.should.have.status(400);
+        should.not.exist(err);
+        res.body.should.be.a('object');
+        res.body.should.have.property('error').eql(true);
+        res.body.should.have.property('msg');
+        res.body.should.have.property('msg').eql('missing param (state)');
 
-      done();
-    });
+        done();
+      });
   });
 });
 
 describe('/POST', () => {
   it('it should return 404 if "country" not found', (done) => {
     chai.request(server)
-    .post(`${basePath}/state/cities`)
-    .send({ country: 'XHJSDkF', state: 'adasd' })
-    .end((err, res) => {
-      res.should.have.status(404);
-      should.not.exist(err);
-      res.body.should.be.a('object');
-      res.body.should.have.property('error').eql(true);
-      res.body.should.have.property('msg');
+      .post(`${basePath}/state/cities`)
+      .send({ country: 'XHJSDkF', state: 'adasd' })
+      .end((err, res) => {
+        res.should.have.status(404);
+        should.not.exist(err);
+        res.body.should.be.a('object');
+        res.body.should.have.property('error').eql(true);
+        res.body.should.have.property('msg');
 
-      done();
-    });
+        done();
+      });
   });
 });
 
 describe('/POST', () => {
   it('it should return 404 if "state" not found', (done) => {
     chai.request(server)
-    .post(`${basePath}/state/cities`)
-    .send({ country: 'Afghanistan', state: 'asasds' })
-    .end((err, res) => {
-      res.should.have.status(404);
-      should.not.exist(err);
-      res.body.should.be.a('object');
-      res.body.should.have.property('error').eql(true);
-      res.body.should.have.property('msg');
+      .post(`${basePath}/state/cities`)
+      .send({ country: 'Afghanistan', state: 'asasds' })
+      .end((err, res) => {
+        res.should.have.status(404);
+        should.not.exist(err);
+        res.body.should.be.a('object');
+        res.body.should.have.property('error').eql(true);
+        res.body.should.have.property('msg');
 
-      done();
-    });
+        done();
+      });
   });
 });
 
@@ -105,7 +105,7 @@ describe('/POST', () => {
   it('it should get a single state and its city data', (done) => {
     const payload = {
       country: 'Afghanistan',
-      state: 'Badakhshan'
+      state: 'Badakhshan',
     };
     chai.request(server)
       .post(`${basePath}/state/cities`)
