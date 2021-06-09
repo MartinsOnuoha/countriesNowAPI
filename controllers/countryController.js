@@ -306,15 +306,20 @@ class CountryController {
     const fetchImage = params.includes('flag');
     const fetchDialCode = params.includes('dialCode');
     const fetchUnicode = params.includes('unicodeFlag');
+    const fetchCities = params.includes('cities');
 
     const data = CountriesAndUnicodes.map((x) => {
       const countryAndFlag = fetchImage && CountriesAndFlag.find((c) => c.name.toLowerCase() === x.Name.toLowerCase());
+
+      const Country = CountriesAndCities.find(({ country }) => country === x.Name);
+
       return ({
         name: x.Name,
         currency: (fetchCurrency && x.Currency) || undefined,
         unicodeFlag: (fetchUnicode && x.Unicode) || undefined,
         flag: (countryAndFlag && countryAndFlag.flag) || undefined,
         dialCode: (fetchDialCode && x.Dial) || undefined,
+        cities: (fetchCities && Country && Country.cities) || undefined,
       });
     });
     return Respond.success(res, `countries details: '${returns}' have been retrieved`, data);
