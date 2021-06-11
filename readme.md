@@ -70,4 +70,4 @@ npm run integration:test
 > Please read the contribution guide [here](https://github.com/MartinsOnuoha/countriesNowAPI/blob/master/docs/contributing.md)
 >
 
-✨ All thanks to [this gist](https://gist.github.com/keeguon/2310008), [datahub](https://pkgstore.datahub.io/core/), and [this repository](www.github.com/dr5hn/countries-states-cities-database) for the data curated.
+✨ All thanks to [this gist](https://gist.github.com/keeguon/2310008), [datahub](https://pkgstore.datahub.io/core/), and [this repository](https://github.com/dr5hn/countries-states-cities-database) for the data curated.
