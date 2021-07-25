@@ -240,7 +240,7 @@ class CountryController {
    * @param {ResponseObject} res response object
    */
   static getCountriesCapital(req, res) {
-    const data = CountriesAndUnicodes.map((x) => ({ name: x.Name, capital: x.Capital }));
+    const data = orderCountryData(CountriesAndUnicodes.map((x) => ({ name: x.Name, capital: x.Capital })), 'asc', 'name', 'name');
     return Respond.success(res, 'countries and capitals retrieved', data);
   }
 

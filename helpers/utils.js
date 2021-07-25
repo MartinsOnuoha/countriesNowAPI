@@ -10,11 +10,11 @@ const latestYear = (data) => data[0].populationCounts[data[0].populationCounts.l
  * @param {String} type sort type (asc, dsc)
  * @param {String} orderBy parameter to sort by (population, name)
  */
-const orderCountryData = (data, type = 'asc', orderBy = 'population') => {
+const orderCountryData = (data, type = 'asc', orderBy = 'population', field = 'country') => {
   if (orderBy.trim().toLowerCase() === 'name') {
     return data.sort((a, b) => {
-      const casedA = a.country.toUpperCase();
-      const casedB = b.country.toUpperCase();
+      const casedA = a[field].toUpperCase();
+      const casedB = b[field].toUpperCase();
 
       return (casedA < casedB) && type === 'asc' ? -1
         : (casedA > casedB) && type === 'asc' ? 1
