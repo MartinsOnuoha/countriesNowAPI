@@ -15867,7 +15867,7 @@ const CountriesState = [
     states: [],
   },
   {
-    name: 'Netherlands The',
+    name: 'Netherlands',
     iso3: 'NLD',
     iso2: 'NL',
     phone_code: '31',
