@@ -42541,7 +42541,6 @@ const CountriesAndCities = [
       'Chiapas',
       'Chiautempan',
       'Chiautla',
-      'Chicago',
       'Chiconcuac',
       'Chignahuapan',
       'Chihuahua',

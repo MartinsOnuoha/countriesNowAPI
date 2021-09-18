@@ -15864,7 +15864,23 @@ const CountriesState = [
     phone_code: '',
     capital: '',
     currency: '',
-    states: [],
+    states: [
+      {
+        id: 2624,
+        name: 'Bonaire',
+        state_code: 'BQ1',
+      },
+      {
+        id: 2621,
+        name: 'Saba',
+        state_code: 'BQ2',
+      },
+      {
+        id: 2616,
+        name: 'Sint Eustatius',
+        state_code: 'BQ3',
+      },
+    ],
   },
   {
     name: 'Netherlands',
@@ -15874,11 +15890,6 @@ const CountriesState = [
     capital: 'Amsterdam',
     currency: 'EUR',
     states: [
-      {
-        id: 2624,
-        name: 'Bonaire',
-        state_code: 'BQ1',
-      },
       {
         id: 2613,
         name: 'Drenthe',
@@ -15923,16 +15934,6 @@ const CountriesState = [
         id: 2618,
         name: 'Overijssel',
         state_code: 'OV',
-      },
-      {
-        id: 2621,
-        name: 'Saba',
-        state_code: 'BQ2',
-      },
-      {
-        id: 2616,
-        name: 'Sint Eustatius',
-        state_code: 'BQ3',
       },
       {
         id: 2614,
