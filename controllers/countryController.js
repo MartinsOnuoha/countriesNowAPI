@@ -453,7 +453,7 @@ class CountryController {
   static async countriesCitiesStates(req, res) {
     const data = await GithubService.getCountriesStateCities();
     // eslint-disable-next-line no-console
-    console.log(data);
+    
     // TODO: implement
     return Respond.success(res, 'countries state and cities', data);
   }
