@@ -8,12 +8,12 @@ const getCountriesStateCities = () => {
 
   return apiService.getData(endpoint).then((data) => {
     // eslint-disable-next-line no-console
-    console.log(data);
+    
     return data;
   })
     .catch((err) => {
       // eslint-disable-next-line no-console
-      console.log(err);
+      
     });
 };
 
