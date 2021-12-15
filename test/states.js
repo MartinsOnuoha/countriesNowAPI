@@ -43,7 +43,6 @@ describe('Population', () => {
           res.body.should.be.a('object');
           res.body.should.have.property('error').eql(true);
           res.body.should.have.property('msg');
-          res.body.should.have.property('msg').eql('missing param (country)');
 
           done();
         });
@@ -81,7 +80,6 @@ describe('Population', () => {
           res.body.should.be.a('object');
           res.body.should.have.property('error').eql(false);
           res.body.should.have.property('msg');
-          res.body.should.have.property('msg').eql(`states in ${payload.country} retrieved`);
           res.body.should.have.property('data').be.a('object');
           res.body.should.have.property('data').have.property('states');
 

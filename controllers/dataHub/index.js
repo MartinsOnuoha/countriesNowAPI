@@ -18,7 +18,13 @@ const getCountriesPopulation = () => {
       !accumulator[key] ? accumulator[key] = [item] : accumulator[key].push(item);
       return accumulator;
     }, {});
-    const final = Object.entries(result).map((x, i) => ({ country: x[0], code: x[1][0]['Country Code'], populationCounts: x[1].map((y) => ({ year: y.Year, value: y.Value })) }));
+
+    const final = Object.entries(result).map((x, i) => ({
+      country: x[0],
+      code: x[1][0]['Country Code'],
+      iso3: x[1][0]['Country Code'],
+      populationCounts: x[1].map((y) => ({ year: y.Year, value: y.Value }))
+    }));
     return final;
   });
 };

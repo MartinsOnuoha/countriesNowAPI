@@ -116,7 +116,6 @@ describe('/POST', () => {
         res.body.should.be.a('object');
         res.body.should.have.property('error').eql(false);
         res.body.should.have.property('msg');
-        res.body.should.have.property('msg').eql(`cities in state ${payload.state} of country ${payload.country} retrieved`);
         res.body.should.have.property('data').be.a('array');
 
         done();

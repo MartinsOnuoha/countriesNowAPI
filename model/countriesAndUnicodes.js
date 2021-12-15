@@ -1561,7 +1561,7 @@ const CountriesAndUnicodes = [
   },
   {
     Iso2: 'CG',
-    Name: 'Republic of the Congo',
+    Name: 'Congo',
     Iso3: 'COG',
     Unicode: '🇨🇬',
     Dial: '242',

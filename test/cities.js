@@ -61,7 +61,6 @@ describe('Cities', () => {
           res.body.should.have.property('error').eql(false);
           res.body.should.have.property('data');
           res.body.should.have.property('data').be.a('array');
-          res.body.should.have.property('msg').be.a('string').eql(`cities in ${payload.country} retrieved`);
           done();
         });
     });

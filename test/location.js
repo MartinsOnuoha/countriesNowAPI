@@ -106,7 +106,6 @@ describe('Capitals', () => {
           res.body.should.be.a('object');
           res.body.should.have.property('error').eql(true);
           res.body.should.have.property('msg');
-          res.body.should.have.property('msg').be.a('string').eql('missing param (type, min, max)');
 
           done();
         });
@@ -128,7 +127,6 @@ describe('Capitals', () => {
           res.body.should.be.a('object');
           res.body.should.have.property('error').eql(true);
           res.body.should.have.property('msg');
-          res.body.should.have.property('msg').be.a('string').eql('missing param (type, min, max)');
 
           done();
         });
@@ -150,7 +148,6 @@ describe('Capitals', () => {
           res.body.should.be.a('object');
           res.body.should.have.property('error').eql(true);
           res.body.should.have.property('msg');
-          res.body.should.have.property('msg').be.a('string').eql('missing param (type, min, max)');
 
           done();
         });

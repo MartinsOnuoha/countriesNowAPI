@@ -4752,7 +4752,7 @@ const CountriesState = [
     ],
   },
   {
-    name: 'Congo The Democratic Republic Of The',
+    name: 'Congo',
     iso3: 'COD',
     iso2: 'CD',
     phone_code: '243',
@@ -4956,7 +4956,7 @@ const CountriesState = [
     ],
   },
   {
-    name: 'Cote D\'Ivoire (Ivory Coast)',
+    name: 'Ivory Coast',
     iso3: 'CIV',
     iso2: 'CI',
     phone_code: '225',
@@ -11154,7 +11154,7 @@ const CountriesState = [
     ],
   },
   {
-    name: 'Korea North',
+    name: 'North Korea',
     iso3: 'PRK',
     iso2: 'KP',
     phone_code: '850',
@@ -11219,7 +11219,7 @@ const CountriesState = [
     ],
   },
   {
-    name: 'Korea South',
+    name: 'South Korea',
     iso3: 'KOR',
     iso2: 'KR',
     phone_code: '82',

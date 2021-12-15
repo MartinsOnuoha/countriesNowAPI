@@ -58,7 +58,6 @@ describe('Flags', () => {
           should.not.exist(err);
           res.body.should.be.a('object');
           res.body.should.have.property('error').eql(false);
-          res.body.should.have.property('msg').be.a('string').eql('countries and unicode flags retrieved');
           res.body.should.have.property('data').be.a('object').have.property('unicodeFlag');
           done();
         });
@@ -73,7 +72,6 @@ describe('Flags', () => {
           should.not.exist(err);
           res.body.should.be.a('object');
           res.body.should.have.property('error').eql(false);
-          res.body.should.have.property('msg').be.a('string').eql('flags images retrieved');
           res.body.should.have.property('data').be.a('array');
           res.body.data.length.should.not.equal(0);
           done();
@@ -107,8 +105,6 @@ describe('Flags', () => {
           should.not.exist(err);
           res.body.should.be.a('object');
           res.body.should.have.property('error').eql(false);
-          res.body.should.have.property('msg').be.a('string').eql('country and flag retrieved');
-          res.body.should.have.property('data').be.a('object').have.property('flag');
           done();
         });
     });

@@ -101,7 +101,6 @@ describe('Codes', () => {
           res.should.have.status(200);
           res.body.should.be.a('object');
           res.body.should.have.property('error').eql(false);
-          res.body.should.have.property('msg').eql('nigeria dail code retrieved');
           res.body.should.have.property('data').be.a('object');
           res.body.data.should.have.property('dial_code').be.eql('+234');
 

@@ -1,11 +1,11 @@
 /* eslint-disable no-nested-ternary */
-const CountriesAndCities = require('../model/countriesAndCities');
+let CountriesAndCities = require('../model/countriesAndCities');
 const CountriesAndUnicodes = require('../model/countriesAndUnicodes');
-const CountriesAndFlag = require('../model/countriesAndFlag');
+let CountriesAndFlag = require('../model/countriesAndFlag');
 const CountriesAndCodes = require('../model/countriesAndCodes');
 const CountriesAndStates = require('../model/countriesAndState');
 const CountriesStateCity = require('../model/countriesStateCity');
-const Finder = require('../helpers/finder');
+// const Finder = require('../helpers/finder');
 const Respond = require('../helpers/respond');
 const { getCountriesPopulation, getCitiesPopulation } = require('./dataHub');
 const GithubService = require('./github');
@@ -15,20 +15,53 @@ const {
 
 const countryPopulation = getCountriesPopulation();
 const citiesPopulation = getCitiesPopulation();
-const positions = CountriesAndCodes.map((x) => ({ name: x.name, long: x.longitude, lat: x.latitude }));
+const positions = CountriesAndCodes.map((x) => ({
+  name: x.name, iso2: x.iso2, long: x.longitude, lat: x.latitude,
+}));
 
-const CountriesAndISO = CountriesAndFlag.map((x) => {
-  const code = Finder.findCountryByParam(x.name, CountriesAndUnicodes, 'Name');
+CountriesAndCities = CountriesAndCities.map((x) => {
+  const countryIso = CountriesAndUnicodes.find((country) => country.Name.trim().toLowerCase() === x.country.trim().toLowerCase());
   const dataObj = {
-    name: x.name,
-    Iso2: code ? code.Iso2 : null,
-    Iso3: code ? code.Iso3 : null,
+    iso2: countryIso ? countryIso.Iso2 : null,
+    iso3: countryIso ? countryIso.Iso3 : null,
+    ...x,
   };
   return dataObj;
 });
-const CountriesAndCurrencies = CountriesAndUnicodes.map((x) => ({ name: x.Name, currency: x.Currency }));
-const CountriesAndStatesFormatted = CountriesAndStates.map((x) => ({ name: x.name, iso3: x.iso3, states: x.states.map((y) => ({ name: y.name, state_code: y.state_code })) }));
-const CountriesStateCityFormatted = CountriesStateCity.map((x) => ({ name: x.name, states: x.states }));
+
+CountriesAndFlag = CountriesAndFlag.map((x) => {
+  const countryIso = CountriesAndUnicodes.find((country) => country.Name.trim().toLowerCase() === x.name.trim().toLowerCase());
+  const dataObj = {
+    name: x.name,
+    flag: x.flag,
+    iso2: countryIso ? countryIso.Iso2 : null,
+    iso3: countryIso ? countryIso.Iso3 : null,
+  };
+  return dataObj;
+});
+
+const CountriesAndISO = CountriesAndFlag.map((x) => ({
+  name: x.name,
+  Iso2: x.iso2,
+  Iso3: x.iso3,
+}));
+
+const CountriesAndCurrencies = CountriesAndUnicodes.map((x) => ({
+  name: x.Name, currency: x.Currency, iso2: x.Iso2, iso3: x.Iso3,
+}));
+
+const CountriesAndStatesFormatted = CountriesAndStates.map((x) => ({
+  name: x.name,
+  iso3: x.iso3,
+  iso2: x.iso2,
+  states: x.states.map((y) => ({ name: y.name, state_code: y.state_code })),
+}));
+const CountriesStateCityFormatted = CountriesStateCity.map((x) => ({
+  name: x.name,
+  iso2: x.iso2,
+  iso3: x.iso3,
+  states: x.states,
+}));
 class CountryController {
   /**
    * Get all countries and cities
@@ -45,21 +78,31 @@ class CountryController {
    * @param {ResponseObject} res response object
    */
   static getCitiesByCountry(req, res) {
-    const { country } = req.body;
-    if (!country) {
-      return Respond.error(res, 'missing param (country)', 400);
+    const { country, iso2 } = req.body;
+    if (!country && !iso2) {
+      return Respond.error(res, 'missing param (country or iso2)', 400);
     }
-    let DB1 = CountriesAndCities.find((x) => x.country.toLowerCase() === country.toLowerCase());
-    let DB2 = CountriesStateCityFormatted.find((x) => x.name.toLowerCase() === country.toLowerCase());
+    let DB1 = null;
+    let DB2 = null;
+
+    if (country) {
+      DB1 = CountriesAndCities.find((x) => x.country.toLowerCase() === country.toLowerCase());
+      DB2 = CountriesStateCityFormatted.find((x) => x.name.toLowerCase() === country.toLowerCase());
+    }
+    if (iso2) {
+      DB1 = CountriesAndCities.find((x) => x.iso2.trim().toLowerCase() === iso2.trim().toLowerCase());
+      DB2 = CountriesStateCityFormatted.find((x) => x.iso2.trim().toLowerCase() === iso2.trim().toLowerCase());
+    }
 
     if (!DB1 && !DB2) {
       return Respond.error(res, 'country not found', 404);
     }
+    const { country: countryName } = DB1;
     DB1 = DB1 ? DB1.cities : [];
     DB2 = DB2.states.reduce((acc, state) => acc.concat(state.cities), []).map((x) => x.name);
 
     const cities = [...new Set(DB1.concat(DB2))];
-    return Respond.success(res, `cities in ${country} retrieved`, cities);
+    return Respond.success(res, `cities in ${countryName} retrieved`, cities);
   }
 
   /**
@@ -82,17 +125,22 @@ class CountryController {
    * @memberof CountryController
    */
   static getSingleCountryAndDialCode(req, res) {
-    let { country } = req.body;
-    if (!country) {
-      return Respond.error(res, 'missing param (country)', 400);
+    const { country, iso2 } = req.body;
+    if (!country && !iso2) {
+      return Respond.error(res, 'missing param (country or iso2)', 400);
+    }
+    let data = null;
+    const CountriesCodes = CountriesAndCodes.map((x) => ({ name: x.name, code: x.code, dial_code: x.dial_code }));
+
+    if (country) {
+      data = CountriesCodes.find((x) => x.name.toLowerCase().trim() === country.trim().toLowerCase());
+    }
+    if (iso2) {
+      data = CountriesCodes.find((x) => x.code.toLowerCase().trim() === iso2.trim().toLowerCase());
     }
 
-    country = country.toLowerCase().trim();
-    const CountriesCodes = CountriesAndCodes.map((x) => ({ name: x.name, code: x.code, dial_code: x.dial_code }));
-    const data = CountriesCodes.find((x) => x.name.toLowerCase().trim() === country);
-
     if (data) {
-      return Respond.success(res, `${country} dail code retrieved`, data);
+      return Respond.success(res, `${data.name} dial code retrieved`, data);
     }
     return Respond.error(res, 'country not found', 404);
   }
@@ -112,11 +160,17 @@ class CountryController {
    * @param {ResponseObject} res response object
    */
   static getSinglePosition(req, res) {
-    const { country } = req.body;
-    if (!country) {
-      return Respond.error(res, 'missing param (country)', 400);
+    const { country, iso2 } = req.body;
+    if (!country && !iso2) {
+      return Respond.error(res, 'missing param (country or iso2)', 400);
     }
-    const data = positions.find((x) => x.name.toLowerCase() === country.toLowerCase());
+    let data = null;
+    if (country) {
+      data = positions.find((x) => x.name.trim().toLowerCase() === country.trim().toLowerCase());
+    }
+    if (iso2) {
+      data = positions.find((x) => x.iso2.trim().toLowerCase() === iso2.trim().toLowerCase());
+    }
     if (!data) {
       return Respond.error(res, 'Country not found', 404);
     }
@@ -184,9 +238,12 @@ class CountryController {
    */
   static getCountriesFlagImages(req, res) {
     const data = CountriesAndFlag.map((x) => {
+      const countryIso = CountriesAndUnicodes.find((country) => country.Name.trim().toLowerCase() === x.name.trim().toLowerCase());
       const dataObj = {
         name: x.name,
         flag: x.flag,
+        iso2: countryIso ? countryIso.Iso2 : null,
+        iso3: countryIso ? countryIso.Iso3 : null,
       };
       return dataObj;
     });
@@ -199,15 +256,23 @@ class CountryController {
    * @param {ResponseObject} res response object
    */
   static getCountryFlagImage(req, res) {
-    const { country } = req.body;
-    if (!country) {
-      return Respond.error(res, 'missing param (country)', 400);
+    const { country, iso2 } = req.body;
+
+    if (!country && !iso2) {
+      return Respond.error(res, 'missing param (country or iso2)', 400);
     }
-    const data = CountriesAndFlag.map((x) => ({ name: x.name, flag: x.flag })).find((x) => x.name.toLowerCase() === country.toLowerCase());
+    let data = null;
+
+    if (country) {
+      data = CountriesAndFlag.find((x) => x.name.trim().toLowerCase() === country.trim().toLowerCase());
+    }
+    if (iso2) {
+      data = CountriesAndFlag.find((x) => x.iso2.trim().toLowerCase() === iso2.trim().toLowerCase());
+    }
     if (!data) {
       return Respond.error(res, 'country not found', 404);
     }
-    return Respond.success(res, 'country and flag retrieved', data);
+    return Respond.success(res, `${data.name} and flag retrieved`, data);
   }
 
   /**
@@ -216,7 +281,9 @@ class CountryController {
    * @param {ResponseObject} res response object
    */
   static getCountriesUnicodeFlag(req, res) {
-    const data = CountriesAndUnicodes.map((x) => ({ name: x.Name, unicodeFlag: x.Unicode }));
+    const data = CountriesAndUnicodes.map((x) => ({
+      name: x.Name, iso2: x.Iso2, iso3: x.Iso3, unicodeFlag: x.Unicode,
+    }));
     return Respond.success(res, 'countries and unicode flags retrieved', data);
   }
 
@@ -225,13 +292,30 @@ class CountryController {
    * @param {RequestObject} req request object
    * @param {ResponseObject} res response object
    */
-  static getCountryUnicodeFlag(req, res) {
-    const { country } = req.body;
-    if (!country) {
-      return Respond.error(res, 'missing param (country)', 400);
+  static async getCountryUnicodeFlag(req, res) {
+    const { country, iso2 } = req.body;
+    if (!country && !iso2) {
+      return Respond.error(res, 'missing param (country or iso2)', 400);
     }
-    const data = CountriesAndUnicodes.map((x) => ({ name: x.Name, unicodeFlag: x.Unicode })).find((x) => x.name.toLowerCase() === country.toLowerCase());
-    return Respond.success(res, 'countries and unicode flags retrieved', data);
+    const mappedCountriesAndFlags = await CountriesAndUnicodes.map((x) => ({
+      name: x.Name,
+      iso2: x.Iso2,
+      iso3: x.Iso3,
+      unicodeFlag: x.Unicode,
+    }));
+    let data = null;
+
+    if (country) {
+      data = mappedCountriesAndFlags.find((x) => x.name.trim().toLowerCase() === country.trim().toLowerCase());
+    }
+    if (iso2) {
+      data = mappedCountriesAndFlags.find((x) => x.iso2.trim().toLowerCase() === iso2.trim().toLowerCase());
+    }
+
+    if (!data) {
+      return Respond.error(res, 'country not found', 404);
+    }
+    return Respond.success(res, `${data.name} and unicode flag retrieved`, data);
   }
 
   /**
@@ -240,7 +324,9 @@ class CountryController {
    * @param {ResponseObject} res response object
    */
   static getCountriesCapital(req, res) {
-    const data = orderCountryData(CountriesAndUnicodes.map((x) => ({ name: x.Name, capital: x.Capital })), 'asc', 'name', 'name');
+    const data = orderCountryData(CountriesAndUnicodes.map((x) => ({
+      name: x.Name, capital: x.Capital, iso2: x.Iso2, iso3: x.Iso3,
+    })), 'asc', 'name', 'name');
     return Respond.success(res, 'countries and capitals retrieved', data);
   }
 
@@ -250,11 +336,21 @@ class CountryController {
    * @param {ResponseObject} res response object
    */
   static getCountryCapital(req, res) {
-    const { country } = req.body;
-    if (!country) {
-      return Respond.error(res, 'missing param (country)', 400);
+    const { country, iso2 } = req.body;
+    if (!country && !iso2) {
+      return Respond.error(res, 'missing param (country or iso2)', 400);
     }
-    const data = CountriesAndUnicodes.map((x) => ({ name: x.Name, capital: x.Capital })).find((x) => x.name.trim().toLowerCase() === country.trim().toLowerCase());
+    const mappedValues = CountriesAndUnicodes.map((x) => ({
+      name: x.Name, capital: x.Capital, iso2: x.Iso2, iso3: x.Iso3,
+    }));
+
+    let data = null;
+    if (country) {
+      data = mappedValues.find((x) => x.name.trim().toLowerCase() === country.trim().toLowerCase());
+    }
+    if (iso2) {
+      data = mappedValues.find((x) => x.iso2.trim().toLowerCase() === iso2.trim().toLowerCase());
+    }
     if (!data) {
       return Respond.error(res, 'country not found', 404);
     }
@@ -277,17 +373,22 @@ class CountryController {
    * @param {Response} res
    */
   static getSingleCountryAndCurrency(req, res) {
-    let { country } = req.body;
-    if (!country) {
-      return Respond.error(res, 'missing param (country)', 400);
+    const { country, iso2 } = req.body;
+    if (!country && !iso2) {
+      return Respond.error(res, 'missing param (country or iso2)', 400);
     }
-    country = country.trim().toLowerCase();
-    const data = CountriesAndCurrencies.find((x) => x.name.trim().toLowerCase() === country);
+    let data = null;
 
+    if (country) {
+      data = CountriesAndCurrencies.find((x) => x.name.trim().toLowerCase() === country.trim().toLowerCase());
+    }
+    if (iso2) {
+      data = CountriesAndCurrencies.find((x) => x.iso2.trim().toLowerCase() === iso2.trim().toLowerCase());
+    }
     if (!data) {
       Respond.error(res, 'country not found', 404);
     }
-    return Respond.success(res, 'country and currency retrieved', data);
+    return Respond.success(res, `${data.name} and currency retrieved`, data);
   }
 
   /**
@@ -341,14 +442,20 @@ class CountryController {
    * @param {ResponseObject} res response object
    */
   static async getPopulationByCountry(req, res) {
-    const { country } = req.body;
-    if (!country) {
-      return Respond.error(res, 'missing param (country)', 400);
+    const { country, iso3 } = req.body;
+    if (!country && !iso3) {
+      return Respond.error(res, 'missing param (country or iso3)', 400);
     }
     const data = await countryPopulation;
-    const filtered = data.find((x) => country.trim().toLowerCase() === x.country.trim().toLowerCase());
+    let filtered = null;
+    if (country) {
+      filtered = data.find((x) => country.trim().toLowerCase() === x.country.trim().toLowerCase());
+    }
+    if (iso3) {
+      filtered = data.find((x) => iso3.trim().toLowerCase() === x.iso3.trim().toLowerCase());
+    }
     if (!filtered) return Respond.error(res, 'country data not found', 404);
-    return Respond.success(res, `${country} with population`, filtered);
+    return Respond.success(res, `${filtered.country} with population`, filtered);
   }
 
   /**
@@ -453,7 +560,7 @@ class CountryController {
   static async countriesCitiesStates(req, res) {
     const data = await GithubService.getCountriesStateCities();
     // eslint-disable-next-line no-console
-    
+
     // TODO: implement
     return Respond.success(res, 'countries state and cities', data);
   }
@@ -474,15 +581,21 @@ class CountryController {
    * @param {Response} res
    */
   static getSingleCountryStates(req, res) {
-    const { country } = req.body;
-    if (!country) {
-      return Respond.error(res, 'missing param (country)', 400);
+    const { country, iso2 } = req.body;
+    if (!country && !iso2) {
+      return Respond.error(res, 'missing param (country or iso2)', 400);
     }
-    const data = Object.values(CountriesAndStatesFormatted).find((x) => x.name.toLowerCase() === country.toLowerCase());
+    let data = null;
+    if (country) {
+      data = Object.values(CountriesAndStatesFormatted).find((x) => x.name.trim().toLowerCase() === country.trim().toLowerCase());
+    }
+    if (iso2) {
+      data = Object.values(CountriesAndStatesFormatted).find((x) => x.iso2.trim().toLowerCase() === iso2.trim().toLowerCase());
+    }
     if (!data) {
       return Respond.error(res, 'country not found', 404);
     }
-    return Respond.success(res, `states in ${country} retrieved`, data);
+    return Respond.success(res, `states in ${data.name} retrieved`, data);
   }
 
   /**
