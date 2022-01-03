@@ -5434,10 +5434,6 @@ const CountriesAndCities = [
     cities: ['Francistown', 'Gaborone', 'Orapa', 'Serowe', 'Village'],
   },
   {
-    country: 'Botswana',
-    cities: ['Olavtoppen', 'Kapp Valdivia', 'Kapp Circoncision', 'Nyrøysa', 'Kapp Norvegia', 'Larsøya', 'Kapp Fie', 'Kapp Lollo', 'Store Kari', 'Thompson Island'],
-  },
-  {
     country: 'Brazil',
     cities: [
       'Abadiania',
@@ -5982,7 +5978,7 @@ const CountriesAndCities = [
     ],
   },
   {
-    country: 'Burma',
+    country: 'Myanmar',
     cities: [
       'Ayeyarwady',
       'Bago',
@@ -32880,7 +32876,7 @@ const CountriesAndCities = [
     cities: [],
   },
   {
-    country: 'Hashemite Kingdom of Jordan',
+    country: 'Jordan',
     cities: [
       'Amman',
       'Ar Ramtha',
@@ -41483,7 +41479,7 @@ const CountriesAndCities = [
     cities: [],
   },
   {
-    country: 'Korea North',
+    country: 'North Korea',
     cities: [
       'Chagang',
       'North Hamgyong',
@@ -41498,27 +41494,6 @@ const CountriesAndCities = [
       'Najin',
       'Namp\'o',
       'Pyongyang',
-    ],
-  },
-  {
-    country: 'Korea South',
-    cities: [
-      'Seoul',
-      'Busan City',
-      'Daegu City',
-      'Incheon City',
-      'Gwangju City',
-      'Daejeon City',
-      'Ulsan',
-      'Gyeonggi Province',
-      'Gangwon Province',
-      'North Chungcheong Province',
-      'South Chungcheong Province',
-      'North Jeolla Province',
-      'South Jeolla Province',
-      'North Gyeongsang Province',
-      'South Gyeongsang Province',
-      'Jeju',
     ],
   },
   {
@@ -46129,6 +46104,15 @@ const CountriesAndCities = [
       'Vossestrand',
       'Vraliosen',
       'Ytre Alvik',
+      'Olavtoppen',
+      'Kapp Valdivia',
+      'Kapp Circoncision',
+      'Nyrøysa',
+      'Kapp Norvegia',
+      'Larsøya',
+      'Kapp Fie',
+      'Cape Lollo',
+      'Thompson Island',
     ],
   },
   {
@@ -49205,7 +49189,7 @@ const CountriesAndCities = [
     ],
   },
   {
-    country: 'Korea',
+    country: 'South Korea',
     cities: [
       'Andong',
       'Ansan-si',
@@ -49300,6 +49284,22 @@ const CountriesAndCities = [
       'Yeosu',
       'Yongin',
       'Yongsan-dong',
+      'Seoul',
+      'Busan City',
+      'Daegu City',
+      'Incheon City',
+      'Gwangju City',
+      'Daejeon City',
+      'Ulsan',
+      'Gyeonggi Province',
+      'Gangwon Province',
+      'North Chungcheong Province',
+      'South Chungcheong Province',
+      'North Jeolla Province',
+      'South Jeolla Province',
+      'North Gyeongsang Province',
+      'South Gyeongsang Province',
+      'Jeju',
     ],
   },
   {
