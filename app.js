@@ -10,10 +10,17 @@ const logger = require('morgan');
 const swaggerUi = require('swagger-ui-express');
 const corsConfig = require('./config/cors');
 
+const rateLimit = require('express-rate-limit');
+const rateLimitConfig = require('./config/rateLimit');
+const rateLimiter = rateLimit(rateLimitConfig);
+
 const indexRouter = require('./routes/index');
 const countryRouter = require('./routes/countries');
 
 const app = express();
+
+app.set('trust proxy', rateLimitConfig.numberOfProxies);
+app.use('/api', rateLimiter);
 
 const openApiDocumentation = require('./swagger/openApiDocumentation');
 
