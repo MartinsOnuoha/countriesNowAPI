@@ -70,4 +70,8 @@ npm run integration:test
 > Please read the contribution guide [here](https://github.com/MartinsOnuoha/countriesNowAPI/blob/master/docs/contributing.md)
 >
 
+Feel free to support and keep the API running
+
+<a href="https://www.buymeacoffee.com/martinsvicF" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
+
 ✨ All thanks to [this gist](https://gist.github.com/keeguon/2310008), [datahub](https://pkgstore.datahub.io/core/), and [this repository](https://github.com/dr5hn/countries-states-cities-database) for the data curated.
