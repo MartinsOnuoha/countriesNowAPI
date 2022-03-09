@@ -121,10 +121,15 @@ class CountryController {
    * Get all countries, code and dial codes
    * @param {RequestObject} req request object
    * @param {ResponseObject} res response object
+   * @param {Callback} next callback function that invokes the next express middleware function
    */
-  static getCountriesAndCodes(req, res) {
-    const data = CountriesAndCodes.map((x) => ({ name: x.name, code: x.code, dial_code: x.dial_code }));
-    return Respond.success(res, 'countries and codes retrieved', data);
+  static getCountriesAndCodes(req, res, next) {
+    try {
+      const data = CountriesAndCodes.map((x) => ({ name: x.name, code: x.code, dial_code: x.dial_code }));
+      return Respond.success(res, 'countries and codes retrieved', data);
+    } catch(err) {
+      next(err);
+    }
   }
 
   /**
