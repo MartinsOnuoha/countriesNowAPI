@@ -67,9 +67,14 @@ class CountryController {
    * Get all countries and cities
    * @param {RequestObject} req request object
    * @param {ResponseObject} res response object
+   * @param {Callback} next callback function that invokes the next express middleware function
    */
-  static getCountriesAndCities(req, res) {
-    return Respond.success(res, 'countries and cities retrieved', CountriesAndCities);
+  static getCountriesAndCities(req, res, next) {
+    try {
+      return Respond.success(res, 'countries and cities retrieved', CountriesAndCities);
+    } catch(err) {
+      next(err);
+    }
   }
 
   /**
