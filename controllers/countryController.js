@@ -81,33 +81,40 @@ class CountryController {
    * Get cities of a specified country
    * @param {RequestObject} req request obeject
    * @param {ResponseObject} res response object
+   * @param {Callback} next callback function that invokes the next express middleware function
    */
-  static getCitiesByCountry(req, res) {
-    const { country, iso2 } = req.body;
-    if (!country && !iso2) {
-      return Respond.error(res, 'missing param (country or iso2)', 400);
-    }
-    let DB1 = null;
-    let DB2 = null;
+  static getCitiesByCountry(req, res, next) {
+    try {
 
-    if (country) {
-      DB1 = CountriesAndCities.find((x) => x.country.toLowerCase() === country.toLowerCase());
-      DB2 = CountriesStateCityFormatted.find((x) => x.name.toLowerCase() === country.toLowerCase());
-    }
-    if (iso2) {
-      DB1 = CountriesAndCities.find((x) => x.iso2.trim().toLowerCase() === iso2.trim().toLowerCase());
-      DB2 = CountriesStateCityFormatted.find((x) => x.iso2.trim().toLowerCase() === iso2.trim().toLowerCase());
-    }
+      const { country, iso2 } = req.body;
+      if (!country && !iso2) {
+        return Respond.error(res, 'missing param (country or iso2)', 400);
+      }
+      let DB1 = null;
+      let DB2 = null;
 
-    if (!DB1 && !DB2) {
-      return Respond.error(res, 'country not found', 404);
-    }
-    const { country: countryName } = DB1;
-    DB1 = DB1 ? DB1.cities : [];
-    DB2 = DB2.states.reduce((acc, state) => acc.concat(state.cities), []).map((x) => x.name);
+      if (country) {
+        DB1 = CountriesAndCities.find((x) => x.country.toLowerCase() === country.toLowerCase());
+        DB2 = CountriesStateCityFormatted.find((x) => x.name.toLowerCase() === country.toLowerCase());
+      }
+      if (iso2) {
+        DB1 = CountriesAndCities.find((x) => x.iso2.trim().toLowerCase() === iso2.trim().toLowerCase());
+        DB2 = CountriesStateCityFormatted.find((x) => x.iso2.trim().toLowerCase() === iso2.trim().toLowerCase());
+      }
 
-    const cities = [...new Set(DB1.concat(DB2))];
-    return Respond.success(res, `cities in ${countryName} retrieved`, cities);
+      if (!DB1 && !DB2) {
+        return Respond.error(res, 'country not found', 404);
+      }
+      const { country: countryName } = DB1;
+      DB1 = DB1 ? DB1.cities : [];
+      DB2 = DB2.states.reduce((acc, state) => acc.concat(state.cities), []).map((x) => x.name);
+
+      const cities = [...new Set(DB1.concat(DB2))];
+      return Respond.success(res, `cities in ${countryName} retrieved`, cities);
+
+    } catch(err) {
+      next(err);
+    }
   }
 
   /**
