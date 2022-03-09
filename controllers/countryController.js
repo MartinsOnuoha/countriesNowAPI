@@ -463,29 +463,37 @@ class CountryController {
    * allowed queries { year: Number, limit: Number, gt: Number, lt: Number, order: String, orderBy: String }
    * @param {RequestObject} req request object
    * @param {ResponseObject} res response object
+   * @param {Callback} next callback function that invokes the next express middleware function
    */
-  static async filterCountryPopulation(req, res) {
-    const data = await countryPopulation;
-    const {
-      year = latestYear(data),
-      limit = data.length,
-      gt = false,
-      lt = false,
-      order = 'asc',
-      orderBy = 'population',
-    } = req.body;
+  static async filterCountryPopulation(req, res, next) {
+    try{
+      const data = await countryPopulation;
+      const {
+        year = latestYear(data),
+        limit = data.length,
+        gt = false,
+        lt = false,
+        order = 'asc',
+        orderBy = 'population',
+      } = req.body;
 
-    if (typeof limit !== 'number') return Respond.error(res, 'invalid payload format');
+      if (typeof limit !== 'number') return Respond.error(res, 'invalid payload format');
 
-    const selectedYear = orderCountryData(data.map((x) => ({
-      country: x.country,
-      code: x.code,
-      populationCounts: x.populationCounts.find((y) => y.year === year),
-    })), order, orderBy);
-    const result = gt && !lt ? greaterThan(selectedYear, gt) : lt && !gt ? lessThan(selectedYear, lt) : gt && lt ? withRange(selectedYear, gt, lt) : selectedYear;
-    const applyLimit = result.splice(0, limit);
+      const selectedYear = orderCountryData(data.map((x) => ({
+        country: x.country,
+        code: x.code,
+        populationCounts: x.populationCounts.find((y) => y.year === year) || {year: year, value: -1},
+      })), order, orderBy)
+      .filter(obj => obj.populationCounts.value !== -1);
 
-    return Respond.success(res, 'filtered result', applyLimit);
+      const result = gt && !lt ? greaterThan(selectedYear, gt) : lt && !gt ? lessThan(selectedYear, lt) : gt && lt ? withRange(selectedYear, gt, lt) : selectedYear;
+      const applyLimit = result.splice(0, limit);
+
+      return Respond.success(res, 'filtered result', applyLimit);
+    } catch(err) {
+      next(err);
+    }
+    
   }
 
   /**
