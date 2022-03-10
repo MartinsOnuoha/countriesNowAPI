@@ -705,33 +705,43 @@ class CountryController {
    * get countries and their states
    * @param {Request} req
    * @param {Response} res
+   * @param {Callback} next callback function that invokes the next express middleware function
    */
-  static getCountriesState(req, res) {
-    const data = CountriesAndStatesFormatted;
-    return Respond.success(res, 'countries and states retrieved', data);
+  static getCountriesState(req, res, next) {
+    try {
+      const data = CountriesAndStatesFormatted;
+      return Respond.success(res, 'countries and states retrieved', data);
+    } catch(err) {
+      next(err);
+    }
   }
 
   /**
    * get a single country's states
    * @param {Request} req
    * @param {Response} res
+   * @param {Callback} next callback function that invokes the next express middleware function
    */
-  static getSingleCountryStates(req, res) {
-    const { country, iso2 } = req.body;
-    if (!country && !iso2) {
-      return Respond.error(res, 'missing param (country or iso2)', 400);
+  static getSingleCountryStates(req, res, next) {
+    try {
+      const { country, iso2 } = req.body;
+      if (!country && !iso2) {
+        return Respond.error(res, 'missing param (country or iso2)', 400);
+      }
+      let data = null;
+      if (country) {
+        data = Object.values(CountriesAndStatesFormatted).find((x) => x.name.trim().toLowerCase() === country.trim().toLowerCase());
+      }
+      if (iso2) {
+        data = Object.values(CountriesAndStatesFormatted).find((x) => x.iso2.trim().toLowerCase() === iso2.trim().toLowerCase());
+      }
+      if (!data) {
+        return Respond.error(res, 'country not found', 404);
+      }
+      return Respond.success(res, `states in ${data.name} retrieved`, data);
+    } catch(err) {
+      next(err);
     }
-    let data = null;
-    if (country) {
-      data = Object.values(CountriesAndStatesFormatted).find((x) => x.name.trim().toLowerCase() === country.trim().toLowerCase());
-    }
-    if (iso2) {
-      data = Object.values(CountriesAndStatesFormatted).find((x) => x.iso2.trim().toLowerCase() === iso2.trim().toLowerCase());
-    }
-    if (!data) {
-      return Respond.error(res, 'country not found', 404);
-    }
-    return Respond.success(res, `states in ${data.name} retrieved`, data);
   }
 
   /**
