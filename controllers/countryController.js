@@ -138,28 +138,33 @@ class CountryController {
    * @static
    * @param {Request} req
    * @param {Response} res
+   * @param {Callback} next callback function that invokes the next express middleware function
    * @returns Object
    * @memberof CountryController
    */
-  static getSingleCountryAndDialCode(req, res) {
-    const { country, iso2 } = req.body;
-    if (!country && !iso2) {
-      return Respond.error(res, 'missing param (country or iso2)', 400);
-    }
-    let data = null;
-    const CountriesCodes = CountriesAndCodes.map((x) => ({ name: x.name, code: x.code, dial_code: x.dial_code }));
+  static getSingleCountryAndDialCode(req, res, next) {
+    try {
+      const { country, iso2 } = req.body;
+      if (!country && !iso2) {
+        return Respond.error(res, 'missing param (country or iso2)', 400);
+      }
+      let data = null;
+      const CountriesCodes = CountriesAndCodes.map((x) => ({ name: x.name, code: x.code, dial_code: x.dial_code }));
 
-    if (country) {
-      data = CountriesCodes.find((x) => x.name.toLowerCase().trim() === country.trim().toLowerCase());
-    }
-    if (iso2) {
-      data = CountriesCodes.find((x) => x.code.toLowerCase().trim() === iso2.trim().toLowerCase());
-    }
+      if (country) {
+        data = CountriesCodes.find((x) => x.name.toLowerCase().trim() === country.trim().toLowerCase());
+      }
+      if (iso2) {
+        data = CountriesCodes.find((x) => x.code.toLowerCase().trim() === iso2.trim().toLowerCase());
+      }
 
-    if (data) {
-      return Respond.success(res, `${data.name} dial code retrieved`, data);
+      if (data) {
+        return Respond.success(res, `${data.name} dial code retrieved`, data);
+      }
+      return Respond.error(res, 'country not found', 404);
+    } catch(err) {
+      next(err);
     }
-    return Respond.error(res, 'country not found', 404);
   }
 
   /**
