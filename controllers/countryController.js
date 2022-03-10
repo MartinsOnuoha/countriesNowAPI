@@ -748,31 +748,36 @@ class CountryController {
    * Get list of cities in a state
    * @param {Request} req
    * @param {Response} res
+   * @param {Callback} next callback function that invokes the next express middleware function
    */
-  static async getStateCities(req, res) {
-    const { country, state } = req.body;
-    if (!country) {
-      return Respond.error(res, 'missing param (country)', 400);
-    }
-    if (!state) {
-      return Respond.error(res, 'missing param (state)', 400);
-    }
+  static async getStateCities(req, res, next) {
+    try {
+      const { country, state } = req.body;
+      if (!country) {
+        return Respond.error(res, 'missing param (country)', 400);
+      }
+      if (!state) {
+        return Respond.error(res, 'missing param (state)', 400);
+      }
 
-    const countryData = Object.values(CountriesStateCityFormatted).find((x) => x.name.toLowerCase() === country.toLowerCase());
-    if (!countryData) {
-      return Respond.error(res, 'country not found', 404);
+      const countryData = Object.values(CountriesStateCityFormatted).find((x) => x.name.toLowerCase() === country.toLowerCase());
+      if (!countryData) {
+        return Respond.error(res, 'country not found', 404);
+      }
+      const statesInCountry = countryData.states;
+      const statesFormatted = statesInCountry.map((x) => ({
+        name: x.name.trim().toLowerCase().endsWith('state') ? x.name.toLowerCase().replace('state', '').trim() : x.name,
+        cities: x.cities,
+      }));
+      const stateData = Object.values(statesFormatted).find((x) => x.name.toLowerCase() === state.toLowerCase());
+      if (!stateData) {
+        return Respond.error(res, 'state not found', 404);
+      }
+      const cityList = stateData.cities.map((city) => city.name);
+      return Respond.success(res, `cities in state ${state} of country ${country} retrieved`, cityList);
+    } catch(err) {
+      next(err);
     }
-    const statesInCountry = countryData.states;
-    const statesFormatted = statesInCountry.map((x) => ({
-      name: x.name.trim().toLowerCase().endsWith('state') ? x.name.toLowerCase().replace('state', '').trim() : x.name,
-      cities: x.cities,
-    }));
-    const stateData = Object.values(statesFormatted).find((x) => x.name.toLowerCase() === state.toLowerCase());
-    if (!stateData) {
-      return Respond.error(res, 'state not found', 404);
-    }
-    const cityList = stateData.cities.map((city) => city.name);
-    return Respond.success(res, `cities in state ${state} of country ${country} retrieved`, cityList);
   }
 
   static getRandomCountry(req, res) {
