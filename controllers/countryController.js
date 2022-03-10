@@ -647,32 +647,41 @@ class CountryController {
    * filter cities and population data
    * @param {RequestObject} req
    * @param {ResponseObject} res
+   * @param {Callback} next callback function that invokes the next express middleware function
    */
-  static async filterCitiesPopulation(req, res) {
-    const data = await citiesPopulation;
-    const {
-      limit = data.length,
-      order = 'asc',
-      orderBy = 'population',
-      country = false,
-    } = req.body;
+  static async filterCitiesPopulation(req, res, next) {
+    try {
+      const data = await citiesPopulation;
+      const {
+        limit = data.length,
+        order = 'asc',
+        orderBy = 'population',
+        country = false,
+      } = req.body;
 
-    if (typeof limit !== 'number') return Respond.error(res, 'invalid payload format');
+      if (typeof limit !== 'number') return Respond.error(res, 'invalid payload format');
 
-    let result = orderCityData(data.map((x) => ({
-      city: x.city,
-      country: x.country,
-      populationCounts: x.populationCounts,
-    })), order, orderBy);
-    if (country) {
-      result = result.filter((x) => x.country.toLowerCase() === country.toLowerCase());
+      let result = orderCityData(data.map((x) => ({
+        city: x.city,
+        country: x.country,
+        populationCounts: x.populationCounts,
+      })), order, orderBy);
+      if (country) {
+        result = result.filter((x) => x.country.toLowerCase() === country.toLowerCase());
+      }
+
+      // Handle empty results
+      if(!result.length) Respond.error(res, 'No results found', 404);
+
+      // remove unnecessary information from dataHub
+      if (result[0].city === 'null') { result.shift(); }
+      // add limit
+      result = result.splice(0, limit);
+
+      return Respond.success(res, 'filtered result', result);
+    } catch(err) {
+      next(err);
     }
-    // remove unnecessary information from dataHub
-    if (result[0].city === 'null') { result.shift(); }
-    // add limit
-    result = result.splice(0, limit);
-
-    return Respond.success(res, 'filtered result', result);
   }
 
   /**
