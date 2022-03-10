@@ -780,9 +780,19 @@ class CountryController {
     }
   }
 
-  static getRandomCountry(req, res) {
-    const randomCountry = CountriesAndCodes[Math.floor(Math.random() * CountriesAndCodes.length)];
-    return Respond.success(res, 'retrieved random country', randomCountry);
+  /**
+   * Get list of cities in a state
+   * @param {Request} req
+   * @param {Response} res
+   * @param {Callback} next callback function that invokes the next express middleware function
+   */
+  static getRandomCountry(req, res, next) {
+    try {
+      const randomCountry = CountriesAndCodes[Math.floor(Math.random() * CountriesAndCodes.length)];
+      return Respond.success(res, 'retrieved random country', randomCountry);
+    } catch(err) {
+      next(err);
+    }
   }
 }
 module.exports = CountryController;
