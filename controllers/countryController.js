@@ -267,44 +267,54 @@ class CountryController {
    * get all countries with their flag images
    * @param {RequestObject} req request object
    * @param {ResponseObject} res response object
+   * @param {Callback} next callback function that invokes the next express middleware function
    */
-  static getCountriesFlagImages(req, res) {
-    const data = CountriesAndFlag.map((x) => {
-      const countryIso = CountriesAndUnicodes.find((country) => country.Name.trim().toLowerCase() === x.name.trim().toLowerCase());
-      const dataObj = {
-        name: x.name,
-        flag: x.flag,
-        iso2: countryIso ? countryIso.Iso2 : null,
-        iso3: countryIso ? countryIso.Iso3 : null,
-      };
-      return dataObj;
-    });
-    return Respond.success(res, 'flags images retrieved', data);
+  static getCountriesFlagImages(req, res, next) {
+    try {
+      const data = CountriesAndFlag.map((x) => {
+        const countryIso = CountriesAndUnicodes.find((country) => country.Name.trim().toLowerCase() === x.name.trim().toLowerCase());
+        const dataObj = {
+          name: x.name,
+          flag: x.flag,
+          iso2: countryIso ? countryIso.Iso2 : null,
+          iso3: countryIso ? countryIso.Iso3 : null,
+        };
+        return dataObj;
+      });
+      return Respond.success(res, 'flags images retrieved', data);
+    } catch(err) {
+      next(err);
+    }
   }
 
   /**
    * Get single country with flag image
    * @param {RequestObject} req request object
    * @param {ResponseObject} res response object
+   * @param {Callback} next callback function that invokes the next express middleware function
    */
-  static getCountryFlagImage(req, res) {
-    const { country, iso2 } = req.body;
+  static getCountryFlagImage(req, res, next) {
+    try {
+      const { country, iso2 } = req.body;
 
-    if (!country && !iso2) {
-      return Respond.error(res, 'missing param (country or iso2)', 400);
-    }
-    let data = null;
+      if (!country && !iso2) {
+        return Respond.error(res, 'missing param (country or iso2)', 400);
+      }
+      let data = null;
 
-    if (country) {
-      data = CountriesAndFlag.find((x) => x.name.trim().toLowerCase() === country.trim().toLowerCase());
+      if (country) {
+        data = CountriesAndFlag.find((x) => x.name.trim().toLowerCase() === country.trim().toLowerCase());
+      }
+      if (iso2) {
+        data = CountriesAndFlag.find((x) => x.iso2.trim().toLowerCase() === iso2.trim().toLowerCase());
+      }
+      if (!data) {
+        return Respond.error(res, 'country not found', 404);
+      }
+      return Respond.success(res, `${data.name} and flag retrieved`, data);
+    } catch(err) {
+      next(err);
     }
-    if (iso2) {
-      data = CountriesAndFlag.find((x) => x.iso2.trim().toLowerCase() === iso2.trim().toLowerCase());
-    }
-    if (!data) {
-      return Respond.error(res, 'country not found', 404);
-    }
-    return Respond.success(res, `${data.name} and flag retrieved`, data);
   }
 
   /**
