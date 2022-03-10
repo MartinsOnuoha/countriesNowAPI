@@ -228,29 +228,39 @@ class CountryController {
    * get all countries and their ISON Code
    * @param {RequestObject} req
    * @param {ResponseObject} res
+   * @param {Callback} next callback function that invokes the next express middleware function
    */
-  static getCountriesAndISO(req, res) {
-    const data = CountriesAndISO;
-    return Respond.success(res, 'countries and ISO codes retrieved', data);
+  static getCountriesAndISO(req, res, next) {
+    try {
+      const data = CountriesAndISO;
+      return Respond.success(res, 'countries and ISO codes retrieved', data);
+    } catch(err) {
+      next(err);
+    }
   }
 
   /**
    *
    * @param {*} req
    * @param {*} res
+   * @param {Callback} next callback function that invokes the next express middleware function
    */
-  static getSingleCountryAndISO(req, res) {
-    let { country } = req.body;
-    if (!country) {
-      return Respond.error(res, 'missing param (country)', 400);
-    }
-    country = country.toLowerCase().trim();
-    const data = CountriesAndISO.find((x) => x.name.toLowerCase().trim() === country);
+  static getSingleCountryAndISO(req, res, next) {
+    try {
+      let { country } = req.body;
+      if (!country) {
+        return Respond.error(res, 'missing param (country)', 400);
+      }
+      country = country.toLowerCase().trim();
+      const data = CountriesAndISO.find((x) => x.name.toLowerCase().trim() === country);
 
-    if (!data) {
-      return Respond.error(res, 'country not found', 404);
+      if (!data) {
+        return Respond.error(res, 'country not found', 404);
+      }
+      return Respond.success(res, 'country\'s ISO code retrieved', data);
+    } catch(err) {
+      next(err);
     }
-    return Respond.success(res, 'country\'s ISO code retrieved', data);
   }
 
   /**
