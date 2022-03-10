@@ -437,35 +437,40 @@ class CountryController {
    * Get countries information by specifying required data
    * @param {RequestObject} req request object
    * @param {ResponseObject} res response object
+   * @param {Callback} next callback function that invokes the next express middleware function
    */
-  static getCountriesInfo(req, res) {
-    const { returns = '' } = req.query;
+  static getCountriesInfo(req, res, next) {
+    try {
+      const { returns = '' } = req.query;
 
-    if (!returns) return Respond.error(res, 'you must specify data to fetch e.g ?returns=unicode,currency,image', 400);
-    const params = returns.trim().split(',').map((x) => x.trim());
+      if (!returns) return Respond.error(res, 'you must specify data to fetch e.g ?returns=unicodeFlag,currency,image', 400);
+      const params = returns.trim().split(',').map((x) => x.trim());
 
-    // TODO: Add more data selectors
-    const fetchCurrency = params.includes('currency');
-    const fetchImage = params.includes('flag');
-    const fetchDialCode = params.includes('dialCode');
-    const fetchUnicode = params.includes('unicodeFlag');
-    const fetchCities = params.includes('cities');
+      // TODO: Add more data selectors
+      const fetchCurrency = params.includes('currency');
+      const fetchImage = params.includes('flag');
+      const fetchDialCode = params.includes('dialCode');
+      const fetchUnicode = params.includes('unicodeFlag');
+      const fetchCities = params.includes('cities');
 
-    const data = CountriesAndUnicodes.map((x) => {
-      const countryAndFlag = fetchImage && CountriesAndFlag.find((c) => c.name.toLowerCase() === x.Name.toLowerCase());
+      const data = CountriesAndUnicodes.map((x) => {
+        const countryAndFlag = fetchImage && CountriesAndFlag.find((c) => c.name.toLowerCase() === x.Name.toLowerCase());
 
-      const Country = CountriesAndCities.find(({ country }) => country === x.Name);
+        const Country = CountriesAndCities.find(({ country }) => country === x.Name);
 
-      return ({
-        name: x.Name,
-        currency: (fetchCurrency && x.Currency) || undefined,
-        unicodeFlag: (fetchUnicode && x.Unicode) || undefined,
-        flag: (countryAndFlag && countryAndFlag.flag) || undefined,
-        dialCode: (fetchDialCode && x.Dial) || undefined,
-        cities: (fetchCities && Country && Country.cities) || undefined,
+        return ({
+          name: x.Name,
+          currency: (fetchCurrency && x.Currency) || undefined,
+          unicodeFlag: (fetchUnicode && x.Unicode) || undefined,
+          flag: (countryAndFlag && countryAndFlag.flag) || undefined,
+          dialCode: (fetchDialCode && x.Dial) || undefined,
+          cities: (fetchCities && Country && Country.cities) || undefined,
+        });
       });
-    });
-    return Respond.success(res, `countries details: '${returns}' have been retrieved`, data);
+      return Respond.success(res, `countries details: '${returns}' have been retrieved`, data);
+    } catch(err) {
+      next(err);
+    }
   }
 
   /**
