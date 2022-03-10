@@ -609,28 +609,38 @@ class CountryController {
    * get cities and population data
    * @param {RequestObject} req request object
    * @param {ResponseObject} res response object
+   * @param {Callback} next callback function that invokes the next express middleware function
    */
-  static async getCitiesPopulation(req, res) {
-    const data = await citiesPopulation;
-    return Respond.success(res, 'all cities with population', data);
+  static async getCitiesPopulation(req, res, next) {
+    try {
+      const data = await citiesPopulation;
+      return Respond.success(res, 'all cities with population', data);
+    } catch(err) {
+      next;
+    }
   }
 
   /**
    * get single city and its population data
    * @param {RequestObject} req request object
    * @param {ResponseObject} res response object
+   * @param {Callback} next callback function that invokes the next express middleware function
    */
-  static async getPopulationByCity(req, res) {
-    const { city } = req.body;
-    if (!city) {
-      return Respond.error(res, 'missing param (city)', 400);
+  static async getPopulationByCity(req, res, next) {
+    try {
+      const { city } = req.body;
+      if (!city) {
+        return Respond.error(res, 'missing param (city)', 400);
+      }
+      const data = await citiesPopulation;
+      const filtered = data.find((x) => city.trim().toLowerCase() === x.city.trim().toLowerCase());
+      if (!filtered) {
+        return Respond.error(res, 'city data not found', 404);
+      }
+      return Respond.success(res, `${city} with population`, filtered);
+    } catch(err) {
+      next(err);
     }
-    const data = await citiesPopulation;
-    const filtered = data.find((x) => city.trim().toLowerCase() === x.city.trim().toLowerCase());
-    if (!filtered) {
-      return Respond.error(res, 'city data not found', 404);
-    }
-    return Respond.success(res, `${city} with population`, filtered);
   }
 
   /**
