@@ -171,32 +171,42 @@ class CountryController {
    * Get countries and positions
    * @param {RequestObject} req request object
    * @param {ResponseObject} res response object
+   * @param {Callback} next callback function that invokes the next express middleware function
    */
-  static getCountriesPosition(req, res) {
-    return Respond.success(res, 'countries and positions retrieved', positions);
+  static getCountriesPosition(req, res, next) {
+    try {
+      return Respond.success(res, 'countries and positions retrieved', positions);
+    } catch(err) {
+      next(err);
+    }
   }
 
   /**
    * Get a single country's position
    * @param {RequestObject} req request object
    * @param {ResponseObject} res response object
+   * @param {Callback} next callback function that invokes the next express middleware function
    */
-  static getSinglePosition(req, res) {
-    const { country, iso2 } = req.body;
-    if (!country && !iso2) {
-      return Respond.error(res, 'missing param (country or iso2)', 400);
+  static getSinglePosition(req, res, next) {
+    try {
+      const { country, iso2 } = req.body;
+      if (!country && !iso2) {
+        return Respond.error(res, 'missing param (country or iso2)', 400);
+      }
+      let data = null;
+      if (country) {
+        data = positions.find((x) => x.name.trim().toLowerCase() === country.trim().toLowerCase());
+      }
+      if (iso2) {
+        data = positions.find((x) => x.iso2.trim().toLowerCase() === iso2.trim().toLowerCase());
+      }
+      if (!data) {
+        return Respond.error(res, 'Country not found', 404);
+      }
+      return Respond.success(res, 'country position retrieved', data);
+    } catch(err) {
+      next(err);
     }
-    let data = null;
-    if (country) {
-      data = positions.find((x) => x.name.trim().toLowerCase() === country.trim().toLowerCase());
-    }
-    if (iso2) {
-      data = positions.find((x) => x.iso2.trim().toLowerCase() === iso2.trim().toLowerCase());
-    }
-    if (!data) {
-      return Respond.error(res, 'Country not found', 404);
-    }
-    return Respond.success(res, 'country position retrieved', data);
   }
 
   /**
