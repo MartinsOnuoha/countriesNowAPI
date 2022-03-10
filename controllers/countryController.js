@@ -526,32 +526,45 @@ class CountryController {
    * Get all countries and respective population
    * @param {RequestObject} req request object
    * @param {ResponseObject} res response object
+   * @param {Callback} next callback function that invokes the next express middleware function
    */
-  static async getPopulation(req, res) {
-    const data = await countryPopulation;
-    return Respond.success(res, 'all countries and population 1961 - 2018', data);
+  static async getPopulation(req, res, next) {
+    try {
+      const data = await countryPopulation;
+      return Respond.success(res, 'all countries and population 1961 - 2018', data);
+    } catch(err) {
+      next(err);
+    }
   }
 
   /**
    * Get population of a specific country
    * @param {RequestObject} req request object
    * @param {ResponseObject} res response object
+   * @param {Callback} next callback function that invokes the next express middleware function
    */
-  static async getPopulationByCountry(req, res) {
-    const { country, iso3 } = req.body;
-    if (!country && !iso3) {
-      return Respond.error(res, 'missing param (country or iso3)', 400);
+  static async getPopulationByCountry(req, res, next) {
+
+    // TODO: Make this work with iso2 instead of iso3 so it matches other functions
+
+    try {
+      const { country, iso3 } = req.body;
+      if (!country && !iso3) {
+        return Respond.error(res, 'missing param (country or iso3)', 400);
+      }
+      const data = await countryPopulation;
+      let filtered = null;
+      if (country) {
+        filtered = data.find((x) => country.trim().toLowerCase() === x.country.trim().toLowerCase());
+      }
+      if (iso3) {
+        filtered = data.find((x) => iso3.trim().toLowerCase() === x.iso3.trim().toLowerCase());
+      }
+      if (!filtered) return Respond.error(res, 'country data not found', 404);
+      return Respond.success(res, `${filtered.country} with population`, filtered);
+    } catch(err) {
+      next(err);
     }
-    const data = await countryPopulation;
-    let filtered = null;
-    if (country) {
-      filtered = data.find((x) => country.trim().toLowerCase() === x.country.trim().toLowerCase());
-    }
-    if (iso3) {
-      filtered = data.find((x) => iso3.trim().toLowerCase() === x.iso3.trim().toLowerCase());
-    }
-    if (!filtered) return Respond.error(res, 'country data not found', 404);
-    return Respond.success(res, `${filtered.country} with population`, filtered);
   }
 
   /**
