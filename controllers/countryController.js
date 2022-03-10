@@ -354,39 +354,49 @@ class CountryController {
    * Get countries and their capital
    * @param {RequestObject} req request object
    * @param {ResponseObject} res response object
+   * @param {Callback} next callback function that invokes the next express middleware function
    */
-  static getCountriesCapital(req, res) {
-    const data = orderCountryData(CountriesAndUnicodes.map((x) => ({
-      name: x.Name, capital: x.Capital, iso2: x.Iso2, iso3: x.Iso3,
-    })), 'asc', 'name', 'name');
-    return Respond.success(res, 'countries and capitals retrieved', data);
+  static getCountriesCapital(req, res, next) {
+    try {
+      const data = orderCountryData(CountriesAndUnicodes.map((x) => ({
+        name: x.Name, capital: x.Capital, iso2: x.Iso2, iso3: x.Iso3,
+      })), 'asc', 'name', 'name');
+      return Respond.success(res, 'countries and capitals retrieved', data);
+    } catch(err) {
+      next(err);
+    }
   }
 
   /**
    * Get single country and capital
    * @param {RequestObject} req request object
    * @param {ResponseObject} res response object
+   * @param {Callback} next callback function that invokes the next express middleware function
    */
-  static getCountryCapital(req, res) {
-    const { country, iso2 } = req.body;
-    if (!country && !iso2) {
-      return Respond.error(res, 'missing param (country or iso2)', 400);
-    }
-    const mappedValues = CountriesAndUnicodes.map((x) => ({
-      name: x.Name, capital: x.Capital, iso2: x.Iso2, iso3: x.Iso3,
-    }));
+  static getCountryCapital(req, res, next) {
+    try {
+      const { country, iso2 } = req.body;
+      if (!country && !iso2) {
+        return Respond.error(res, 'missing param (country or iso2)', 400);
+      }
+      const mappedValues = CountriesAndUnicodes.map((x) => ({
+        name: x.Name, capital: x.Capital, iso2: x.Iso2, iso3: x.Iso3,
+      }));
 
-    let data = null;
-    if (country) {
-      data = mappedValues.find((x) => x.name.trim().toLowerCase() === country.trim().toLowerCase());
+      let data = null;
+      if (country) {
+        data = mappedValues.find((x) => x.name.trim().toLowerCase() === country.trim().toLowerCase());
+      }
+      if (iso2) {
+        data = mappedValues.find((x) => x.iso2.trim().toLowerCase() === iso2.trim().toLowerCase());
+      }
+      if (!data) {
+        return Respond.error(res, 'country not found', 404);
+      }
+      return Respond.success(res, 'country and capitals retrieved', data);
+    } catch(err) {
+      next(err);
     }
-    if (iso2) {
-      data = mappedValues.find((x) => x.iso2.trim().toLowerCase() === iso2.trim().toLowerCase());
-    }
-    if (!data) {
-      return Respond.error(res, 'country not found', 404);
-    }
-    return Respond.success(res, 'country and capitals retrieved', data);
   }
 
   /**
