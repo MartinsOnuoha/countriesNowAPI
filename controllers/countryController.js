@@ -213,25 +213,34 @@ class CountryController {
    * Get countries by position range
    * @param {RequestObject} req request object
    * @param {ResponseObject} res response object
+   * @param {Callback} next callback function that invokes the next express middleware function
    */
-  static getPositionRange(req, res) {
-    const { type, min, max } = req.body;
-    if (!type || !min || !max) {
-      return Respond.error(res, 'missing param (type, min, max)', 400);
+  static getPositionRange(req, res, next) {
+
+    // TODO: Ensure min is less than max, swap values if not the case
+    // TODO: Ensure type is 'lat' or 'long' - default makes this the same as GET /api/v0.1/countries/positions
+
+    try {
+      const { type, min, max } = req.body;
+      if (!type || !min || !max) {
+        return Respond.error(res, 'missing param (type, min, max)', 400);
+      }
+      let result = positions;
+      switch (type) {
+        case 'lat':
+          result = positions.filter((x) => Number(x.lat) >= Number(min) && Number(x.lat) <= Number(max));
+          break;
+        case 'long':
+          result = positions.filter((x) => Number(x.long) >= Number(min) && Number(x.long) <= Number(max));
+          break;
+        default:
+          result = positions;
+          break;
+      }
+      return Respond.success(res, `countries between ${type} of (${min} and ${max})`, result);
+    } catch(err) {
+      next(err);
     }
-    let result = positions;
-    switch (type) {
-      case 'lat':
-        result = positions.filter((x) => Number(x.lat) >= Number(min) && Number(x.lat) <= Number(max));
-        break;
-      case 'long':
-        result = positions.filter((x) => Number(x.long) >= Number(min) && Number(x.long) <= Number(max));
-        break;
-      default:
-        result = positions;
-        break;
-    }
-    return Respond.success(res, `countries between ${type} of (${min} and ${max})`, result);
   }
 
   /**
