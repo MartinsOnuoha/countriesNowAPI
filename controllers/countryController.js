@@ -393,34 +393,44 @@ class CountryController {
    * Get countries and their currencies
    * @param {RequestObject} req request object
    * @param {ResponseObject} res response object
+   * @param {Callback} next callback function that invokes the next express middleware function
    */
-  static getCountriesAndCurrency(req, res) {
-    const data = CountriesAndCurrencies;
-    return Respond.success(res, 'countries and currencies retrieved', data);
+  static getCountriesAndCurrency(req, res, next) {
+    try {
+      const data = CountriesAndCurrencies;
+      return Respond.success(res, 'countries and currencies retrieved', data);
+    } catch(err) {
+      next(err);
+    }
   }
 
   /**
    * get a single country and it's currency
    * @param {Request} req
    * @param {Response} res
+   * @param {Callback} next callback function that invokes the next express middleware function
    */
-  static getSingleCountryAndCurrency(req, res) {
-    const { country, iso2 } = req.body;
-    if (!country && !iso2) {
-      return Respond.error(res, 'missing param (country or iso2)', 400);
-    }
-    let data = null;
+  static getSingleCountryAndCurrency(req, res, next) {
+    try {
+      const { country, iso2 } = req.body;
+      if (!country && !iso2) {
+        return Respond.error(res, 'missing param (country or iso2)', 400);
+      }
+      let data = null;
 
-    if (country) {
-      data = CountriesAndCurrencies.find((x) => x.name.trim().toLowerCase() === country.trim().toLowerCase());
+      if (country) {
+        data = CountriesAndCurrencies.find((x) => x.name.trim().toLowerCase() === country.trim().toLowerCase());
+      }
+      if (iso2) {
+        data = CountriesAndCurrencies.find((x) => x.iso2.trim().toLowerCase() === iso2.trim().toLowerCase());
+      }
+      if (!data) {
+        Respond.error(res, 'country not found', 404);
+      }
+      return Respond.success(res, `${data.name} and currency retrieved`, data);
+    } catch(err) {
+      next(err);
     }
-    if (iso2) {
-      data = CountriesAndCurrencies.find((x) => x.iso2.trim().toLowerCase() === iso2.trim().toLowerCase());
-    }
-    if (!data) {
-      Respond.error(res, 'country not found', 404);
-    }
-    return Respond.success(res, `${data.name} and currency retrieved`, data);
   }
 
   /**
