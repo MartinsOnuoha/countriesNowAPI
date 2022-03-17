@@ -7,7 +7,8 @@
 > Please note that this doesn't guarantee complete or correct data, feel free to raise issues where necessary.
 >
 
-![landing page](https://raw.githubusercontent.com/MartinsOnuoha/countriesAndCitiesAPI/chore/update-readme/public/img/landing.png)
+<img width="1594" alt="CleanShot 2022-03-17 at 9 19 17@2x" src="https://user-images.githubusercontent.com/29035007/158766598-c0a9cde5-8c15-4e9e-b7c7-5fbf3fc18666.png">
+
 
 ## USAGE
 
