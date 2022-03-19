@@ -2,9 +2,10 @@ const express = require('express');
 
 const router = express.Router();
 const CountryController = require('../controllers/countryController');
+const redirectPostToGet = require('../middlewares/redirectPostToGet');
 
 // Redirect all POST requests to GET requests by appending /q and the request body as query parameters
-router.use(CountryController.redirectPostToGet);
+router.use(redirectPostToGet);
 
 router.get('/', CountryController.getCountriesAndCities);
 

@@ -66,39 +66,6 @@ const CountriesStateCityFormatted = CountriesStateCity.map((x) => ({
 class CountryController {
 
   /**
-   * Redirect all POST requests by appending "/q" to the end of the route
-   * and appending the request body as query parameters
-   * @param {RequestObject} req request object
-   * @param {ResponseObject} res response object
-   * @param {Callback} next callback function that invokes the next express middleware function
-   */
-  static redirectPostToGet(req, res, next) {
-    try {
-      // If POST request
-      if(req.method === 'POST') {
-        // append /q to the route
-        let redirectRoute = req.originalUrl + '/q';
-
-        // Convert the request body to a query string
-        let bodyArray = [];
-        for(const k in req.body) {
-          bodyArray.push(k + '=' + req.body[k]);
-        }
-        const queryString = '?' + bodyArray.join('&');
-
-        // Redirect to GET /q route with query parameters
-        redirectRoute += queryString;
-        res.redirect(301, redirectRoute);
-      } else {
-        // If not a POST request, route normally
-        next();
-      }
-    } catch(err) {
-      next(err);
-    }
-  }
-
-  /**
    * Get all countries and cities
    * @param {RequestObject} req request object
    * @param {ResponseObject} res response object
