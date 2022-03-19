@@ -12,7 +12,6 @@ const GithubService = require('./github');
 const {
   latestYear, greaterThan, lessThan, withRange, orderCountryData, orderCityData,
 } = require('../helpers/utils');
-const { redirect } = require('express/lib/response');
 
 const countryPopulation = getCountriesPopulation();
 const citiesPopulation = getCitiesPopulation();
@@ -63,8 +62,8 @@ const CountriesStateCityFormatted = CountriesStateCity.map((x) => ({
   iso3: x.iso3,
   states: x.states,
 }));
-class CountryController {
 
+class CountryController {
   /**
    * Get all countries and cities
    * @param {RequestObject} req request object
@@ -74,8 +73,8 @@ class CountryController {
   static getCountriesAndCities(req, res, next) {
     try {
       return Respond.success(res, 'countries and cities retrieved', CountriesAndCities);
-    } catch(err) {
-      next(err);
+    } catch (err) {
+      return next(err);
     }
   }
 
@@ -112,9 +111,8 @@ class CountryController {
 
       const cities = [...new Set(DB1.concat(DB2))];
       return Respond.success(res, `cities in ${countryName} retrieved`, cities);
-
-    } catch(err) {
-      next(err);
+    } catch (err) {
+      return next(err);
     }
   }
 
@@ -128,8 +126,8 @@ class CountryController {
     try {
       const data = CountriesAndCodes.map((x) => ({ name: x.name, code: x.code, dial_code: x.dial_code }));
       return Respond.success(res, 'countries and codes retrieved', data);
-    } catch(err) {
-      next(err);
+    } catch (err) {
+      return next(err);
     }
   }
 
@@ -163,8 +161,8 @@ class CountryController {
         return Respond.success(res, `${data.name} dial code retrieved`, data);
       }
       return Respond.error(res, 'country not found', 404);
-    } catch(err) {
-      next(err);
+    } catch (err) {
+      return next(err);
     }
   }
 
@@ -177,8 +175,8 @@ class CountryController {
   static getCountriesPosition(req, res, next) {
     try {
       return Respond.success(res, 'countries and positions retrieved', positions);
-    } catch(err) {
-      next(err);
+    } catch (err) {
+      return next(err);
     }
   }
 
@@ -205,8 +203,8 @@ class CountryController {
         return Respond.error(res, 'Country not found', 404);
       }
       return Respond.success(res, 'country position retrieved', data);
-    } catch(err) {
-      next(err);
+    } catch (err) {
+      return next(err);
     }
   }
 
@@ -217,7 +215,6 @@ class CountryController {
    * @param {Callback} next callback function that invokes the next express middleware function
    */
   static getPositionRange(req, res, next) {
-
     // TODO: Ensure min is less than max, swap values if not the case
     // TODO: Ensure type is 'lat' or 'long' - default makes this the same as GET /api/v0.1/countries/positions
 
@@ -239,8 +236,8 @@ class CountryController {
           break;
       }
       return Respond.success(res, `countries between ${type} of (${min} and ${max})`, result);
-    } catch(err) {
-      next(err);
+    } catch (err) {
+      return next(err);
     }
   }
 
@@ -254,8 +251,8 @@ class CountryController {
     try {
       const data = CountriesAndISO;
       return Respond.success(res, 'countries and ISO codes retrieved', data);
-    } catch(err) {
-      next(err);
+    } catch (err) {
+      return next(err);
     }
   }
 
@@ -278,8 +275,8 @@ class CountryController {
         return Respond.error(res, 'country not found', 404);
       }
       return Respond.success(res, 'country\'s ISO code retrieved', data);
-    } catch(err) {
-      next(err);
+    } catch (err) {
+      return next(err);
     }
   }
 
@@ -302,8 +299,8 @@ class CountryController {
         return dataObj;
       });
       return Respond.success(res, 'flags images retrieved', data);
-    } catch(err) {
-      next(err);
+    } catch (err) {
+      return next(err);
     }
   }
 
@@ -332,8 +329,8 @@ class CountryController {
         return Respond.error(res, 'country not found', 404);
       }
       return Respond.success(res, `${data.name} and flag retrieved`, data);
-    } catch(err) {
-      next(err);
+    } catch (err) {
+      return next(err);
     }
   }
 
@@ -349,8 +346,8 @@ class CountryController {
         name: x.Name, iso2: x.Iso2, iso3: x.Iso3, unicodeFlag: x.Unicode,
       }));
       return Respond.success(res, 'countries and unicode flags retrieved', data);
-    } catch(err) {
-      next(err);
+    } catch (err) {
+      return next(err);
     }
   }
 
@@ -385,8 +382,8 @@ class CountryController {
         return Respond.error(res, 'country not found', 404);
       }
       return Respond.success(res, `${data.name} and unicode flag retrieved`, data);
-    } catch(err) {
-      next(err);
+    } catch (err) {
+      return next(err);
     }
   }
 
@@ -402,8 +399,8 @@ class CountryController {
         name: x.Name, capital: x.Capital, iso2: x.Iso2, iso3: x.Iso3,
       })), 'asc', 'name', 'name');
       return Respond.success(res, 'countries and capitals retrieved', data);
-    } catch(err) {
-      next(err);
+    } catch (err) {
+      return next(err);
     }
   }
 
@@ -434,8 +431,8 @@ class CountryController {
         return Respond.error(res, 'country not found', 404);
       }
       return Respond.success(res, 'country and capitals retrieved', data);
-    } catch(err) {
-      next(err);
+    } catch (err) {
+      return next(err);
     }
   }
 
@@ -449,8 +446,8 @@ class CountryController {
     try {
       const data = CountriesAndCurrencies;
       return Respond.success(res, 'countries and currencies retrieved', data);
-    } catch(err) {
-      next(err);
+    } catch (err) {
+      return next(err);
     }
   }
 
@@ -478,8 +475,8 @@ class CountryController {
         Respond.error(res, 'country not found', 404);
       }
       return Respond.success(res, `${data.name} and currency retrieved`, data);
-    } catch(err) {
-      next(err);
+    } catch (err) {
+      return next(err);
     }
   }
 
@@ -518,8 +515,8 @@ class CountryController {
         });
       });
       return Respond.success(res, `countries details: '${returns}' have been retrieved`, data);
-    } catch(err) {
-      next(err);
+    } catch (err) {
+      return next(err);
     }
   }
 
@@ -533,8 +530,8 @@ class CountryController {
     try {
       const data = await countryPopulation;
       return Respond.success(res, 'all countries and population 1961 - 2018', data);
-    } catch(err) {
-      next(err);
+    } catch (err) {
+      return next(err);
     }
   }
 
@@ -545,7 +542,6 @@ class CountryController {
    * @param {Callback} next callback function that invokes the next express middleware function
    */
   static async getPopulationByCountry(req, res, next) {
-
     // TODO: Make this work with iso2 instead of iso3 so it matches other functions
 
     try {
@@ -563,8 +559,8 @@ class CountryController {
       }
       if (!filtered) return Respond.error(res, 'country data not found', 404);
       return Respond.success(res, `${filtered.country} with population`, filtered);
-    } catch(err) {
-      next(err);
+    } catch (err) {
+      return next(err);
     }
   }
 
@@ -576,10 +572,9 @@ class CountryController {
    * @param {Callback} next callback function that invokes the next express middleware function
    */
   static async filterCountryPopulation(req, res, next) {
-    try{
-
+    try {
       // Shim to make the limit parameter a number instead of a string
-      if(req.query.limit && !isNaN(req.query.limit)) req.query.limit = Number(req.query.limit);
+      if (req.query.limit && !Number.isNaN(req.query.limit)) req.query.limit = Number(req.query.limit);
 
       const data = await countryPopulation;
       const {
@@ -596,18 +591,17 @@ class CountryController {
       const selectedYear = orderCountryData(data.map((x) => ({
         country: x.country,
         code: x.code,
-        populationCounts: x.populationCounts.find((y) => y.year === year) || {year: year, value: -1},
+        populationCounts: x.populationCounts.find((y) => y.year === year) || { year, value: -1 },
       })), order, orderBy)
-      .filter(obj => obj.populationCounts.value !== -1);
+        .filter((obj) => obj.populationCounts.value !== -1);
 
       const result = gt && !lt ? greaterThan(selectedYear, gt) : lt && !gt ? lessThan(selectedYear, lt) : gt && lt ? withRange(selectedYear, gt, lt) : selectedYear;
       const applyLimit = result.splice(0, limit);
 
       return Respond.success(res, 'filtered result', applyLimit);
-    } catch(err) {
-      next(err);
+    } catch (err) {
+      return next(err);
     }
-    
   }
 
   /**
@@ -620,8 +614,8 @@ class CountryController {
     try {
       const data = await citiesPopulation;
       return Respond.success(res, 'all cities with population', data);
-    } catch(err) {
-      next;
+    } catch (err) {
+      return next(err);
     }
   }
 
@@ -643,8 +637,8 @@ class CountryController {
         return Respond.error(res, 'city data not found', 404);
       }
       return Respond.success(res, `${city} with population`, filtered);
-    } catch(err) {
-      next(err);
+    } catch (err) {
+      return next(err);
     }
   }
 
@@ -656,9 +650,8 @@ class CountryController {
    */
   static async filterCitiesPopulation(req, res, next) {
     try {
-
       // Shim to make the limit parameter a number instead of a string.
-      if(req.query.limit && !isNaN(req.query.limit)) req.query.limit = Number(req.query.limit);
+      if (req.query.limit && !Number.isNaN(req.query.limit)) req.query.limit = Number(req.query.limit);
 
       const data = await citiesPopulation;
       const {
@@ -680,7 +673,7 @@ class CountryController {
       }
 
       // Handle empty results
-      if(!result.length) Respond.error(res, 'No results found', 404);
+      if (!result.length) Respond.error(res, 'No results found', 404);
 
       // remove unnecessary information from dataHub
       if (result[0].city === 'null') { result.shift(); }
@@ -688,8 +681,8 @@ class CountryController {
       result = result.splice(0, limit);
 
       return Respond.success(res, 'filtered result', result);
-    } catch(err) {
-      next(err);
+    } catch (err) {
+      return next(err);
     }
   }
 
@@ -720,8 +713,8 @@ class CountryController {
     try {
       const data = CountriesAndStatesFormatted;
       return Respond.success(res, 'countries and states retrieved', data);
-    } catch(err) {
-      next(err);
+    } catch (err) {
+      return next(err);
     }
   }
 
@@ -748,8 +741,8 @@ class CountryController {
         return Respond.error(res, 'country not found', 404);
       }
       return Respond.success(res, `states in ${data.name} retrieved`, data);
-    } catch(err) {
-      next(err);
+    } catch (err) {
+      return next(err);
     }
   }
 
@@ -784,8 +777,8 @@ class CountryController {
       }
       const cityList = stateData.cities.map((city) => city.name);
       return Respond.success(res, `cities in state ${state} of country ${country} retrieved`, cityList);
-    } catch(err) {
-      next(err);
+    } catch (err) {
+      return next(err);
     }
   }
 
@@ -799,8 +792,8 @@ class CountryController {
     try {
       const randomCountry = CountriesAndCodes[Math.floor(Math.random() * CountriesAndCodes.length)];
       return Respond.success(res, 'retrieved random country', randomCountry);
-    } catch(err) {
-      next(err);
+    } catch (err) {
+      return next(err);
     }
   }
 }
