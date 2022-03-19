@@ -12,6 +12,7 @@ const GithubService = require('./github');
 const {
   latestYear, greaterThan, lessThan, withRange, orderCountryData, orderCityData,
 } = require('../helpers/utils');
+const { redirect } = require('express/lib/response');
 
 const countryPopulation = getCountriesPopulation();
 const citiesPopulation = getCitiesPopulation();
@@ -63,6 +64,7 @@ const CountriesStateCityFormatted = CountriesStateCity.map((x) => ({
   states: x.states,
 }));
 class CountryController {
+
   /**
    * Get all countries and cities
    * @param {RequestObject} req request object
@@ -85,8 +87,7 @@ class CountryController {
    */
   static getCitiesByCountry(req, res, next) {
     try {
-
-      const { country, iso2 } = req.body;
+      const { country, iso2 } = req.query;
       if (!country && !iso2) {
         return Respond.error(res, 'missing param (country or iso2)', 400);
       }
@@ -144,7 +145,7 @@ class CountryController {
    */
   static getSingleCountryAndDialCode(req, res, next) {
     try {
-      const { country, iso2 } = req.body;
+      const { country, iso2 } = req.query;
       if (!country && !iso2) {
         return Respond.error(res, 'missing param (country or iso2)', 400);
       }
@@ -189,7 +190,7 @@ class CountryController {
    */
   static getSinglePosition(req, res, next) {
     try {
-      const { country, iso2 } = req.body;
+      const { country, iso2 } = req.query;
       if (!country && !iso2) {
         return Respond.error(res, 'missing param (country or iso2)', 400);
       }
@@ -221,7 +222,7 @@ class CountryController {
     // TODO: Ensure type is 'lat' or 'long' - default makes this the same as GET /api/v0.1/countries/positions
 
     try {
-      const { type, min, max } = req.body;
+      const { type, min, max } = req.query;
       if (!type || !min || !max) {
         return Respond.error(res, 'missing param (type, min, max)', 400);
       }
@@ -266,7 +267,7 @@ class CountryController {
    */
   static getSingleCountryAndISO(req, res, next) {
     try {
-      let { country } = req.body;
+      let { country } = req.query;
       if (!country) {
         return Respond.error(res, 'missing param (country)', 400);
       }
@@ -314,7 +315,7 @@ class CountryController {
    */
   static getCountryFlagImage(req, res, next) {
     try {
-      const { country, iso2 } = req.body;
+      const { country, iso2 } = req.query;
 
       if (!country && !iso2) {
         return Respond.error(res, 'missing param (country or iso2)', 400);
@@ -361,7 +362,7 @@ class CountryController {
    */
   static async getCountryUnicodeFlag(req, res, next) {
     try {
-      const { country, iso2 } = req.body;
+      const { country, iso2 } = req.query;
       if (!country && !iso2) {
         return Respond.error(res, 'missing param (country or iso2)', 400);
       }
@@ -414,7 +415,7 @@ class CountryController {
    */
   static getCountryCapital(req, res, next) {
     try {
-      const { country, iso2 } = req.body;
+      const { country, iso2 } = req.query;
       if (!country && !iso2) {
         return Respond.error(res, 'missing param (country or iso2)', 400);
       }
@@ -461,7 +462,7 @@ class CountryController {
    */
   static getSingleCountryAndCurrency(req, res, next) {
     try {
-      const { country, iso2 } = req.body;
+      const { country, iso2 } = req.query;
       if (!country && !iso2) {
         return Respond.error(res, 'missing param (country or iso2)', 400);
       }
@@ -548,7 +549,7 @@ class CountryController {
     // TODO: Make this work with iso2 instead of iso3 so it matches other functions
 
     try {
-      const { country, iso3 } = req.body;
+      const { country, iso3 } = req.query;
       if (!country && !iso3) {
         return Respond.error(res, 'missing param (country or iso3)', 400);
       }
@@ -576,6 +577,10 @@ class CountryController {
    */
   static async filterCountryPopulation(req, res, next) {
     try{
+
+      // Shim to make the limit parameter a number instead of a string
+      if(req.query.limit && !isNaN(req.query.limit)) req.query.limit = Number(req.query.limit);
+
       const data = await countryPopulation;
       const {
         year = latestYear(data),
@@ -584,7 +589,7 @@ class CountryController {
         lt = false,
         order = 'asc',
         orderBy = 'population',
-      } = req.body;
+      } = req.query;
 
       if (typeof limit !== 'number') return Respond.error(res, 'invalid payload format');
 
@@ -628,7 +633,7 @@ class CountryController {
    */
   static async getPopulationByCity(req, res, next) {
     try {
-      const { city } = req.body;
+      const { city } = req.query;
       if (!city) {
         return Respond.error(res, 'missing param (city)', 400);
       }
@@ -651,13 +656,17 @@ class CountryController {
    */
   static async filterCitiesPopulation(req, res, next) {
     try {
+
+      // Shim to make the limit parameter a number instead of a string.
+      if(req.query.limit && !isNaN(req.query.limit)) req.query.limit = Number(req.query.limit);
+
       const data = await citiesPopulation;
       const {
         limit = data.length,
         order = 'asc',
         orderBy = 'population',
         country = false,
-      } = req.body;
+      } = req.query;
 
       if (typeof limit !== 'number') return Respond.error(res, 'invalid payload format');
 
@@ -724,7 +733,7 @@ class CountryController {
    */
   static getSingleCountryStates(req, res, next) {
     try {
-      const { country, iso2 } = req.body;
+      const { country, iso2 } = req.query;
       if (!country && !iso2) {
         return Respond.error(res, 'missing param (country or iso2)', 400);
       }
@@ -752,7 +761,7 @@ class CountryController {
    */
   static async getStateCities(req, res, next) {
     try {
-      const { country, state } = req.body;
+      const { country, state } = req.query;
       if (!country) {
         return Respond.error(res, 'missing param (country)', 400);
       }

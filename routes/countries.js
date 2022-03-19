@@ -2,36 +2,48 @@ const express = require('express');
 
 const router = express.Router();
 const CountryController = require('../controllers/countryController');
+const redirectPostToGet = require('../middlewares/redirectPostToGet');
+
+// Redirect all POST requests to GET requests by appending /q and the request body as query parameters
+router.use(redirectPostToGet);
 
 router.get('/', CountryController.getCountriesAndCities);
-router.post('/cities', CountryController.getCitiesByCountry);
+
+router.get('/cities/q', CountryController.getCitiesByCountry);
+
 router.get('/codes', CountryController.getCountriesAndCodes);
-router.post('/codes', CountryController.getSingleCountryAndDialCode);
+router.get('/codes/q', CountryController.getSingleCountryAndDialCode);
+
 router.get('/iso', CountryController.getCountriesAndISO);
-router.post('/iso', CountryController.getSingleCountryAndISO);
+router.get('/iso/q', CountryController.getSingleCountryAndISO);
+
 router.get('/currency', CountryController.getCountriesAndCurrency);
-router.post('/currency', CountryController.getSingleCountryAndCurrency);
+router.get('/currency/q', CountryController.getSingleCountryAndCurrency);
+
 router.get('/info', CountryController.getCountriesInfo);
+
 router.get('/capital', CountryController.getCountriesCapital);
-router.post('/capital', CountryController.getCountryCapital);
+router.get('/capital/q', CountryController.getCountryCapital);
+
 router.get('/flag/images', CountryController.getCountriesFlagImages);
-router.post('/flag/images', CountryController.getCountryFlagImage);
+router.get('/flag/images/q', CountryController.getCountryFlagImage);
 router.get('/flag/unicode', CountryController.getCountriesUnicodeFlag);
-router.post('/flag/unicode', CountryController.getCountryUnicodeFlag);
+router.get('/flag/unicode/q', CountryController.getCountryUnicodeFlag);
 
 router.get('/positions', CountryController.getCountriesPosition);
-router.post('/positions', CountryController.getSinglePosition);
-router.post('/positions/range', CountryController.getPositionRange);
+router.get('/positions/q', CountryController.getSinglePosition);
+router.get('/positions/range/q', CountryController.getPositionRange);
 
 router.get('/population', CountryController.getPopulation);
-router.post('/population', CountryController.getPopulationByCountry);
-router.post('/population/filter', CountryController.filterCountryPopulation);
+router.get('/population/q', CountryController.getPopulationByCountry);
+router.get('/population/filter/q', CountryController.filterCountryPopulation);
 router.get('/population/cities', CountryController.getCitiesPopulation);
-router.post('/population/cities', CountryController.getPopulationByCity);
-router.post('/population/cities/filter', CountryController.filterCitiesPopulation);
+router.get('/population/cities/q', CountryController.getPopulationByCity);
+router.get('/population/cities/filter/q', CountryController.filterCitiesPopulation);
+
 router.get('/states', CountryController.getCountriesState);
-router.post('/states', CountryController.getSingleCountryStates);
-router.post('/state/cities', CountryController.getStateCities);
+router.get('/states/q', CountryController.getSingleCountryStates);
+router.get('/state/cities/q', CountryController.getStateCities);
 
 router.get('/random', CountryController.getRandomCountry);
 
