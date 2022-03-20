@@ -5,28 +5,28 @@
    * @param {ResponseObject} res response object
    * @param {Callback} next callback function that invokes the next express middleware function
    */
- module.exports = (req, res, next) => {
-    try {
-      // If POST request
-      if(req.method === 'POST') {
-        // append /q to the route
-        let redirectRoute = req.originalUrl + '/q';
+module.exports = (req, res, next) => {
+  try {
+    // If POST request
+    if (req.method === 'POST') {
+      // append /q to the route
+      let redirectRoute = `${req.originalUrl}/q`;
 
-        // Convert the request body to a query string
-        let bodyArray = [];
-        for(const k in req.body) {
-          bodyArray.push(k + '=' + req.body[k]);
-        }
-        const queryString = '?' + bodyArray.join('&');
+      // Convert the request body to a query string
+      const bodyArray = [];
 
-        // Redirect to GET /q route with query parameters
-        redirectRoute += queryString;
-        res.redirect(301, redirectRoute);
-      } else {
-        // If not a POST request, route normally
-        next();
-      }
-    } catch(err) {
-      next(err);
+      Object.keys(req.body).forEach((key) => bodyArray.push(`${key}=${req.body[key]}`));
+
+      const queryString = `?${bodyArray.join('&')}`;
+
+      // Redirect to GET /q route with query parameters
+      redirectRoute += queryString;
+      res.redirect(301, redirectRoute);
+    } else {
+      // If not a POST request, route normally
+      next();
     }
+  } catch (err) {
+    next(err);
   }
+};
