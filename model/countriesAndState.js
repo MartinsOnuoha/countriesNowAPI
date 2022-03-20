@@ -20899,7 +20899,7 @@ const CountriesState = [
       },
       {
         id: 1148,
-        name: 'Araba Álava',
+        name: 'Araba Álava Province',
         state_code: 'VI',
       },
       {
@@ -20929,7 +20929,7 @@ const CountriesState = [
       },
       {
         id: 1186,
-        name: 'Biscay',
+        name: 'Biscay Province',
         state_code: 'BI',
       },
       {
@@ -21014,7 +21014,7 @@ const CountriesState = [
       },
       {
         id: 1202,
-        name: 'Gipuzkoa',
+        name: 'Gipuzkoa Province',
         state_code: 'SS',
       },
       {
