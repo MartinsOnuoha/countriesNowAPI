@@ -1,8 +1,14 @@
 const express = require('express');
+const apicache = require('apicache');
+const apicacheConfig = require('../config/apicache');
 
 const router = express.Router();
 const CountryController = require('../controllers/countryController');
 const redirectPostToGet = require('../middlewares/redirectPostToGet');
+
+let cache = apicache.options(apicacheConfig).middleware;
+const cacheOnlyGET = cache('1 day', (req) => req.method === 'GET');
+router.use(cacheOnlyGET);
 
 // Redirect all POST requests to GET requests by appending /q and the request body as query parameters
 router.use(redirectPostToGet);
