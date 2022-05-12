@@ -768,7 +768,7 @@ class CountryController {
       }
       const statesInCountry = countryData.states;
       const statesFormatted = statesInCountry.map((x) => ({
-        name: x.name.trim().toLowerCase().endsWith('state') ? x.name.toLowerCase().replace('state', '').trim() : x.name,
+        name: x.name.trim().toLowerCase().endsWith('state') ? x.name.toLowerCase().trim() : x.name,
         cities: x.cities,
       }));
       const stateData = Object.values(statesFormatted).find((x) => x.name.toLowerCase() === state.toLowerCase());
