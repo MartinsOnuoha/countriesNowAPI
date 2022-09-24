@@ -2155,7 +2155,7 @@ const CountriesAndUnicodes = [
     Iso3: 'LTU',
     Unicode: '🇱🇹',
     Dial: '370',
-    Currency: 'LTL',
+    Currency: 'EUR',
     Capital: 'Vilnius',
     Continent: 'EU',
   },
