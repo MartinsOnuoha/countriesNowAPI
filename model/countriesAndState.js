@@ -16321,7 +16321,7 @@ const CountriesState = [
       },
       {
         id: 306,
-        name: 'Lagos',
+        name: 'Lagos State',
         state_code: 'LA',
       },
       {
