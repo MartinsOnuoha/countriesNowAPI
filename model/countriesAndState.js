@@ -21707,6 +21707,11 @@ const CountriesState = [
         state_code: 'BL',
       },
       {
+        id: 1642,
+        name: 'Basel-Stadt',
+        state_code: 'BS',
+      },
+      {
         id: 1645,
         name: 'canton of Bern',
         state_code: 'BE',
