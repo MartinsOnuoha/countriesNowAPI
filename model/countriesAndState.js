@@ -21709,7 +21709,7 @@ const CountriesState = [
       {
         id: 1642,
         name: 'Basel-Stadt',
-        state_code: 'CH-BS',
+        state_code: 'BS',
       },
       {
         id: 1645,
