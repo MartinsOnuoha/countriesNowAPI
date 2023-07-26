@@ -14,7 +14,7 @@ const methods = {
     ],
     responses: {
       200: {
-        description: 'countries details: \'currency,flag,unicodeFlag\' have been retrieved',
+        description: 'countries details: \'currency,flag,unicodeFlag,iso2\' have been retrieved',
       },
     },
   },
