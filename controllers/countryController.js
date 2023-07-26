@@ -499,6 +499,8 @@ class CountryController {
       const fetchDialCode = params.includes('dialCode');
       const fetchUnicode = params.includes('unicodeFlag');
       const fetchCities = params.includes('cities');
+      const fetchIso2 = params.includes('iso2');
+      const fetchIso3 = params.includes('iso3');
 
       const data = CountriesAndUnicodes.map((x) => {
         const countryAndFlag = fetchImage && CountriesAndFlag.find((c) => c.name.toLowerCase() === x.Name.toLowerCase());
@@ -512,6 +514,8 @@ class CountryController {
           flag: (countryAndFlag && countryAndFlag.flag) || undefined,
           dialCode: (fetchDialCode && x.Dial) || undefined,
           cities: (fetchCities && Country && Country.cities) || undefined,
+          iso2: (fetchIso2 && x.Iso2) || undefined,
+          iso3: (fetchIso3 && x.Iso3) || undefined,
         });
       });
       return Respond.success(res, `countries details: '${returns}' have been retrieved`, data);
