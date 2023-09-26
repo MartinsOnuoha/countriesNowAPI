@@ -108,6 +108,9 @@ class CountryController {
       const { country: countryName } = DB1;
       DB1 = DB1 ? DB1.cities : [];
       DB2 = DB2.states.reduce((acc, state) => acc.concat(state.cities), []).map((x) => x.name);
+      if(country === 'Turkey') {
+        DB2 = [];
+      }
 
       const cities = [...new Set(DB1.concat(DB2))];
       return Respond.success(res, `cities in ${countryName} retrieved`, cities);
