@@ -1,7 +1,7 @@
 const methods = {
   getCapitals: {
     tags: ['Capital'],
-    description: 'Get all countries and thier capital',
+    description: 'Get all countries and their capital',
     responses: {
       200: {
         description: 'countries and capitals retrieved',
