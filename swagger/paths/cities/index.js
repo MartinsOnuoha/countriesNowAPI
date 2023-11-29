@@ -1,7 +1,7 @@
 const methods = {
   getCountriesAndCities: {
     tags: ['Cities'],
-    description: 'Get all countries and thier cities',
+    description: 'Get all countries and their cities',
     responses: {
       200: {
         description: 'countries and cities retrieved',
