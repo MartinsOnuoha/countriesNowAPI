@@ -10,3 +10,5 @@ public/.DS_Store
 coverage
 coverage/*
 ./coverage
+.idea
+.idea/*
