@@ -6,7 +6,7 @@ const router = express.Router();
 const CountryController = require('../controllers/countryController');
 const redirectPostToGet = require('../middlewares/redirectPostToGet');
 
-let cache = apicache.options(apicacheConfig).middleware;
+const cache = apicache.options(apicacheConfig).middleware;
 const cacheOnlyGET = cache('1 day', (req) => req.method === 'GET');
 router.use(cacheOnlyGET);
 

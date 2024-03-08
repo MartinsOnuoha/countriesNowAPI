@@ -596,11 +596,13 @@ class CountryController {
 
       if (typeof limit !== 'number') return Respond.error(res, 'invalid payload format');
 
-      const selectedYear = orderCountryData(data.map((x) => ({
+      const mappedPopulation = data.map((x) => ({
         country: x.country,
         code: x.code,
         populationCounts: x.populationCounts.find((y) => y.year === year) || { year, value: -1 },
-      })), order, orderBy)
+      }));
+
+      const selectedYear = orderCountryData(mappedPopulation, order, orderBy)
         .filter((obj) => obj.populationCounts.value !== -1);
 
       const result = gt && !lt ? greaterThan(selectedYear, gt) : lt && !gt ? lessThan(selectedYear, lt) : gt && lt ? withRange(selectedYear, gt, lt) : selectedYear;
@@ -676,8 +678,10 @@ class CountryController {
         country: x.country,
         populationCounts: x.populationCounts,
       })), order, orderBy);
+
       if (country) {
-        result = result.filter((x) => x.country.toLowerCase() === country.toLowerCase());
+        // TODO: check datahub to get correct countries names.
+        result = result.filter((x) => x.country.toLowerCase().includes(country.toLowerCase()));
       }
 
       // Handle empty results
