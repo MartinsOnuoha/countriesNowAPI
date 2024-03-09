@@ -498,6 +498,7 @@ class CountryController {
       const params = returns.trim().split(',').map((x) => x.trim());
 
       // TODO: Add more data selectors
+      const fetchCapital = params.includes('capital');
       const fetchCurrency = params.includes('currency');
       const fetchImage = params.includes('flag');
       const fetchDialCode = params.includes('dialCode');
@@ -515,6 +516,7 @@ class CountryController {
           name: x.Name,
           currency: (fetchCurrency && x.Currency) || undefined,
           unicodeFlag: (fetchUnicode && x.Unicode) || undefined,
+          capital: (fetchCapital && x.Capital) || undefined,
           flag: (countryAndFlag && countryAndFlag.flag) || undefined,
           dialCode: (fetchDialCode && x.Dial) || undefined,
           cities: (fetchCities && Country && Country.cities) || undefined,
