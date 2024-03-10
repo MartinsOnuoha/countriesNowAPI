@@ -32880,11 +32880,21 @@ const CountriesAndCities = [
     cities: [
       'Amman',
       'Ar Ramtha',
+      'Al \'Aqabah',
+      'Ajlun',
+      'Al Balqa\'',
+      'Al Karak',
+      'Al Mafraq',
+      'At Tafilah',
+      'Az Zarqa\'',
+      '\'Amman',
       'Farah',
       'Irbid',
       'Madaba',
       'Sahab',
       'Salt',
+      'Jarash',
+      'Ma\'an',
     ],
   },
   {
@@ -40272,7 +40282,7 @@ const CountriesAndCities = [
       'Gontougo',
       'Sinfra',
       'Tanda',
-    ]
+    ],
   },
   {
     country: 'Jamaica',
@@ -41470,23 +41480,6 @@ const CountriesAndCities = [
       'Yuzawa',
       'Zama',
       'Zushi',
-    ],
-  },
-  {
-    country: 'Jordan',
-    cities: [
-      'Ajlun',
-      'Al \'Aqabah',
-      'Al Balqa\'',
-      'Al Karak',
-      'Al Mafraq',
-      '\'Amman',
-      'At Tafilah',
-      'Az Zarqa\'',
-      'Irbid',
-      'Jarash',
-      'Ma\'an',
-      'Madaba',
     ],
   },
   {
@@ -57490,7 +57483,7 @@ const CountriesAndCities = [
       'Karabük',
       'Kilis',
       'Osmaniye',
-      'Düzce'
+      'Düzce',
     ],
   },
   {
