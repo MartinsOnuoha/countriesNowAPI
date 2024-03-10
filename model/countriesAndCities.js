@@ -19757,6 +19757,7 @@ const CountriesAndCities = [
       'Mezieres-sur-Couesnon',
       'Mezieres-sur-Seine',
       'Mezzavia',
+      'Méziré',
       'Michelbach-le-Bas',
       'Mielan',
       'Miellin',
@@ -19975,6 +19976,7 @@ const CountriesAndCities = [
       'Montbert',
       'Montbeton',
       'Montbeugny',
+      'Montbéliard',
       'Montbizot',
       'Montblanc',
       'Montboillon',
@@ -20233,6 +20235,7 @@ const CountriesAndCities = [
       'Mortzwiller',
       'Morvillers-Saint-Saturnin',
       'Morvilliers',
+      'Morvillars',
       'Morzine',
       'Moslins',
       'Mosnac',
@@ -40272,7 +40275,7 @@ const CountriesAndCities = [
       'Gontougo',
       'Sinfra',
       'Tanda',
-    ]
+    ],
   },
   {
     country: 'Jamaica',
@@ -57490,7 +57493,7 @@ const CountriesAndCities = [
       'Karabük',
       'Kilis',
       'Osmaniye',
-      'Düzce'
+      'Düzce',
     ],
   },
   {
