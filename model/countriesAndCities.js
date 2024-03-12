@@ -5994,6 +5994,12 @@ const CountriesAndCities = [
       'Mon State',
       'Rakhine State',
       'Shan State',
+      'Hlaing',
+      'Inya',
+      'Kyauktada',
+      'Mandalay',
+      'Wagan',
+      'Yangon',
     ],
   },
   {
@@ -43358,10 +43364,6 @@ const CountriesAndCities = [
       'Quelimane',
       'Tete',
     ],
-  },
-  {
-    country: 'Myanmar',
-    cities: ['Hlaing', 'Inya', 'Kyauktada', 'Mandalay', 'Wagan', 'Yangon'],
   },
   {
     country: 'Namibia',
