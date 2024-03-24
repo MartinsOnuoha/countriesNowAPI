@@ -5121,7 +5121,7 @@ const CountriesState = [
     ],
   },
   {
-    name: 'Croatia (Hrvatska)',
+    name: 'Croatia',
     iso3: 'HRV',
     iso2: 'HR',
     phone_code: '385',
