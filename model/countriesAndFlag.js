@@ -1,7 +1,7 @@
 const CountriesAndFlag = [
   {
     name: 'Afghanistan',
-    flag: 'https://upload.wikimedia.org/wikipedia/commons/9/9a/Flag_of_Afghanistan.svg',
+    flag: 'https://upload.wikimedia.org/wikipedia/commons/5/5f/Flag_of_Afghanistan_%28Colored_Emblem%29.svg',
     number: '+93',
   },
   {
