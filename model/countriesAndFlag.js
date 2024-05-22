@@ -436,7 +436,7 @@ const CountriesAndFlag = [
   },
   {
     name: 'Vatican City State (Holy See)',
-    flag: 'https://upload.wikimedia.org/wikipedia/commons/0/00/Flag_of_the_Vatican_City.svg',
+    flag: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/Flag_of_the_Vatican_City_%282023%E2%80%93present%29.svg/1080px-Flag_of_the_Vatican_City_%282023%E2%80%93present%29.svg.png',
     number: '+379',
   },
   {
@@ -861,7 +861,7 @@ const CountriesAndFlag = [
   },
   {
     name: 'Sao Tome and Principe',
-    flag: 'https://upload.wikimedia.org/wikipedia/commons/4/4f/Flag_of_Sao_Tome_and_Principe.svg',
+    flag: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Flag_of_S%C3%A3o_Tom%C3%A9_and_Pr%C3%ADncipe.svg/1080px-Flag_of_S%C3%A3o_Tom%C3%A9_and_Pr%C3%ADncipe.svg.png',
     number: '+239',
   },
   {
