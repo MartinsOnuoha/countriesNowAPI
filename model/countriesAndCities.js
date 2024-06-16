@@ -7910,6 +7910,7 @@ const CountriesAndCities = [
     country: 'Chile',
     cities: [
       'Algarrobo',
+      'Alto Hospicio',
       'Angol',
       'Antofagasta',
       'Apoquindo',
