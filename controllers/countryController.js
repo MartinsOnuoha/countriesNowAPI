@@ -506,11 +506,14 @@ class CountryController {
       const fetchCities = params.includes('cities');
       const fetchIso2 = params.includes('iso2');
       const fetchIso3 = params.includes('iso3');
+      const fetchStates = params.includes('states');
 
       const data = CountriesAndUnicodes.map((x) => {
         const countryAndFlag = fetchImage && CountriesAndFlag.find((c) => c.name.toLowerCase() === x.Name.toLowerCase());
 
         const Country = CountriesAndCities.find(({ country }) => country === x.Name);
+
+        const states = CountriesAndStates.find((c) => c.name.toLowerCase() === x.Name.toLowerCase());
 
         return ({
           name: x.Name,
@@ -520,6 +523,7 @@ class CountryController {
           flag: (countryAndFlag && countryAndFlag.flag) || undefined,
           dialCode: (fetchDialCode && x.Dial) || undefined,
           cities: (fetchCities && Country && Country.cities) || undefined,
+          states: (fetchStates && states && states.states) || undefined,
           iso2: (fetchIso2 && x.Iso2) || undefined,
           iso3: (fetchIso3 && x.Iso3) || undefined,
         });

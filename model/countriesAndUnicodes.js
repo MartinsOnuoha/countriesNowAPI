@@ -2444,7 +2444,7 @@ const CountriesAndUnicodes = [
     Name: 'India',
     Iso3: 'IND',
     Unicode: '🇮🇳',
-    Dial: '91',
+    Dial: '+91',
     Currency: 'INR',
     Capital: 'New Delhi',
     Continent: 'AS',
