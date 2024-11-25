@@ -50003,8 +50003,8 @@ const CountriesAndCities = [
       'Zalau',
       'Zarnesti',
       'Zlatna',
-      'Simleu Silvaniei'
-    ]
+      'Simleu Silvaniei',
+    ],
   },
   {
     country: 'Russia',
