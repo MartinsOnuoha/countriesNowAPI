@@ -1587,7 +1587,7 @@ const CountriesState = [
     ],
   },
   {
-    name: 'Bahamas The',
+    name: 'Bahamas',
     iso3: 'BHS',
     iso2: 'BS',
     phone_code: '+1-242',
