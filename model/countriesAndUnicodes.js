@@ -211,7 +211,7 @@ const CountriesAndUnicodes = [
   },
   {
     Iso2: 'BS',
-    Name: 'Bahamas',
+    Name: 'The Bahamas',
     Iso3: 'BHS',
     Unicode: '🇧🇸',
     Dial: '+1-242',
