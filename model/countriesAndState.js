@@ -18088,6 +18088,11 @@ const CountriesState = [
         state_code: 'MH',
       },
       {
+        id: 4759,
+        name: 'Mureș County',
+        state_code: 'MS',
+      },
+      {
         id: 4731,
         name: 'Neamț County',
         state_code: 'NT',
