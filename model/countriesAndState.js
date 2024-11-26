@@ -676,15 +676,6 @@ const CountriesState = [
     ],
   },
   {
-    name: 'American Samoa',
-    iso3: 'ASM',
-    iso2: 'AS',
-    phone_code: '+1-684',
-    capital: 'Pago Pago',
-    currency: 'USD',
-    states: [],
-  },
-  {
     name: 'Andorra',
     iso3: 'AND',
     iso2: 'AD',
@@ -24275,7 +24266,7 @@ const CountriesState = [
     currency: 'USD',
     states: [
       {
-        id: 1456,
+        id: '1456',
         name: 'Alabama',
         state_code: 'AL',
       },
@@ -24283,11 +24274,6 @@ const CountriesState = [
         id: 1400,
         name: 'Alaska',
         state_code: 'AK',
-      },
-      {
-        id: 1424,
-        name: 'American Samoa',
-        state_code: 'AS',
       },
       {
         id: 1434,
@@ -24298,11 +24284,6 @@ const CountriesState = [
         id: 1444,
         name: 'Arkansas',
         state_code: 'AR',
-      },
-      {
-        id: 1402,
-        name: 'Baker Island',
-        state_code: 'UM-81',
       },
       {
         id: 1416,
@@ -24325,11 +24306,6 @@ const CountriesState = [
         state_code: 'DE',
       },
       {
-        id: 1437,
-        name: 'District of Columbia',
-        state_code: 'DC',
-      },
-      {
         id: 1436,
         name: 'Florida',
         state_code: 'FL',
@@ -24340,19 +24316,9 @@ const CountriesState = [
         state_code: 'GA',
       },
       {
-        id: 1412,
-        name: 'Guam',
-        state_code: 'GU',
-      },
-      {
         id: 1411,
         name: 'Hawaii',
         state_code: 'HI',
-      },
-      {
-        id: 1398,
-        name: 'Howland Island',
-        state_code: 'UM-84',
       },
       {
         id: 1460,
@@ -24375,16 +24341,6 @@ const CountriesState = [
         state_code: 'IA',
       },
       {
-        id: 1410,
-        name: 'Jarvis Island',
-        state_code: 'UM-86',
-      },
-      {
-        id: 1428,
-        name: 'Johnston Atoll',
-        state_code: 'UM-67',
-      },
-      {
         id: 1406,
         name: 'Kansas',
         state_code: 'KS',
@@ -24393,11 +24349,6 @@ const CountriesState = [
         id: 1419,
         name: 'Kentucky',
         state_code: 'KY',
-      },
-      {
-        id: 1403,
-        name: 'Kingman Reef',
-        state_code: 'UM-89',
       },
       {
         id: 1457,
@@ -24425,11 +24376,6 @@ const CountriesState = [
         state_code: 'MI',
       },
       {
-        id: 1438,
-        name: 'Midway Atoll',
-        state_code: 'UM-71',
-      },
-      {
         id: 1420,
         name: 'Minnesota',
         state_code: 'MN',
@@ -24448,11 +24394,6 @@ const CountriesState = [
         id: 1446,
         name: 'Montana',
         state_code: 'MT',
-      },
-      {
-        id: 1439,
-        name: 'Navassa Island',
-        state_code: 'UM-76',
       },
       {
         id: 1408,
@@ -24495,11 +24436,6 @@ const CountriesState = [
         state_code: 'ND',
       },
       {
-        id: 1431,
-        name: 'Northern Mariana Islands',
-        state_code: 'MP',
-      },
-      {
         id: 4851,
         name: 'Ohio',
         state_code: 'OH',
@@ -24515,19 +24451,9 @@ const CountriesState = [
         state_code: 'OR',
       },
       {
-        id: 1448,
-        name: 'Palmyra Atoll',
-        state_code: 'UM-95',
-      },
-      {
         id: 1422,
         name: 'Pennsylvania',
         state_code: 'PA',
-      },
-      {
-        id: 1449,
-        name: 'Puerto Rico',
-        state_code: 'PR',
       },
       {
         id: 1461,
@@ -24555,16 +24481,6 @@ const CountriesState = [
         state_code: 'TX',
       },
       {
-        id: 1432,
-        name: 'United States Minor Outlying Islands',
-        state_code: 'UM',
-      },
-      {
-        id: 1413,
-        name: 'United States Virgin Islands',
-        state_code: 'VI',
-      },
-      {
         id: 1414,
         name: 'Utah',
         state_code: 'UT',
@@ -24578,11 +24494,6 @@ const CountriesState = [
         id: 1427,
         name: 'Virginia',
         state_code: 'VA',
-      },
-      {
-        id: 1405,
-        name: 'Wake Island',
-        state_code: 'UM-79',
       },
       {
         id: 1462,
