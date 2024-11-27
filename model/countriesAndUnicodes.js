@@ -2390,16 +2390,6 @@ const CountriesAndUnicodes = [
     Continent: 'AN',
   },
   {
-    Iso2: 'AS',
-    Name: 'American Samoa',
-    Iso3: 'ASM',
-    Unicode: '🇦🇸',
-    Dial: '+1-684',
-    Currency: 'USD',
-    Capital: 'Pago Pago',
-    Continent: 'OC',
-  },
-  {
     Iso2: 'AR',
     Name: 'Argentina',
     Iso3: 'ARG',
