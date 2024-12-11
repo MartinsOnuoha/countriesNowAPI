@@ -436,7 +436,7 @@ const CountriesAndFlag = [
   },
   {
     name: 'Vatican City State (Holy See)',
-    flag: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/Flag_of_the_Vatican_City_%282023%E2%80%93present%29.svg/1080px-Flag_of_the_Vatican_City_%282023%E2%80%93present%29.svg.png',
+    flag: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/Flag_of_Vatican_City_%282023%E2%80%93present%29.svg/800px-Flag_of_Vatican_City_%282023%E2%80%93present%29.svg.png',
     number: '+379',
   },
   {
