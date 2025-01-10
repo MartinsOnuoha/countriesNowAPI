@@ -70,6 +70,14 @@ body {
   background-color: var(--white-color);
   color: #5a393e;
 }
+.bg-orange {
+  background-color: var(--amber-color);
+  color: var(--white-color);
+}
+.bg-orange:hover {
+  background-color: var(--white-color);
+  color: var(--black-color);
+}
 button.bg-white:hover {
   background-color: var(--success-color);
   color: #FFF;
