@@ -4088,7 +4088,7 @@ const CountriesAndCities = [
       'Chapai Nawabganj',
       'Chattogram',
       'Chuadanga',
-      "Cox's Bazar",
+      `Cox's Bazar`,
       'Cumilla',
       'Dinajpur',
       'Dhaka',
@@ -50003,8 +50003,8 @@ const CountriesAndCities = [
       'Zalau',
       'Zarnesti',
       'Zlatna',
-      'Simleu Silvaniei',
-    ],
+      'Simleu Silvaniei'
+    ]
   },
   {
     country: 'Russia',

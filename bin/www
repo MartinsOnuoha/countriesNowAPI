@@ -49,14 +49,6 @@ app.set('port', port);
 const server = http.createServer(app);
 
 /**
- * Listen on provided port, on all network interfaces.
- */
-
-server.listen(port);
-server.on('error', onError);
-server.on('listening', onListening);
-
-/**
  * Event listener for HTTP server "error" event.
  */
 
@@ -93,6 +85,14 @@ function onListening() {
   const bind = typeof addr === 'string'
     ? `pipe ${addr}`
     : `port ${addr.port}`;
-  console.log(`Listening on ${bind}`);
+  console.log(`Listening on ${bind}: http://127.0.0.1:${addr.port}`);
   debug(`Listening on ${bind}`);
 }
+
+/**
+ * Listen on provided port, on all network interfaces.
+ */
+
+server.listen(port);
+server.on('error', onError);
+server.on('listening', onListening);
