@@ -961,7 +961,7 @@ const CountriesAndFlag = [
   },
   {
     name: 'Syria',
-    flag: 'https://upload.wikimedia.org/wikipedia/commons/5/53/Flag_of_Syria.svg',
+    flag: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Flag_of_the_Syrian_revolution.svg/800px-Flag_of_the_Syrian_revolution.svg.png',
     number: '+963',
   },
   {
