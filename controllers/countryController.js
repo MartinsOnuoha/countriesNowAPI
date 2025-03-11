@@ -773,14 +773,20 @@ class CountryController {
   static async getStateCities(req, res, next) {
     try {
       const { country, state, iso2, state_code } = req.query;
-      if (!country || !iso2) {
+      if (!country || !iso2 || !iso3) {
         return Respond.error(res, 'missing param (country)', 400);
       }
       if (!state || !state_code) {
         return Respond.error(res, 'missing param (state)', 400);
       }
-
-      const countryData = country ? Object.values(CountriesStateCityFormatted).find((x) => x.name.toLowerCase() === country.toLowerCase()) : Object.values(CountriesStateCityFormatted).find((x) => x.iso2.toLowerCase() === iso2.toLowerCase());
+      let countryData;
+      if(country){
+        countryData = Object.values(CountriesStateCityFormatted).find((x) => x.name.toLowerCase() === country.toLowerCase())
+      } else if(iso2){
+        countryData = Object.values(CountriesStateCityFormatted).find((x) => x.iso2.toLowerCase() === iso2.toLowerCase())
+      } else if(iso3){
+        countryData = Object.values(CountriesStateCityFormatted).find((x) => x.iso3.toLowerCase() === iso3.toLowerCase())
+      }
       if (!countryData) {
         return Respond.error(res, 'country not found', 404);
       }
