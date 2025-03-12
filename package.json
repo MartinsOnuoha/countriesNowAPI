@@ -38,6 +38,7 @@
     "cross-env": "^7.0.2",
     "cz-conventional-changelog": "^3.3.0",
     "cz-emoji": "^1.2.2",
+    "deasync": "^0.1.30",
     "eslint": "^7.9.0",
     "eslint-config-airbnb-base": "^14.2.0",
     "eslint-plugin-import": "^2.22.0",
