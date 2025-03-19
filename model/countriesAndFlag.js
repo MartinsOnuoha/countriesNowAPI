@@ -825,6 +825,11 @@ const CountriesAndFlag = [
     number: '+40',
   },
   {
+	  name: 'Russia',
+	  flag: 'https://upload.wikimedia.org/wikipedia/commons/f/f3/Flag_of_Russia.svg',
+	  number: '+7',
+  },
+  {
     name: 'Rwanda',
     flag: 'https://upload.wikimedia.org/wikipedia/commons/1/17/Flag_of_Rwanda.svg',
     number: '+250',
@@ -1073,6 +1078,11 @@ const CountriesAndFlag = [
     name: 'Vanuatu',
     flag: 'https://upload.wikimedia.org/wikipedia/commons/b/bc/Flag_of_Vanuatu.svg',
     number: '+678',
+  },
+  {
+	  name: 'Venezuela',
+	  flag: 'https://upload.wikimedia.org/wikipedia/commons/0/06/Flag_of_Venezuela.svg',
+	  number: '+58',
   },
   {
     name: 'Vietnam',
