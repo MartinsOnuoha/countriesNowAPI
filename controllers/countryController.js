@@ -772,15 +772,21 @@ class CountryController {
    */
   static async getStateCities(req, res, next) {
     try {
-      const { country, state } = req.query;
-      if (!country) {
+      const { country, state, iso2, state_code } = req.query;
+      if (!country || !iso2 || !iso3) {
         return Respond.error(res, 'missing param (country)', 400);
       }
-      if (!state) {
+      if (!state || !state_code) {
         return Respond.error(res, 'missing param (state)', 400);
       }
-
-      const countryData = Object.values(CountriesStateCityFormatted).find((x) => x.name.toLowerCase() === country.toLowerCase());
+      let countryData;
+      if(country){
+        countryData = Object.values(CountriesStateCityFormatted).find((x) => x.name.toLowerCase() === country.toLowerCase())
+      } else if(iso2){
+        countryData = Object.values(CountriesStateCityFormatted).find((x) => x.iso2.toLowerCase() === iso2.toLowerCase())
+      } else if(iso3){
+        countryData = Object.values(CountriesStateCityFormatted).find((x) => x.iso3.toLowerCase() === iso3.toLowerCase())
+      }
       if (!countryData) {
         return Respond.error(res, 'country not found', 404);
       }
@@ -789,7 +795,7 @@ class CountryController {
         name: x.name.trim().toLowerCase().endsWith('state') ? x.name.toLowerCase().trim() : x.name,
         cities: x.cities,
       }));
-      const stateData = Object.values(statesFormatted).find((x) => x.name.toLowerCase() === state.toLowerCase());
+      const stateData = state ? Object.values(statesFormatted).find((x) => x.name.toLowerCase() === state.toLowerCase()) : Object.values(statesFormatted).find((x) => x.state_code.toLowerCase() === state_code.toLowerCase());
       if (!stateData) {
         return Respond.error(res, 'state not found', 404);
       }
