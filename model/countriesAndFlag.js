@@ -825,9 +825,9 @@ const CountriesAndFlag = [
     number: '+40',
   },
   {
-	  name: 'Russia',
-	  flag: 'https://upload.wikimedia.org/wikipedia/commons/f/f3/Flag_of_Russia.svg',
-	  number: '+7',
+    name: 'Russia',
+    flag: 'https://upload.wikimedia.org/wikipedia/commons/f/f3/Flag_of_Russia.svg',
+    number: '+7',
   },
   {
     name: 'Rwanda',
@@ -966,7 +966,7 @@ const CountriesAndFlag = [
   },
   {
     name: 'Syria',
-    flag: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Flag_of_the_Syrian_revolution.svg/800px-Flag_of_the_Syrian_revolution.svg.png',
+    flag: 'https://upload.wikimedia.org/wikipedia/commons/5/54/Flag_of_Syria_%282025-%29.svg',
     number: '+963',
   },
   {
@@ -1080,9 +1080,9 @@ const CountriesAndFlag = [
     number: '+678',
   },
   {
-	  name: 'Venezuela',
-	  flag: 'https://upload.wikimedia.org/wikipedia/commons/0/06/Flag_of_Venezuela.svg',
-	  number: '+58',
+    name: 'Venezuela',
+    flag: 'https://upload.wikimedia.org/wikipedia/commons/0/06/Flag_of_Venezuela.svg',
+    number: '+58',
   },
   {
     name: 'Vietnam',
