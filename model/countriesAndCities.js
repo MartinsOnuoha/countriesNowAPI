@@ -46302,14 +46302,15 @@ const CountriesAndCities = [
   {
     country: 'Pakistan',
     cities: [
-      'Al Mawasi',
-      'Bethlehem',
-      'Gaza',
-      'Hebron',
-      'Jenin',
-      'Jericho',
-      'Nablus',
-      'Ramallah',
+      'Islamabad',
+      'Lahore',
+      'Karachi',
+      'Faisalabad',
+      'Rawalpindi',
+      'Multan',
+      'Peshawar',
+      'Quetta',
+      'Sialkot',
     ],
   },
   {
