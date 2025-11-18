@@ -26,7 +26,7 @@
     "hbs": "^4.1.1",
     "http-errors": "~1.6.3",
     "morgan": "~1.10.1",
-    "swagger-jsdoc": "^4.0.0",
+    "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^4.1.4"
   },
   "devDependencies": {
