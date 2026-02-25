@@ -7103,26 +7103,6 @@ const CountriesState = [
     currency: 'EUR',
     states: [
       {
-        id: 4800,
-        name: 'Alo',
-        state_code: 'WF-AL',
-      },
-      {
-        id: 4811,
-        name: 'Alsace',
-        state_code: 'A',
-      },
-      {
-        id: 4808,
-        name: 'Aquitaine',
-        state_code: 'B',
-      },
-      {
-        id: 4789,
-        name: 'Auvergne',
-        state_code: 'C',
-      },
-      {
         id: 4798,
         name: 'Auvergne-Rhône-Alpes',
         state_code: 'ARA',
@@ -7138,29 +7118,14 @@ const CountriesState = [
         state_code: 'BRE',
       },
       {
-        id: 4788,
-        name: 'Burgundy',
-        state_code: 'D',
-      },
-      {
         id: 4818,
         name: 'Centre-Val de Loire',
         state_code: 'CVL',
       },
       {
-        id: 4791,
-        name: 'Champagne-Ardenne',
-        state_code: 'G',
-      },
-      {
         id: 4806,
         name: 'Corsica',
         state_code: 'COR',
-      },
-      {
-        id: 4805,
-        name: 'Franche-Comté',
-        state_code: 'I',
       },
       {
         id: 4822,
@@ -7193,26 +7158,6 @@ const CountriesState = [
         state_code: 'IDF',
       },
       {
-        id: 4803,
-        name: 'Languedoc-Roussillon',
-        state_code: 'K',
-      },
-      {
-        id: 4792,
-        name: 'Limousin',
-        state_code: 'L',
-      },
-      {
-        id: 4801,
-        name: 'Lorraine',
-        state_code: 'M',
-      },
-      {
-        id: 4814,
-        name: 'Lower Normandy',
-        state_code: 'P',
-      },
-      {
         id: 4827,
         name: 'Martinique',
         state_code: 'MQ',
@@ -7221,16 +7166,6 @@ const CountriesState = [
         id: 4797,
         name: 'Mayotte',
         state_code: 'YT',
-      },
-      {
-        id: 4793,
-        name: 'Nord-Pas-de-Calais',
-        state_code: 'O',
-      },
-      {
-        id: 4804,
-        name: 'Normandy',
-        state_code: 'NOR',
       },
       {
         id: 4795,
@@ -7243,24 +7178,9 @@ const CountriesState = [
         state_code: 'OCC',
       },
       {
-        id: 4816,
-        name: 'Paris',
-        state_code: '75',
-      },
-      {
         id: 4802,
         name: 'Pays de la Loire',
         state_code: 'PDL',
-      },
-      {
-        id: 4790,
-        name: 'Picardy',
-        state_code: 'S',
-      },
-      {
-        id: 4815,
-        name: 'Poitou-Charentes',
-        state_code: 'T',
       },
       {
         id: 4812,
@@ -7271,11 +7191,6 @@ const CountriesState = [
         id: 4823,
         name: 'Réunion',
         state_code: 'RE',
-      },
-      {
-        id: 4813,
-        name: 'Rhône-Alpes',
-        state_code: 'V',
       },
       {
         id: 4794,
@@ -7291,21 +7206,6 @@ const CountriesState = [
         id: 4821,
         name: 'Saint Pierre and Miquelon',
         state_code: 'PM',
-      },
-      {
-        id: 4819,
-        name: 'Sigave',
-        state_code: 'WF-SG',
-      },
-      {
-        id: 4826,
-        name: 'Upper Normandy',
-        state_code: 'Q',
-      },
-      {
-        id: 4817,
-        name: 'Uvea',
-        state_code: 'WF-UV',
       },
       {
         id: 4810,
