@@ -1,9 +1,4 @@
-/**
- * The Elysia application.
- *
- * Separated from src/index.ts so tests can mount the app without binding a
- * port. Nothing here opens a socket.
- */
+/** Elysia app factory — exported separately so tests can mount without binding a port. */
 
 import cors from '@elysiajs/cors';
 import openapi from '@elysiajs/openapi';
@@ -14,14 +9,13 @@ import { ArtifactMissingError, getMeta, isReady } from './serving/artifact.ts';
 import { ResolutionError } from './serving/resolve.ts';
 import { InvalidCursorError } from './serving/queries.ts';
 import { DEFAULT_LANDING_DESIGN, isLandingDesign, renderLanding } from './landing.ts';
+import { join } from 'node:path';
+
+const FAVICON = join(import.meta.dir, '..', 'public', 'img', '1.png');
 
 const CACHE_MAX_AGE = Number(process.env.CACHE_MAX_AGE ?? 86_400);
 
-/**
- * HEAD counts. A cache that validates with HEAD and gets no ETag back has to
- * treat the entry as unvalidatable and refetch the body, which quietly turns
- * the cheapest request we serve into the most expensive one.
- */
+/** HEAD must share GET ETag/Cache-Control or CDNs refetch bodies. */
 const isCacheable = (method: string): boolean => method === 'GET' || method === 'HEAD';
 
 export function createApp() {
@@ -31,13 +25,7 @@ export function createApp() {
     app
       .use(cors())
 
-      // Elysia routes HEAD separately from GET, so without this every HEAD is
-      // a 404 — including the ones a CDN sends to revalidate. Re-dispatching as
-      // GET and dropping the body is what RFC 9110 asks for, and it keeps the
-      // ETag and Cache-Control identical to the GET they describe.
-      //
-      // Chaining mutates in place, so `app` here is the same instance the rest
-      // of this builder returns.
+      // Re-dispatch HEAD as GET (RFC 9110); Elysia treats HEAD separately.
       .onRequest(async ({ request }): Promise<Response | undefined> => {
         if (request.method !== 'HEAD') return undefined;
 
@@ -49,9 +37,7 @@ export function createApp() {
 
       .use(
         openapi({
-          // The plugin drops any path that looks like a static file, and
-          // `/v0.1/countries` looks like one because of the dot in the version.
-          // Without this the entire compatibility surface is undocumented.
+          // openapi exclude.staticFile: false — v0.1 paths look like static files.
           exclude: { staticFile: false },
           documentation: {
             info: {
@@ -84,10 +70,7 @@ export function createApp() {
 
       /* ---- caching ----------------------------------------------------- */
 
-      // The dataset is immutable between releases, so responses are too. A
-      // strong ETag derived from the dataset version means every replica emits
-      // the same validator for the same content, which is what lets a CDN
-      // absorb the traffic instead of the origin.
+      // Immutable dataset → versioned ETag + Cache-Control on GET/HEAD.
       .onAfterHandle(({ set, request }) => {
         if (!isCacheable(request.method)) return;
         if (new URL(request.url).pathname.startsWith('/health')) return;
@@ -102,8 +85,6 @@ export function createApp() {
         }
       })
 
-      // Conditional GET, answered before the body is ever built. With a CDN in
-      // front this is what most revalidation traffic costs us.
       .onRequest(({ request }): Response | undefined => {
         if (!isCacheable(request.method)) return undefined;
         const inm = request.headers.get('if-none-match');
@@ -125,9 +106,7 @@ export function createApp() {
           return {
             error: error.status === 409 ? 'ambiguous_reference' : 'not_found',
             message: error.detail,
-            // 409 is the interesting one. V1 silently returned the first
-            // array match for "Congo", which made the DRC unreachable. Naming
-            // both candidates turns a wrong answer into an answerable question.
+            // 409 lists ambiguous country candidates (V1 picked first "Congo").
             ...(error.candidates ? { candidates: error.candidates } : {})
           };
         }
@@ -159,9 +138,7 @@ export function createApp() {
 
       /* ---- health ------------------------------------------------------ */
 
-      // Liveness is separate from readiness on purpose. A replica with no
-      // artifact is alive but must not receive traffic, and conflating the two
-      // is how a bad deploy takes down a healthy fleet.
+      // /health = liveness; /ready = artifact readiness (503 without artifact).
       .get('/health', () => ({ status: 'ok' }), {
         detail: { summary: 'Liveness', tags: ['Reference'] }
       })
@@ -183,17 +160,15 @@ export function createApp() {
         },
         { detail: { summary: 'Readiness', tags: ['Reference'] } }
       )
+      // Same PNG as V1 /img/1.png; /favicon.ico aliases it.
+      .get('/img/1.png', () => new Response(Bun.file(FAVICON)), {
+        detail: { hide: true }
+      })
+      .get('/favicon.ico', () => new Response(Bun.file(FAVICON), {
+        headers: { 'content-type': 'image/png' }
+      }), { detail: { hide: true } })
 
-      // V1 served a hard-coded hbs view here — a single, non-scrolling hero
-      // with links out to GitHub, docs and a support link. This keeps that
-      // contract: `/` is for humans landing in a browser, `/v2`, `/v0.1` and
-      // `/openapi` are for everything else. Machine-readable service info
-      // lives at `/ready` (liveness + dataset version) instead of duplicating
-      // it here as JSON that nobody but this page ever fetched.
-      //
-      // Three designs ship side by side so the pick is an actual decision
-      // rather than a guess — see src/landing.ts. `?design=` previews the
-      // others without touching the default.
+      // HTML landing; ?design= previews variants (see landing.ts).
       .get(
         '/',
         ({ query, set }) => {
@@ -211,8 +186,6 @@ export function createApp() {
       )
 
       .use(v2)
-      // The v0.1 surface is split in two: bulk collections, and the `/q`
-      // lookups that V1 exposed under both GET and POST.
       .use(v01)
       .use(v01Lookups)
   );

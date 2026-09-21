@@ -1,26 +1,4 @@
-/**
- * The landing page.
- *
- * V1 served a single hard-coded hbs view at `/` — a cream card with a tilting
- * logo, three buttons (Contribute, API Docs, Support) and a live JSON sample
- * rendered by jQuery + tilt.js + renderjson.js. It never scrolled; the whole
- * pitch fit in one viewport.
- *
- * V2 keeps that constraint — one screen, no scroll, links out to GitHub and
- * the docs — but drops the runtime dependency on three CDN scripts. Every
- * design below is a single self-contained HTML string: inline CSS, no JS,
- * one Google Fonts link. There's nothing here to go down.
- *
- * Three directions are implemented so the design can actually be picked
- * rather than argued about in the abstract. Preview them side by side:
- *
- *   GET /?design=classic    warm, serif, a direct descendant of the V1 card
- *   GET /?design=terminal   dark, monospace, a curl example in place of copy
- *   GET /?design=editorial  off-white, oversized type, Swiss/editorial
- *
- * The default is set by `DEFAULT_LANDING_DESIGN` below; change one line to
- * ship a different pick permanently.
- */
+/** Self-contained HTML landing variants; DEFAULT_LANDING_DESIGN + ?design=. */
 
 export type LandingDesign = 'classic' | 'terminal' | 'editorial';
 
@@ -70,7 +48,8 @@ function shell(opts: {
 <title>${opts.title}</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="CountriesNow: countries, states and cities with full source provenance, served from a read-only artifact that can't go down.">
-<link rel="icon" href="data:,">
+<link rel="icon" href="/img/1.png" type="image/png">
+<link rel="shortcut icon" href="/img/1.png" type="image/x-icon">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 ${opts.fonts}
@@ -89,9 +68,6 @@ ${opts.body}
 
 const NAV_TOOLTIP = 'No key. No hardcoded JSON. No downtime philosophy.';
 
-/* ------------------------------------------------------------------------ *
- * classic — a direct descendant of the V1 card: cream, serif, three pills.
- * ------------------------------------------------------------------------ */
 function classicPage(ctx: LandingContext): string {
   const badge = ctx.datasetVersion ? `<span class="badge">dataset ${ctx.datasetVersion}</span>` : '';
   const body = `
@@ -135,9 +111,6 @@ h1{font-family:'Playfair Display',serif;font-weight:600;font-size:clamp(26px,4vw
   });
 }
 
-/* ------------------------------------------------------------------------ *
- * terminal — dark, monospace, the pitch made out of a curl example.
- * ------------------------------------------------------------------------ */
 function terminalPage(ctx: LandingContext): string {
   const version = ctx.datasetVersion ?? '…';
   const body = `
@@ -209,15 +182,12 @@ h1{font-size:clamp(30px,5.6vw,58px);line-height:1.02;margin:0 0 16px;font-weight
   });
 }
 
-/* ------------------------------------------------------------------------ *
- * editorial — off-white, oversized type, one accent, almost no chrome.
- * ------------------------------------------------------------------------ */
 function editorialPage(ctx: LandingContext): string {
   const version = ctx.datasetVersion ?? 'unreleased';
   const body = `
 <main class="wrap">
   <header class="row-top">
-    <span>CN / 02</span>
+    <span>CountriesNow</span>
     <span>dataset ${version}</span>
   </header>
   <h1>

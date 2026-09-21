@@ -23,6 +23,7 @@ RUN bun install --frozen-lockfile --production
 
 COPY tsconfig.json ./
 COPY src ./src
+COPY public ./public
 
 # ---- runtime ----------------------------------------------------------------
 
@@ -38,6 +39,7 @@ RUN addgroup -S app && adduser -S -G app app
 COPY --from=build --chown=app:app /app/node_modules ./node_modules
 COPY --from=build --chown=app:app /app/package.json ./package.json
 COPY --from=build --chown=app:app /app/src ./src
+COPY --from=build --chown=app:app /app/public ./public
 
 # Renamed to a fixed path so COUNTRIESNOW_ARTIFACT is static across releases.
 # The version is still authoritative inside the file and is what the ETag and
