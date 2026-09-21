@@ -1,0 +1,151 @@
+{
+  "id": "population-cities-filter",
+  "path": "/countries/population/cities/filter/q?limit=5&order=dsc",
+  "status": 200,
+  "body": {
+    "error": false,
+    "msg": "filtered result",
+    "data": [
+      {
+        "city": "Shanghai",
+        "country": "China",
+        "populationCounts": [
+          {
+            "year": "2000",
+            "value": "14348535",
+            "sex": "Both Sexes",
+            "reliabilty": "Final figure, complete"
+          }
+        ]
+      },
+      {
+        "city": "Istanbul",
+        "country": "Turkey",
+        "populationCounts": [
+          {
+            "year": "2012",
+            "value": "13596782",
+            "sex": "Both Sexes",
+            "reliabilty": "Final figure, complete"
+          }
+        ]
+      },
+      {
+        "city": "BUENOS AIRES",
+        "country": "Argentina",
+        "populationCounts": [
+          {
+            "year": "2013",
+            "value": "13339001.6015536",
+            "sex": "Both Sexes",
+            "reliabilty": "Final figure, complete"
+          },
+          {
+            "year": "2012",
+            "value": "13242375",
+            "sex": "Both Sexes",
+            "reliabilty": "Final figure, complete"
+          },
+          {
+            "year": "2010",
+            "value": "13047383.5911513",
+            "sex": "Both Sexes",
+            "reliabilty": "Final figure, complete"
+          },
+          {
+            "year": "1991",
+            "value": "2965403",
+            "sex": "Both Sexes",
+            "reliabilty": "Final figure, complete"
+          },
+          {
+            "year": "1991",
+            "value": "11298030",
+            "sex": "Both Sexes",
+            "reliabilty": "Final figure, complete"
+          }
+        ]
+      },
+      {
+        "city": "Mumbai (Bombay)",
+        "country": "India",
+        "populationCounts": [
+          {
+            "year": "2001",
+            "value": "11978450",
+            "sex": "Both Sexes",
+            "reliabilty": "Final figure, complete"
+          },
+          {
+            "year": "2001",
+            "value": "16434386",
+            "sex": "Both Sexes",
+            "reliabilty": "Final figure, complete"
+          }
+        ]
+      },
+      {
+        "city": "MOSKVA",
+        "country": "Russian Federation",
+        "populationCounts": [
+          {
+            "year": "2012",
+            "value": "11918057",
+            "sex": "Both Sexes",
+            "reliabilty": "Final figure, complete"
+          },
+          {
+            "year": "2011",
+            "value": "11577022",
+            "sex": "Both Sexes",
+            "reliabilty": "Final figure, complete"
+          },
+          {
+            "year": "2010",
+            "value": "11503501",
+            "sex": "Both Sexes",
+            "reliabilty": "Final figure, complete"
+          },
+          {
+            "year": "2010",
+            "value": "11503501",
+            "sex": "Both Sexes",
+            "reliabilty": "Final figure, complete"
+          },
+          {
+            "year": "2009",
+            "value": "10536005",
+            "sex": "Both Sexes",
+            "reliabilty": "Final figure, complete"
+          },
+          {
+            "year": "2008",
+            "value": "10489644",
+            "sex": "Both Sexes",
+            "reliabilty": "Final figure, complete"
+          },
+          {
+            "year": "2007",
+            "value": "10456490",
+            "sex": "Both Sexes",
+            "reliabilty": "Final figure, complete"
+          },
+          {
+            "year": "2006",
+            "value": "10433869",
+            "sex": "Both Sexes",
+            "reliabilty": "Final figure, complete"
+          },
+          {
+            "year": "2004",
+            "value": "10406578",
+            "sex": "Both Sexes",
+            "reliabilty": "Final figure, complete"
+          }
+        ]
+      }
+    ]
+  },
+  "capturedAt": "2026-08-07T03:22:19.351Z",
+  "capturedFrom": "https://countriesnow.space/api/v0.1"
+}

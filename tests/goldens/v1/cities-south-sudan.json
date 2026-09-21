@@ -1,0 +1,10 @@
+{
+  "id": "cities-south-sudan",
+  "path": "/countries/cities/q?country=South%20Sudan",
+  "status": 500,
+  "body": {
+    "__nonJson": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Internal Server Error</pre>\n</body>\n</html>\n"
+  },
+  "capturedAt": "2026-08-07T03:22:20.075Z",
+  "capturedFrom": "https://countriesnow.space/api/v0.1"
+}

@@ -1,0 +1,17 @@
+{
+  "id": "position-japan",
+  "path": "/countries/positions/q?country=Japan",
+  "status": 200,
+  "body": {
+    "error": false,
+    "msg": "country position retrieved",
+    "data": {
+      "name": "Japan",
+      "iso2": "JP",
+      "long": 138,
+      "lat": 36
+    }
+  },
+  "capturedAt": "2026-08-07T03:22:18.609Z",
+  "capturedFrom": "https://countriesnow.space/api/v0.1"
+}

@@ -1,0 +1,16 @@
+{
+  "id": "iso-germany",
+  "path": "/countries/iso/q?country=Germany",
+  "status": 200,
+  "body": {
+    "error": false,
+    "msg": "country's ISO code retrieved",
+    "data": {
+      "name": "Germany",
+      "Iso2": "DE",
+      "Iso3": "DEU"
+    }
+  },
+  "capturedAt": "2026-08-07T03:22:18.223Z",
+  "capturedFrom": "https://countriesnow.space/api/v0.1"
+}

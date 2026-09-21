@@ -1,0 +1,17 @@
+{
+  "id": "capital-nigeria",
+  "path": "/countries/capital/q?country=nigeria",
+  "status": 200,
+  "body": {
+    "error": false,
+    "msg": "country and capitals retrieved",
+    "data": {
+      "name": "Nigeria",
+      "capital": "Abuja",
+      "iso2": "NG",
+      "iso3": "NGA"
+    }
+  },
+  "capturedAt": "2026-08-07T03:22:17.852Z",
+  "capturedFrom": "https://countriesnow.space/api/v0.1"
+}

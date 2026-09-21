@@ -1,0 +1,11 @@
+{
+  "id": "capital-iso2",
+  "path": "/countries/capital/q?country=NG",
+  "status": 404,
+  "body": {
+    "error": true,
+    "msg": "country not found"
+  },
+  "capturedAt": "2026-08-07T03:22:17.861Z",
+  "capturedFrom": "https://countriesnow.space/api/v0.1"
+}

@@ -1,0 +1,186 @@
+{
+  "id": "states-france",
+  "path": "/countries/states/q?country=France",
+  "status": 200,
+  "body": {
+    "error": false,
+    "msg": "states in France retrieved",
+    "data": {
+      "name": "France",
+      "iso3": "FRA",
+      "iso2": "FR",
+      "states": [
+        {
+          "name": "Alo",
+          "state_code": "WF-AL"
+        },
+        {
+          "name": "Alsace",
+          "state_code": "A"
+        },
+        {
+          "name": "Aquitaine",
+          "state_code": "B"
+        },
+        {
+          "name": "Auvergne",
+          "state_code": "C"
+        },
+        {
+          "name": "Auvergne-Rhône-Alpes",
+          "state_code": "ARA"
+        },
+        {
+          "name": "Bourgogne-Franche-Comté",
+          "state_code": "BFC"
+        },
+        {
+          "name": "Brittany",
+          "state_code": "BRE"
+        },
+        {
+          "name": "Burgundy",
+          "state_code": "D"
+        },
+        {
+          "name": "Centre-Val de Loire",
+          "state_code": "CVL"
+        },
+        {
+          "name": "Champagne-Ardenne",
+          "state_code": "G"
+        },
+        {
+          "name": "Corsica",
+          "state_code": "COR"
+        },
+        {
+          "name": "Franche-Comté",
+          "state_code": "I"
+        },
+        {
+          "name": "French Guiana",
+          "state_code": "GF"
+        },
+        {
+          "name": "French Polynesia",
+          "state_code": "PF"
+        },
+        {
+          "name": "Grand Est",
+          "state_code": "GES"
+        },
+        {
+          "name": "Guadeloupe",
+          "state_code": "GP"
+        },
+        {
+          "name": "Hauts-de-France",
+          "state_code": "HDF"
+        },
+        {
+          "name": "Île-de-France",
+          "state_code": "IDF"
+        },
+        {
+          "name": "Languedoc-Roussillon",
+          "state_code": "K"
+        },
+        {
+          "name": "Limousin",
+          "state_code": "L"
+        },
+        {
+          "name": "Lorraine",
+          "state_code": "M"
+        },
+        {
+          "name": "Lower Normandy",
+          "state_code": "P"
+        },
+        {
+          "name": "Martinique",
+          "state_code": "MQ"
+        },
+        {
+          "name": "Mayotte",
+          "state_code": "YT"
+        },
+        {
+          "name": "Nord-Pas-de-Calais",
+          "state_code": "O"
+        },
+        {
+          "name": "Normandy",
+          "state_code": "NOR"
+        },
+        {
+          "name": "Nouvelle-Aquitaine",
+          "state_code": "NAQ"
+        },
+        {
+          "name": "Occitania",
+          "state_code": "OCC"
+        },
+        {
+          "name": "Paris",
+          "state_code": "75"
+        },
+        {
+          "name": "Pays de la Loire",
+          "state_code": "PDL"
+        },
+        {
+          "name": "Picardy",
+          "state_code": "S"
+        },
+        {
+          "name": "Poitou-Charentes",
+          "state_code": "T"
+        },
+        {
+          "name": "Provence-Alpes-Côte d'Azur",
+          "state_code": "PAC"
+        },
+        {
+          "name": "Réunion",
+          "state_code": "RE"
+        },
+        {
+          "name": "Rhône-Alpes",
+          "state_code": "V"
+        },
+        {
+          "name": "Saint Barthélemy",
+          "state_code": "BL"
+        },
+        {
+          "name": "Saint Martin",
+          "state_code": "MF"
+        },
+        {
+          "name": "Saint Pierre and Miquelon",
+          "state_code": "PM"
+        },
+        {
+          "name": "Sigave",
+          "state_code": "WF-SG"
+        },
+        {
+          "name": "Upper Normandy",
+          "state_code": "Q"
+        },
+        {
+          "name": "Uvea",
+          "state_code": "WF-UV"
+        },
+        {
+          "name": "Wallis and Futuna",
+          "state_code": "WF"
+        }
+      ]
+    }
+  },
+  "capturedAt": "2026-08-07T03:22:18.713Z",
+  "capturedFrom": "https://countriesnow.space/api/v0.1"
+}

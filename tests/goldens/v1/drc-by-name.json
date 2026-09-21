@@ -1,0 +1,17 @@
+{
+  "id": "drc-by-name",
+  "path": "/countries/capital/q?country=Democratic%20Republic%20of%20the%20Congo",
+  "status": 200,
+  "body": {
+    "error": false,
+    "msg": "country and capitals retrieved",
+    "data": {
+      "name": "Democratic Republic of the Congo",
+      "capital": "Kinshasa",
+      "iso2": "CD",
+      "iso3": "COD"
+    }
+  },
+  "capturedAt": "2026-08-07T03:22:20.087Z",
+  "capturedFrom": "https://countriesnow.space/api/v0.1"
+}

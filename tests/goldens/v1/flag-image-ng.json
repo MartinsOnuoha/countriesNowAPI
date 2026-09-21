@@ -1,0 +1,17 @@
+{
+  "id": "flag-image-ng",
+  "path": "/countries/flag/images/q?iso2=NG",
+  "status": 200,
+  "body": {
+    "error": false,
+    "msg": "Nigeria and flag retrieved",
+    "data": {
+      "name": "Nigeria",
+      "flag": "https://upload.wikimedia.org/wikipedia/commons/7/79/Flag_of_Nigeria.svg",
+      "iso2": "NG",
+      "iso3": "NGA"
+    }
+  },
+  "capturedAt": "2026-08-07T03:22:18.340Z",
+  "capturedFrom": "https://countriesnow.space/api/v0.1"
+}

@@ -1,0 +1,164 @@
+name: CI
+
+on:
+  push:
+    branches: [master, main, 'CHORE-rebuild']
+  pull_request:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  GEONAMES_TIER: cities15000
+
+jobs:
+  static:
+    name: Lint and typecheck
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+      - run: bun install --frozen-lockfile
+      - run: bun run lint
+      - run: bun run typecheck
+
+  # The dataset is built once and shared. Everything downstream reads the same
+  # bytes, so a gate failure and a test failure always refer to the same data.
+  dataset:
+    name: Build dataset
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.publish.outputs.version }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+      - run: bun install --frozen-lockfile
+
+      # Snapshots are content-addressed, so a cache hit skips the upstream
+      # fetch entirely and the run becomes fully deterministic.
+      - name: Cache upstream snapshots
+        uses: actions/cache@v4
+        with:
+          path: data/snapshots
+          key: snapshots-${{ hashFiles('harness/policy/**') }}-${{ github.run_id }}
+          restore-keys: |
+            snapshots-${{ hashFiles('harness/policy/**') }}-
+            snapshots-
+
+      - name: Pull upstream sources
+        run: bun run harness:pull
+
+      - name: Resolve into a candidate dataset
+        run: bun run harness:resolve --offline
+
+      - name: Publish artifact
+        id: publish
+        run: |
+          bun run harness:publish
+          echo "version=$(bun run --silent harness dataset-version)" >> "$GITHUB_OUTPUT"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: serving-artifact
+          path: data/artifacts/
+          retention-days: 7
+
+  # The three blocking gates from the plan. They run in parallel against the
+  # same artifact because they fail for independent reasons and a developer
+  # wants to see all three verdicts, not just the first.
+  invariants:
+    name: Gate — invariants
+    needs: dataset
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+      - run: bun install --frozen-lockfile
+      - uses: actions/download-artifact@v4
+        with:
+          name: serving-artifact
+          path: data/artifacts/
+
+      # Every historical bug in the tracker is an executable rule here.
+      - name: Invariant suite
+        run: bun run harness:gate
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: gate-report
+          path: data/artifacts/gate-report.json
+          retention-days: 7
+          if-no-files-found: ignore
+
+  goldens:
+    name: Gate — v0.1 goldens and API tests
+    needs: dataset
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+      - run: bun install --frozen-lockfile
+      - uses: actions/download-artifact@v4
+        with:
+          name: serving-artifact
+          path: data/artifacts/
+
+      # Replays committed V1 responses against the shim. Deliberately offline:
+      # V1's uptime is the problem we are solving, not something to depend on.
+      - name: Test suite
+        run: bun test
+
+  bench:
+    name: Gate — latency
+    needs: dataset
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+      - run: bun install --frozen-lockfile
+      - uses: actions/download-artifact@v4
+        with:
+          name: serving-artifact
+          path: data/artifacts/
+
+      - name: Latency budgets
+        run: bun run harness:bench --ci
+
+  # A single required check, so branch protection does not need updating every
+  # time a gate is added.
+  ci:
+    name: CI
+    if: always()
+    needs: [static, dataset, invariants, goldens, bench]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+      # Asserting every result is `success` rather than looking for `failure`,
+      # so a cancelled or skipped gate is not silently treated as a pass.
+      - name: Verify every gate passed
+        run: |
+          echo '${{ toJSON(needs) }}' > needs.json
+          bad=$(bun -e '
+            const needs = JSON.parse(await Bun.file("needs.json").text());
+            const bad = Object.entries(needs).filter(([, v]) => v.result !== "success");
+            console.log(bad.map(([k, v]) => `${k}: ${v.result}`).join("\n"));
+          ')
+          if [ -n "$bad" ]; then
+            echo "$bad"
+            exit 1
+          fi
+          echo "all gates passed"

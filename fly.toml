@@ -1,0 +1,64 @@
+# Multi-replica deployment.
+#
+# Nothing here is stateful. Every replica holds an identical copy of the same
+# immutable artifact and emits the same ETag for the same content, so requests
+# are interchangeable between them and a CDN can collapse them regardless of
+# which one answered. Scaling is `fly scale count N`; there is no coordination.
+#
+# Fly is one option, not a requirement. Cloud Run, ECS or a Kubernetes
+# Deployment work the same way — the design constraint the platform has to meet
+# is only "run N stateless copies of one image". See docs/DEPLOYMENT.md.
+
+app = "countriesnow"
+primary_region = "iad"
+
+[build]
+  dockerfile = "Dockerfile"
+
+[env]
+  PORT = "3000"
+  # Versioned data behind a CDN: cache hard, and let stale-while-revalidate
+  # absorb the gap during a release rather than stampeding the origin.
+  CACHE_MAX_AGE = "86400"
+
+[http_service]
+  internal_port = 3000
+  force_https = true
+  auto_stop_machines = "off"
+  # Two is the floor, not a target. A single replica means a deploy is an
+  # outage, which is the failure mode this rebuild exists to remove.
+  min_machines_running = 2
+  processes = ["app"]
+
+  [http_service.concurrency]
+    type = "requests"
+    soft_limit = 400
+    hard_limit = 600
+
+  # Liveness and readiness are separate on purpose. A replica whose artifact
+  # failed to load is running but must not be routed to.
+  [[http_service.checks]]
+    grace_period = "3s"
+    interval = "15s"
+    method = "get"
+    path = "/health"
+    timeout = "2s"
+
+  [[http_service.checks]]
+    grace_period = "5s"
+    interval = "30s"
+    method = "get"
+    path = "/ready"
+    timeout = "2s"
+
+[[vm]]
+  size = "shared-cpu-1x"
+  # The artifact is ~38 MB at cities15000 and ~1.4 GB at allCountries. Memory
+  # is sized so the OS page cache can hold the working set: after the first few
+  # requests the hot pages are resident and a query never touches the disk.
+  memory = "1gb"
+
+[deploy]
+  # Rolling, because every replica is interchangeable and there is no schema
+  # migration to coordinate — the new dataset ships inside the new image.
+  strategy = "rolling"

@@ -1,0 +1,11 @@
+{
+  "id": "err-info-no-returns",
+  "path": "/countries/info",
+  "status": 400,
+  "body": {
+    "error": true,
+    "msg": "you must specify data to fetch e.g ?returns=unicodeFlag,currency,image"
+  },
+  "capturedAt": "2026-08-07T03:22:19.708Z",
+  "capturedFrom": "https://countriesnow.space/api/v0.1"
+}

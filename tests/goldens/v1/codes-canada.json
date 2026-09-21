@@ -1,0 +1,16 @@
+{
+  "id": "codes-canada",
+  "path": "/countries/codes/q?country=Canada",
+  "status": 200,
+  "body": {
+    "error": false,
+    "msg": "Canada dial code retrieved",
+    "data": {
+      "name": "Canada",
+      "code": "CA",
+      "dial_code": "+1"
+    }
+  },
+  "capturedAt": "2026-08-07T03:22:18.232Z",
+  "capturedFrom": "https://countriesnow.space/api/v0.1"
+}

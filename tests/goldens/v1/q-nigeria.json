@@ -1,0 +1,11 @@
+{
+  "id": "q-nigeria",
+  "path": "/countries/q?country=nigeria",
+  "status": 404,
+  "body": {
+    "error": true,
+    "msg": "you seem to be lost"
+  },
+  "capturedAt": "2026-08-07T03:22:17.964Z",
+  "capturedFrom": "https://countriesnow.space/api/v0.1"
+}

@@ -35,12 +35,22 @@ yarn-error.log*
 .vercel
 
 **/*.trace
-**/*.zip
 **/*.tar.gz
 **/*.tgz
 **/*.log
 package-lock.json
 **/*.bun
 
-# drizzle
-/drizzle
+# Drizzle migrations under /drizzle ARE version-controlled on purpose.
+# Only the local studio scratch dir is ignored.
+/drizzle/.drizzle
+
+# Pipeline working data: upstream snapshots and built serving artifacts are
+# reproducible from the harness, so they are never committed.
+/data/snapshots
+/data/artifacts
+/data/tmp
+*.sqlite
+*.sqlite-journal
+*.sqlite-wal
+*.sqlite-shm

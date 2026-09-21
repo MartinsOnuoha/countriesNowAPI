@@ -1,0 +1,11 @@
+{
+  "id": "err-missing-country",
+  "path": "/countries/capital/q",
+  "status": 400,
+  "body": {
+    "error": true,
+    "msg": "missing param (country or iso2)"
+  },
+  "capturedAt": "2026-08-07T03:22:19.448Z",
+  "capturedFrom": "https://countriesnow.space/api/v0.1"
+}

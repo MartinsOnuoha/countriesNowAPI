@@ -1,0 +1,23 @@
+# The build context is deliberately small: source, lockfile, and one artifact.
+
+node_modules
+.git
+.github
+.vscode
+build
+tests
+harness
+drizzle
+docs
+
+# Upstream pulls are hundreds of megabytes and belong to the curation plane.
+# The published artifact is copied in explicitly by the Dockerfile.
+data/snapshots
+data/tmp
+data/artifacts/*.json
+
+.env
+.env.*
+!.env.example
+*.log
+.DS_Store

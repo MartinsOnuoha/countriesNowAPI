@@ -1,0 +1,199 @@
+{
+  "id": "positions-range",
+  "path": "/countries/positions/range/q?type=lat&min=0&max=10",
+  "status": 200,
+  "body": {
+    "error": false,
+    "msg": "countries between lat of (0 and 10)",
+    "data": [
+      {
+        "name": "Benin",
+        "iso2": "BJ",
+        "long": 2.25,
+        "lat": 9.5
+      },
+      {
+        "name": "Brunei Darussalam",
+        "iso2": "BN",
+        "long": 114.6667,
+        "lat": 4.5
+      },
+      {
+        "name": "Cameroon",
+        "iso2": "CM",
+        "long": 12,
+        "lat": 6
+      },
+      {
+        "name": "Central African Republic",
+        "iso2": "CF",
+        "long": 21,
+        "lat": 7
+      },
+      {
+        "name": "Colombia",
+        "iso2": "CO",
+        "long": -72,
+        "lat": 4
+      },
+      {
+        "name": "Congo, The Democratic Republic of the",
+        "iso2": "CD",
+        "long": 25,
+        "lat": "0"
+      },
+      {
+        "name": "Costa Rica",
+        "iso2": "CR",
+        "long": -84,
+        "lat": 10
+      },
+      {
+        "name": "Ivory Coast",
+        "iso2": "CI",
+        "long": -5,
+        "lat": 8
+      },
+      {
+        "name": "Equatorial Guinea",
+        "iso2": "GQ",
+        "long": 10,
+        "lat": 2
+      },
+      {
+        "name": "Ethiopia",
+        "iso2": "ET",
+        "long": 38,
+        "lat": 8
+      },
+      {
+        "name": "Ghana",
+        "iso2": "GH",
+        "long": -2,
+        "lat": 8
+      },
+      {
+        "name": "Guyana",
+        "iso2": "GY",
+        "long": -59,
+        "lat": 5
+      },
+      {
+        "name": "Kenya",
+        "iso2": "KE",
+        "long": 38,
+        "lat": 1
+      },
+      {
+        "name": "Kiribati",
+        "iso2": "KI",
+        "long": 173,
+        "lat": 1.4167
+      },
+      {
+        "name": "Liberia",
+        "iso2": "LR",
+        "long": -9.5,
+        "lat": 6.5
+      },
+      {
+        "name": "Malaysia",
+        "iso2": "MY",
+        "long": 112.5,
+        "lat": 2.5
+      },
+      {
+        "name": "Maldives",
+        "iso2": "MV",
+        "long": 73,
+        "lat": 3.25
+      },
+      {
+        "name": "Marshall Islands",
+        "iso2": "MH",
+        "long": 168,
+        "lat": 9
+      },
+      {
+        "name": "Micronesia, Federated States of",
+        "iso2": "FM",
+        "long": 158.25,
+        "lat": 6.9167
+      },
+      {
+        "name": "Nigeria",
+        "iso2": "NG",
+        "long": 8,
+        "lat": 10
+      },
+      {
+        "name": "Palau",
+        "iso2": "PW",
+        "long": 134.5,
+        "lat": 7.5
+      },
+      {
+        "name": "Panama",
+        "iso2": "PA",
+        "long": -80,
+        "lat": 9
+      },
+      {
+        "name": "Sao Tome and Principe",
+        "iso2": "ST",
+        "long": 7,
+        "lat": 1
+      },
+      {
+        "name": "Sierra Leone",
+        "iso2": "SL",
+        "long": -11.5,
+        "lat": 8.5
+      },
+      {
+        "name": "Singapore",
+        "iso2": "SG",
+        "long": 103.8,
+        "lat": 1.3667
+      },
+      {
+        "name": "Somalia",
+        "iso2": "SO",
+        "long": 49,
+        "lat": 10
+      },
+      {
+        "name": "Sri Lanka",
+        "iso2": "LK",
+        "long": 81,
+        "lat": 7
+      },
+      {
+        "name": "Suriname",
+        "iso2": "SR",
+        "long": -56,
+        "lat": 4
+      },
+      {
+        "name": "Togo",
+        "iso2": "TG",
+        "long": 1.1667,
+        "lat": 8
+      },
+      {
+        "name": "Uganda",
+        "iso2": "UG",
+        "long": 32,
+        "lat": 1
+      },
+      {
+        "name": "Venezuela, Bolivarian Republic of",
+        "iso2": "VE",
+        "long": -66,
+        "lat": 8
+      }
+    ]
+  },
+  "capturedAt": "2026-08-07T03:22:19.351Z",
+  "capturedFrom": "https://countriesnow.space/api/v0.1"
+}

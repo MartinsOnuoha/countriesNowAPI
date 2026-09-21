@@ -1,0 +1,150 @@
+{
+  "id": "states-sri-lanka",
+  "path": "/countries/states/q?country=Sri%20Lanka",
+  "status": 200,
+  "body": {
+    "error": false,
+    "msg": "states in Sri Lanka retrieved",
+    "data": {
+      "name": "Sri Lanka",
+      "iso3": "LKA",
+      "iso2": "LK",
+      "states": [
+        {
+          "name": "Ampara District",
+          "state_code": "52"
+        },
+        {
+          "name": "Anuradhapura District",
+          "state_code": "71"
+        },
+        {
+          "name": "Badulla District",
+          "state_code": "81"
+        },
+        {
+          "name": "Batticaloa District",
+          "state_code": "51"
+        },
+        {
+          "name": "Central Province",
+          "state_code": "2"
+        },
+        {
+          "name": "Colombo District",
+          "state_code": "11"
+        },
+        {
+          "name": "Eastern Province",
+          "state_code": "5"
+        },
+        {
+          "name": "Galle District",
+          "state_code": "31"
+        },
+        {
+          "name": "Gampaha District",
+          "state_code": "12"
+        },
+        {
+          "name": "Hambantota District",
+          "state_code": "33"
+        },
+        {
+          "name": "Jaffna District",
+          "state_code": "41"
+        },
+        {
+          "name": "Kalutara District",
+          "state_code": "13"
+        },
+        {
+          "name": "Kandy District",
+          "state_code": "21"
+        },
+        {
+          "name": "Kegalle District",
+          "state_code": "92"
+        },
+        {
+          "name": "Kilinochchi District",
+          "state_code": "42"
+        },
+        {
+          "name": "Mannar District",
+          "state_code": "43"
+        },
+        {
+          "name": "Matale District",
+          "state_code": "22"
+        },
+        {
+          "name": "Matara District",
+          "state_code": "32"
+        },
+        {
+          "name": "Monaragala District",
+          "state_code": "82"
+        },
+        {
+          "name": "Mullaitivu District",
+          "state_code": "45"
+        },
+        {
+          "name": "North Central Province",
+          "state_code": "7"
+        },
+        {
+          "name": "North Western Province",
+          "state_code": "6"
+        },
+        {
+          "name": "Northern Province",
+          "state_code": "4"
+        },
+        {
+          "name": "Nuwara Eliya District",
+          "state_code": "23"
+        },
+        {
+          "name": "Polonnaruwa District",
+          "state_code": "72"
+        },
+        {
+          "name": "Puttalam District",
+          "state_code": "62"
+        },
+        {
+          "name": "Ratnapura district",
+          "state_code": "91"
+        },
+        {
+          "name": "Sabaragamuwa Province",
+          "state_code": "9"
+        },
+        {
+          "name": "Southern Province",
+          "state_code": "3"
+        },
+        {
+          "name": "Trincomalee District",
+          "state_code": "53"
+        },
+        {
+          "name": "Uva Province",
+          "state_code": "8"
+        },
+        {
+          "name": "Vavuniya District",
+          "state_code": "44"
+        },
+        {
+          "name": "Western Province",
+          "state_code": "1"
+        }
+      ]
+    }
+  },
+  "capturedAt": "2026-08-07T03:22:18.609Z",
+  "capturedFrom": "https://countriesnow.space/api/v0.1"
+}
