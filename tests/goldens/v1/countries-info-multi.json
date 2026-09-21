@@ -1,0 +1,1507 @@
+{
+  "id": "countries-info-multi",
+  "path": "/countries/info?returns=capital,iso2,unicodeFlag",
+  "status": 200,
+  "body": {
+    "error": false,
+    "msg": "countries details: 'capital,iso2,unicodeFlag' have been retrieved",
+    "data": [
+      {
+        "name": "Bangladesh",
+        "unicodeFlag": "🇧🇩",
+        "capital": "Dhaka",
+        "iso2": "BD"
+      },
+      {
+        "name": "Belgium",
+        "unicodeFlag": "🇧🇪",
+        "capital": "Brussels",
+        "iso2": "BE"
+      },
+      {
+        "name": "Burkina Faso",
+        "unicodeFlag": "🇧🇫",
+        "capital": "Ouagadougou",
+        "iso2": "BF"
+      },
+      {
+        "name": "Bulgaria",
+        "unicodeFlag": "🇧🇬",
+        "capital": "Sofia",
+        "iso2": "BG"
+      },
+      {
+        "name": "Bosnia and Herzegovina",
+        "unicodeFlag": "🇧🇦",
+        "capital": "Sarajevo",
+        "iso2": "BA"
+      },
+      {
+        "name": "Barbados",
+        "unicodeFlag": "🇧🇧",
+        "capital": "Bridgetown",
+        "iso2": "BB"
+      },
+      {
+        "name": "Wallis and Futuna",
+        "unicodeFlag": "🇼🇫",
+        "capital": "Mata Utu",
+        "iso2": "WF"
+      },
+      {
+        "name": "Saint Barthelemy",
+        "unicodeFlag": "🇧🇱",
+        "capital": "Gustavia",
+        "iso2": "BL"
+      },
+      {
+        "name": "Bermuda",
+        "unicodeFlag": "🇧🇲",
+        "capital": "Hamilton",
+        "iso2": "BM"
+      },
+      {
+        "name": "Brunei",
+        "unicodeFlag": "🇧🇳",
+        "capital": "Bandar Seri Begawan",
+        "iso2": "BN"
+      },
+      {
+        "name": "Bolivia",
+        "unicodeFlag": "🇧🇴",
+        "capital": "Sucre",
+        "iso2": "BO"
+      },
+      {
+        "name": "Bahrain",
+        "unicodeFlag": "🇧🇭",
+        "capital": "Manama",
+        "iso2": "BH"
+      },
+      {
+        "name": "Burundi",
+        "unicodeFlag": "🇧🇮",
+        "capital": "Bujumbura",
+        "iso2": "BI"
+      },
+      {
+        "name": "Benin",
+        "unicodeFlag": "🇧🇯",
+        "capital": "Porto-Novo",
+        "iso2": "BJ"
+      },
+      {
+        "name": "Bhutan",
+        "unicodeFlag": "🇧🇹",
+        "capital": "Thimphu",
+        "iso2": "BT"
+      },
+      {
+        "name": "Jamaica",
+        "unicodeFlag": "🇯🇲",
+        "capital": "Kingston",
+        "iso2": "JM"
+      },
+      {
+        "name": "Bouvet Island",
+        "unicodeFlag": "🇧🇻",
+        "iso2": "BV"
+      },
+      {
+        "name": "Botswana",
+        "unicodeFlag": "🇧🇼",
+        "capital": "Gaborone",
+        "iso2": "BW"
+      },
+      {
+        "name": "Samoa",
+        "unicodeFlag": "🇼🇸",
+        "capital": "Apia",
+        "iso2": "WS"
+      },
+      {
+        "name": "Bonaire, Saint Eustatius and Saba ",
+        "unicodeFlag": "🇧🇶",
+        "iso2": "BQ"
+      },
+      {
+        "name": "Brazil",
+        "unicodeFlag": "🇧🇷",
+        "capital": "Brasilia",
+        "iso2": "BR"
+      },
+      {
+        "name": "Bahamas",
+        "unicodeFlag": "🇧🇸",
+        "capital": "Nassau",
+        "iso2": "BS"
+      },
+      {
+        "name": "Jersey",
+        "unicodeFlag": "🇯🇪",
+        "capital": "Saint Helier",
+        "iso2": "JE"
+      },
+      {
+        "name": "Belarus",
+        "unicodeFlag": "🇧🇾",
+        "capital": "Minsk",
+        "iso2": "BY"
+      },
+      {
+        "name": "Belize",
+        "unicodeFlag": "🇧🇿",
+        "capital": "Belmopan",
+        "iso2": "BZ"
+      },
+      {
+        "name": "Russia",
+        "unicodeFlag": "🇷🇺",
+        "capital": "Moscow",
+        "iso2": "RU"
+      },
+      {
+        "name": "Rwanda",
+        "unicodeFlag": "🇷🇼",
+        "capital": "Kigali",
+        "iso2": "RW"
+      },
+      {
+        "name": "Serbia",
+        "unicodeFlag": "🇷🇸",
+        "capital": "Belgrade",
+        "iso2": "RS"
+      },
+      {
+        "name": "Timor-Leste",
+        "unicodeFlag": "🇹🇱",
+        "capital": "Dili",
+        "iso2": "TL"
+      },
+      {
+        "name": "Réunion",
+        "unicodeFlag": "🇷🇪",
+        "capital": "Saint-Denis",
+        "iso2": "RE"
+      },
+      {
+        "name": "Turkmenistan",
+        "unicodeFlag": "🇹🇲",
+        "capital": "Ashgabat",
+        "iso2": "TM"
+      },
+      {
+        "name": "Tajikistan",
+        "unicodeFlag": "🇹🇯",
+        "capital": "Dushanbe",
+        "iso2": "TJ"
+      },
+      {
+        "name": "Romania",
+        "unicodeFlag": "🇷🇴",
+        "capital": "Bucharest",
+        "iso2": "RO"
+      },
+      {
+        "name": "Tokelau",
+        "unicodeFlag": "🇹🇰",
+        "iso2": "TK"
+      },
+      {
+        "name": "Guinea-Bissau",
+        "unicodeFlag": "🇬🇼",
+        "capital": "Bissau",
+        "iso2": "GW"
+      },
+      {
+        "name": "Guam",
+        "unicodeFlag": "🇬🇺",
+        "capital": "Hagatna",
+        "iso2": "GU"
+      },
+      {
+        "name": "Guatemala",
+        "unicodeFlag": "🇬🇹",
+        "capital": "Guatemala City",
+        "iso2": "GT"
+      },
+      {
+        "name": "South Georgia and the South Sandwich Islands",
+        "unicodeFlag": "🇬🇸",
+        "capital": "Grytviken",
+        "iso2": "GS"
+      },
+      {
+        "name": "Greece",
+        "unicodeFlag": "🇬🇷",
+        "capital": "Athens",
+        "iso2": "GR"
+      },
+      {
+        "name": "Equatorial Guinea",
+        "unicodeFlag": "🇬🇶",
+        "capital": "Malabo",
+        "iso2": "GQ"
+      },
+      {
+        "name": "Guadeloupe",
+        "unicodeFlag": "🇬🇵",
+        "capital": "Basse-Terre",
+        "iso2": "GP"
+      },
+      {
+        "name": "Japan",
+        "unicodeFlag": "🇯🇵",
+        "capital": "Tokyo",
+        "iso2": "JP"
+      },
+      {
+        "name": "Guyana",
+        "unicodeFlag": "🇬🇾",
+        "capital": "Georgetown",
+        "iso2": "GY"
+      },
+      {
+        "name": "Guernsey",
+        "unicodeFlag": "🇬🇬",
+        "capital": "St Peter Port",
+        "iso2": "GG"
+      },
+      {
+        "name": "Georgia",
+        "unicodeFlag": "🇬🇪",
+        "capital": "Tbilisi",
+        "iso2": "GE"
+      },
+      {
+        "name": "Grenada",
+        "unicodeFlag": "🇬🇩",
+        "capital": "St. George's",
+        "iso2": "GD"
+      },
+      {
+        "name": "United Kingdom",
+        "unicodeFlag": "🇬🇧",
+        "capital": "London",
+        "iso2": "GB"
+      },
+      {
+        "name": "Gabon",
+        "unicodeFlag": "🇬🇦",
+        "capital": "Libreville",
+        "iso2": "GA"
+      },
+      {
+        "name": "El Salvador",
+        "unicodeFlag": "🇸🇻",
+        "capital": "San Salvador",
+        "iso2": "SV"
+      },
+      {
+        "name": "Guinea",
+        "unicodeFlag": "🇬🇳",
+        "capital": "Conakry",
+        "iso2": "GN"
+      },
+      {
+        "name": "Gambia",
+        "unicodeFlag": "🇬🇲",
+        "capital": "Banjul",
+        "iso2": "GM"
+      },
+      {
+        "name": "Greenland",
+        "unicodeFlag": "🇬🇱",
+        "capital": "Nuuk",
+        "iso2": "GL"
+      },
+      {
+        "name": "Gibraltar",
+        "unicodeFlag": "🇬🇮",
+        "capital": "Gibraltar",
+        "iso2": "GI"
+      },
+      {
+        "name": "Ghana",
+        "unicodeFlag": "🇬🇭",
+        "capital": "Accra",
+        "iso2": "GH"
+      },
+      {
+        "name": "Oman",
+        "unicodeFlag": "🇴🇲",
+        "capital": "Muscat",
+        "iso2": "OM"
+      },
+      {
+        "name": "Tunisia",
+        "unicodeFlag": "🇹🇳",
+        "capital": "Tunis",
+        "iso2": "TN"
+      },
+      {
+        "name": "Jordan",
+        "unicodeFlag": "🇯🇴",
+        "capital": "Amman",
+        "iso2": "JO"
+      },
+      {
+        "name": "Croatia",
+        "unicodeFlag": "🇭🇷",
+        "capital": "Zagreb",
+        "iso2": "HR"
+      },
+      {
+        "name": "Haiti",
+        "unicodeFlag": "🇭🇹",
+        "capital": "Port-au-Prince",
+        "iso2": "HT"
+      },
+      {
+        "name": "Hungary",
+        "unicodeFlag": "🇭🇺",
+        "capital": "Budapest",
+        "iso2": "HU"
+      },
+      {
+        "name": "Hong Kong",
+        "unicodeFlag": "🇭🇰",
+        "capital": "Hong Kong",
+        "iso2": "HK"
+      },
+      {
+        "name": "Honduras",
+        "unicodeFlag": "🇭🇳",
+        "capital": "Tegucigalpa",
+        "iso2": "HN"
+      },
+      {
+        "name": "Heard Island and McDonald Islands",
+        "unicodeFlag": "🇭🇲",
+        "iso2": "HM"
+      },
+      {
+        "name": "Venezuela",
+        "unicodeFlag": "🇻🇪",
+        "capital": "Caracas",
+        "iso2": "VE"
+      },
+      {
+        "name": "Vatican City State (Holy See)",
+        "unicodeFlag": "🇻🇦",
+        "capital": "Vatican City",
+        "iso2": "VA"
+      },
+      {
+        "name": "Puerto Rico",
+        "unicodeFlag": "🇵🇷",
+        "capital": "San Juan",
+        "iso2": "PR"
+      },
+      {
+        "name": "Palestinian Territory",
+        "unicodeFlag": "🇵🇸",
+        "capital": "East Jerusalem",
+        "iso2": "PS"
+      },
+      {
+        "name": "Palau",
+        "unicodeFlag": "🇵🇼",
+        "capital": "Melekeok",
+        "iso2": "PW"
+      },
+      {
+        "name": "Portugal",
+        "unicodeFlag": "🇵🇹",
+        "capital": "Lisbon",
+        "iso2": "PT"
+      },
+      {
+        "name": "Svalbard and Jan Mayen",
+        "unicodeFlag": "🇸🇯",
+        "capital": "Longyearbyen",
+        "iso2": "SJ"
+      },
+      {
+        "name": "Paraguay",
+        "unicodeFlag": "🇵🇾",
+        "capital": "Asuncion",
+        "iso2": "PY"
+      },
+      {
+        "name": "Iraq",
+        "unicodeFlag": "🇮🇶",
+        "capital": "Baghdad",
+        "iso2": "IQ"
+      },
+      {
+        "name": "Panama",
+        "unicodeFlag": "🇵🇦",
+        "capital": "Panama City",
+        "iso2": "PA"
+      },
+      {
+        "name": "French Polynesia",
+        "unicodeFlag": "🇵🇫",
+        "capital": "Papeete",
+        "iso2": "PF"
+      },
+      {
+        "name": "Papua New Guinea",
+        "unicodeFlag": "🇵🇬",
+        "capital": "Port Moresby",
+        "iso2": "PG"
+      },
+      {
+        "name": "Peru",
+        "unicodeFlag": "🇵🇪",
+        "capital": "Lima",
+        "iso2": "PE"
+      },
+      {
+        "name": "Pakistan",
+        "unicodeFlag": "🇵🇰",
+        "capital": "Islamabad",
+        "iso2": "PK"
+      },
+      {
+        "name": "Philippines",
+        "unicodeFlag": "🇵🇭",
+        "capital": "Manila",
+        "iso2": "PH"
+      },
+      {
+        "name": "Pitcairn",
+        "unicodeFlag": "🇵🇳",
+        "capital": "Adamstown",
+        "iso2": "PN"
+      },
+      {
+        "name": "Poland",
+        "unicodeFlag": "🇵🇱",
+        "capital": "Warsaw",
+        "iso2": "PL"
+      },
+      {
+        "name": "Saint Pierre and Miquelon",
+        "unicodeFlag": "🇵🇲",
+        "capital": "Saint-Pierre",
+        "iso2": "PM"
+      },
+      {
+        "name": "Zambia",
+        "unicodeFlag": "🇿🇲",
+        "capital": "Lusaka",
+        "iso2": "ZM"
+      },
+      {
+        "name": "Western Sahara",
+        "unicodeFlag": "🇪🇭",
+        "capital": "El-Aaiun",
+        "iso2": "EH"
+      },
+      {
+        "name": "Estonia",
+        "unicodeFlag": "🇪🇪",
+        "capital": "Tallinn",
+        "iso2": "EE"
+      },
+      {
+        "name": "Egypt",
+        "unicodeFlag": "🇪🇬",
+        "capital": "Cairo",
+        "iso2": "EG"
+      },
+      {
+        "name": "Cocos (Keeling) Islands",
+        "unicodeFlag": "🇨🇨",
+        "capital": "West Island",
+        "iso2": "CC"
+      },
+      {
+        "name": "South Africa",
+        "unicodeFlag": "🇿🇦",
+        "capital": "Pretoria",
+        "iso2": "ZA"
+      },
+      {
+        "name": "Ecuador",
+        "unicodeFlag": "🇪🇨",
+        "capital": "Quito",
+        "iso2": "EC"
+      },
+      {
+        "name": "Italy",
+        "unicodeFlag": "🇮🇹",
+        "capital": "Rome",
+        "iso2": "IT"
+      },
+      {
+        "name": "Vietnam",
+        "unicodeFlag": "🇻🇳",
+        "capital": "Hanoi",
+        "iso2": "VN"
+      },
+      {
+        "name": "Solomon Islands",
+        "unicodeFlag": "🇸🇧",
+        "capital": "Honiara",
+        "iso2": "SB"
+      },
+      {
+        "name": "Ethiopia",
+        "unicodeFlag": "🇪🇹",
+        "capital": "Addis Ababa",
+        "iso2": "ET"
+      },
+      {
+        "name": "Somalia",
+        "unicodeFlag": "🇸🇴",
+        "capital": "Mogadishu",
+        "iso2": "SO"
+      },
+      {
+        "name": "Zimbabwe",
+        "unicodeFlag": "🇿🇼",
+        "capital": "Harare",
+        "iso2": "ZW"
+      },
+      {
+        "name": "Saudi Arabia",
+        "unicodeFlag": "🇸🇦",
+        "capital": "Riyadh",
+        "iso2": "SA"
+      },
+      {
+        "name": "Spain",
+        "unicodeFlag": "🇪🇸",
+        "capital": "Madrid",
+        "iso2": "ES"
+      },
+      {
+        "name": "Eritrea",
+        "unicodeFlag": "🇪🇷",
+        "capital": "Asmara",
+        "iso2": "ER"
+      },
+      {
+        "name": "Montenegro",
+        "unicodeFlag": "🇲🇪",
+        "capital": "Podgorica",
+        "iso2": "ME"
+      },
+      {
+        "name": "Moldova",
+        "unicodeFlag": "🇲🇩",
+        "capital": "Chisinau",
+        "iso2": "MD"
+      },
+      {
+        "name": "Madagascar",
+        "unicodeFlag": "🇲🇬",
+        "capital": "Antananarivo",
+        "iso2": "MG"
+      },
+      {
+        "name": "Saint Martin",
+        "unicodeFlag": "🇲🇫",
+        "capital": "Marigot",
+        "iso2": "MF"
+      },
+      {
+        "name": "Morocco",
+        "unicodeFlag": "🇲🇦",
+        "capital": "Rabat",
+        "iso2": "MA"
+      },
+      {
+        "name": "Monaco",
+        "unicodeFlag": "🇲🇨",
+        "capital": "Monaco",
+        "iso2": "MC"
+      },
+      {
+        "name": "Uzbekistan",
+        "unicodeFlag": "🇺🇿",
+        "capital": "Tashkent",
+        "iso2": "UZ"
+      },
+      {
+        "name": "Myanmar",
+        "unicodeFlag": "🇲🇲",
+        "capital": "Nay Pyi Taw",
+        "iso2": "MM"
+      },
+      {
+        "name": "Mali",
+        "unicodeFlag": "🇲🇱",
+        "capital": "Bamako",
+        "iso2": "ML"
+      },
+      {
+        "name": "Macau",
+        "unicodeFlag": "🇲🇴",
+        "capital": "Macao",
+        "iso2": "MO"
+      },
+      {
+        "name": "Mongolia",
+        "unicodeFlag": "🇲🇳",
+        "capital": "Ulan Bator",
+        "iso2": "MN"
+      },
+      {
+        "name": "Marshall Islands",
+        "unicodeFlag": "🇲🇭",
+        "capital": "Majuro",
+        "iso2": "MH"
+      },
+      {
+        "name": "Macedonia",
+        "unicodeFlag": "🇲🇰",
+        "capital": "Skopje",
+        "iso2": "MK"
+      },
+      {
+        "name": "Mauritius",
+        "unicodeFlag": "🇲🇺",
+        "capital": "Port Louis",
+        "iso2": "MU"
+      },
+      {
+        "name": "Malta",
+        "unicodeFlag": "🇲🇹",
+        "capital": "Valletta",
+        "iso2": "MT"
+      },
+      {
+        "name": "Malawi",
+        "unicodeFlag": "🇲🇼",
+        "capital": "Lilongwe",
+        "iso2": "MW"
+      },
+      {
+        "name": "Maldives",
+        "unicodeFlag": "🇲🇻",
+        "capital": "Male",
+        "iso2": "MV"
+      },
+      {
+        "name": "Martinique",
+        "unicodeFlag": "🇲🇶",
+        "capital": "Fort-de-France",
+        "iso2": "MQ"
+      },
+      {
+        "name": "Northern Mariana Islands",
+        "unicodeFlag": "🇲🇵",
+        "capital": "Saipan",
+        "iso2": "MP"
+      },
+      {
+        "name": "Montserrat",
+        "unicodeFlag": "🇲🇸",
+        "capital": "Plymouth",
+        "iso2": "MS"
+      },
+      {
+        "name": "Mauritania",
+        "unicodeFlag": "🇲🇷",
+        "capital": "Nouakchott",
+        "iso2": "MR"
+      },
+      {
+        "name": "Isle of Man",
+        "unicodeFlag": "🇮🇲",
+        "capital": "Douglas, Isle of Man",
+        "iso2": "IM"
+      },
+      {
+        "name": "Uganda",
+        "unicodeFlag": "🇺🇬",
+        "capital": "Kampala",
+        "iso2": "UG"
+      },
+      {
+        "name": "Tanzania",
+        "unicodeFlag": "🇹🇿",
+        "capital": "Dodoma",
+        "iso2": "TZ"
+      },
+      {
+        "name": "Malaysia",
+        "unicodeFlag": "🇲🇾",
+        "capital": "Kuala Lumpur",
+        "iso2": "MY"
+      },
+      {
+        "name": "Mexico",
+        "unicodeFlag": "🇲🇽",
+        "capital": "Mexico City",
+        "iso2": "MX"
+      },
+      {
+        "name": "Israel",
+        "unicodeFlag": "🇮🇱",
+        "capital": "Jerusalem",
+        "iso2": "IL"
+      },
+      {
+        "name": "France",
+        "unicodeFlag": "🇫🇷",
+        "capital": "Paris",
+        "iso2": "FR"
+      },
+      {
+        "name": "British Indian Ocean Territory",
+        "unicodeFlag": "🇮🇴",
+        "capital": "Diego Garcia",
+        "iso2": "IO"
+      },
+      {
+        "name": "Saint Helena",
+        "unicodeFlag": "🇸🇭",
+        "capital": "Jamestown",
+        "iso2": "SH"
+      },
+      {
+        "name": "Finland",
+        "unicodeFlag": "🇫🇮",
+        "capital": "Helsinki",
+        "iso2": "FI"
+      },
+      {
+        "name": "Fiji",
+        "unicodeFlag": "🇫🇯",
+        "capital": "Suva",
+        "iso2": "FJ"
+      },
+      {
+        "name": "Falkland Islands",
+        "unicodeFlag": "🇫🇰",
+        "capital": "Stanley",
+        "iso2": "FK"
+      },
+      {
+        "name": "Micronesia",
+        "unicodeFlag": "🇫🇲",
+        "capital": "Palikir",
+        "iso2": "FM"
+      },
+      {
+        "name": "Faroe Islands",
+        "unicodeFlag": "🇫🇴",
+        "capital": "Torshavn",
+        "iso2": "FO"
+      },
+      {
+        "name": "Nicaragua",
+        "unicodeFlag": "🇳🇮",
+        "capital": "Managua",
+        "iso2": "NI"
+      },
+      {
+        "name": "Netherlands",
+        "unicodeFlag": "🇳🇱",
+        "capital": "Amsterdam",
+        "iso2": "NL"
+      },
+      {
+        "name": "Norway",
+        "unicodeFlag": "🇳🇴",
+        "capital": "Oslo",
+        "iso2": "NO"
+      },
+      {
+        "name": "Namibia",
+        "unicodeFlag": "🇳🇦",
+        "capital": "Windhoek",
+        "iso2": "NA"
+      },
+      {
+        "name": "Vanuatu",
+        "unicodeFlag": "🇻🇺",
+        "capital": "Port Vila",
+        "iso2": "VU"
+      },
+      {
+        "name": "New Caledonia",
+        "unicodeFlag": "🇳🇨",
+        "capital": "Noumea",
+        "iso2": "NC"
+      },
+      {
+        "name": "Niger",
+        "unicodeFlag": "🇳🇪",
+        "capital": "Niamey",
+        "iso2": "NE"
+      },
+      {
+        "name": "Norfolk Island",
+        "unicodeFlag": "🇳🇫",
+        "capital": "Kingston",
+        "iso2": "NF"
+      },
+      {
+        "name": "Nigeria",
+        "unicodeFlag": "🇳🇬",
+        "capital": "Abuja",
+        "iso2": "NG"
+      },
+      {
+        "name": "New Zealand",
+        "unicodeFlag": "🇳🇿",
+        "capital": "Wellington",
+        "iso2": "NZ"
+      },
+      {
+        "name": "Nepal",
+        "unicodeFlag": "🇳🇵",
+        "capital": "Kathmandu",
+        "iso2": "NP"
+      },
+      {
+        "name": "Nauru",
+        "unicodeFlag": "🇳🇷",
+        "capital": "Yaren",
+        "iso2": "NR"
+      },
+      {
+        "name": "Niue",
+        "unicodeFlag": "🇳🇺",
+        "capital": "Alofi",
+        "iso2": "NU"
+      },
+      {
+        "name": "Cook Islands",
+        "unicodeFlag": "🇨🇰",
+        "capital": "Avarua",
+        "iso2": "CK"
+      },
+      {
+        "name": "Kosovo",
+        "unicodeFlag": "🇽🇰",
+        "capital": "Pristina",
+        "iso2": "XK"
+      },
+      {
+        "name": "Ivory Coast",
+        "unicodeFlag": "🇨🇮",
+        "capital": "Yamoussoukro",
+        "iso2": "CI"
+      },
+      {
+        "name": "Switzerland",
+        "unicodeFlag": "🇨🇭",
+        "capital": "Berne",
+        "iso2": "CH"
+      },
+      {
+        "name": "Colombia",
+        "unicodeFlag": "🇨🇴",
+        "capital": "Bogota",
+        "iso2": "CO"
+      },
+      {
+        "name": "China",
+        "unicodeFlag": "🇨🇳",
+        "capital": "Beijing",
+        "iso2": "CN"
+      },
+      {
+        "name": "Cameroon",
+        "unicodeFlag": "🇨🇲",
+        "capital": "Yaounde",
+        "iso2": "CM"
+      },
+      {
+        "name": "Chile",
+        "unicodeFlag": "🇨🇱",
+        "capital": "Santiago",
+        "iso2": "CL"
+      },
+      {
+        "name": "Cocos Islands",
+        "unicodeFlag": "🇨🇨",
+        "capital": "West Island",
+        "iso2": "CC"
+      },
+      {
+        "name": "Canada",
+        "unicodeFlag": "🇨🇦",
+        "capital": "Ottawa",
+        "iso2": "CA"
+      },
+      {
+        "name": "Congo",
+        "unicodeFlag": "🇨🇬",
+        "capital": "Brazzaville",
+        "iso2": "CG"
+      },
+      {
+        "name": "Central African Republic",
+        "unicodeFlag": "🇨🇫",
+        "capital": "Bangui",
+        "iso2": "CF"
+      },
+      {
+        "name": "Democratic Republic of the Congo",
+        "unicodeFlag": "🇨🇩",
+        "capital": "Kinshasa",
+        "iso2": "CD"
+      },
+      {
+        "name": "Czech Republic",
+        "unicodeFlag": "🇨🇿",
+        "capital": "Prague",
+        "iso2": "CZ"
+      },
+      {
+        "name": "Cyprus",
+        "unicodeFlag": "🇨🇾",
+        "capital": "Nicosia",
+        "iso2": "CY"
+      },
+      {
+        "name": "Christmas Island",
+        "unicodeFlag": "🇨🇽",
+        "capital": "Flying Fish Cove",
+        "iso2": "CX"
+      },
+      {
+        "name": "Costa Rica",
+        "unicodeFlag": "🇨🇷",
+        "capital": "San Jose",
+        "iso2": "CR"
+      },
+      {
+        "name": "Curacao",
+        "unicodeFlag": "🇨🇼",
+        "capital": " Willemstad",
+        "iso2": "CW"
+      },
+      {
+        "name": "Cape Verde",
+        "unicodeFlag": "🇨🇻",
+        "capital": "Praia",
+        "iso2": "CV"
+      },
+      {
+        "name": "Cuba",
+        "unicodeFlag": "🇨🇺",
+        "capital": "Havana",
+        "iso2": "CU"
+      },
+      {
+        "name": "Swaziland",
+        "unicodeFlag": "🇸🇿",
+        "capital": "Mbabane",
+        "iso2": "SZ"
+      },
+      {
+        "name": "Syria",
+        "unicodeFlag": "🇸🇾",
+        "capital": "Damascus",
+        "iso2": "SY"
+      },
+      {
+        "name": "Sint Maarten",
+        "unicodeFlag": "🇸🇽",
+        "capital": "Philipsburg",
+        "iso2": "SX"
+      },
+      {
+        "name": "Kyrgyzstan",
+        "unicodeFlag": "🇰🇬",
+        "capital": "Bishkek",
+        "iso2": "KG"
+      },
+      {
+        "name": "Kenya",
+        "unicodeFlag": "🇰🇪",
+        "capital": "Nairobi",
+        "iso2": "KE"
+      },
+      {
+        "name": "South Sudan",
+        "unicodeFlag": "🇸🇸",
+        "capital": "Juba",
+        "iso2": "SS"
+      },
+      {
+        "name": "Suriname",
+        "unicodeFlag": "🇸🇷",
+        "capital": "Paramaribo",
+        "iso2": "SR"
+      },
+      {
+        "name": "Kiribati",
+        "unicodeFlag": "🇰🇮",
+        "capital": "Tarawa",
+        "iso2": "KI"
+      },
+      {
+        "name": "Cambodia",
+        "unicodeFlag": "🇰🇭",
+        "capital": "Phnom Penh",
+        "iso2": "KH"
+      },
+      {
+        "name": "Saint Kitts and Nevis",
+        "unicodeFlag": "🇰🇳",
+        "capital": "Basseterre",
+        "iso2": "KN"
+      },
+      {
+        "name": "Comoros",
+        "unicodeFlag": "🇰🇲",
+        "capital": "Moroni",
+        "iso2": "KM"
+      },
+      {
+        "name": "Sao Tome and Principe",
+        "unicodeFlag": "🇸🇹",
+        "capital": "Sao Tome",
+        "iso2": "ST"
+      },
+      {
+        "name": "Slovakia",
+        "unicodeFlag": "🇸🇰",
+        "capital": "Bratislava",
+        "iso2": "SK"
+      },
+      {
+        "name": "South Korea",
+        "unicodeFlag": "🇰🇷",
+        "capital": "Seoul",
+        "iso2": "KR"
+      },
+      {
+        "name": "Slovenia",
+        "unicodeFlag": "🇸🇮",
+        "capital": "Ljubljana",
+        "iso2": "SI"
+      },
+      {
+        "name": "North Korea",
+        "unicodeFlag": "🇰🇵",
+        "capital": "Pyongyang",
+        "iso2": "KP"
+      },
+      {
+        "name": "Kuwait",
+        "unicodeFlag": "🇰🇼",
+        "capital": "Kuwait City",
+        "iso2": "KW"
+      },
+      {
+        "name": "Senegal",
+        "unicodeFlag": "🇸🇳",
+        "capital": "Dakar",
+        "iso2": "SN"
+      },
+      {
+        "name": "San Marino",
+        "unicodeFlag": "🇸🇲",
+        "capital": "San Marino",
+        "iso2": "SM"
+      },
+      {
+        "name": "Sierra Leone",
+        "unicodeFlag": "🇸🇱",
+        "capital": "Freetown",
+        "iso2": "SL"
+      },
+      {
+        "name": "Seychelles",
+        "unicodeFlag": "🇸🇨",
+        "capital": "Victoria",
+        "iso2": "SC"
+      },
+      {
+        "name": "Kazakhstan",
+        "unicodeFlag": "🇰🇿",
+        "capital": "Astana",
+        "iso2": "KZ"
+      },
+      {
+        "name": "Cayman Islands",
+        "unicodeFlag": "🇰🇾",
+        "capital": "George Town",
+        "iso2": "KY"
+      },
+      {
+        "name": "Singapore",
+        "unicodeFlag": "🇸🇬",
+        "capital": "Singapur",
+        "iso2": "SG"
+      },
+      {
+        "name": "Sweden",
+        "unicodeFlag": "🇸🇪",
+        "capital": "Stockholm",
+        "iso2": "SE"
+      },
+      {
+        "name": "Sudan",
+        "unicodeFlag": "🇸🇩",
+        "capital": "Khartoum",
+        "iso2": "SD"
+      },
+      {
+        "name": "Dominican Republic",
+        "unicodeFlag": "🇩🇴",
+        "capital": "Santo Domingo",
+        "iso2": "DO"
+      },
+      {
+        "name": "Dominica",
+        "unicodeFlag": "🇩🇲",
+        "capital": "Roseau",
+        "iso2": "DM"
+      },
+      {
+        "name": "Djibouti",
+        "unicodeFlag": "🇩🇯",
+        "capital": "Djibouti",
+        "iso2": "DJ"
+      },
+      {
+        "name": "Denmark",
+        "unicodeFlag": "🇩🇰",
+        "capital": "Copenhagen",
+        "iso2": "DK"
+      },
+      {
+        "name": "British Virgin Islands",
+        "unicodeFlag": "🇻🇬",
+        "capital": "Road Town",
+        "iso2": "VG"
+      },
+      {
+        "name": "Germany",
+        "unicodeFlag": "🇩🇪",
+        "capital": "Berlin",
+        "iso2": "DE"
+      },
+      {
+        "name": "Yemen",
+        "unicodeFlag": "🇾🇪",
+        "capital": "Sanaa",
+        "iso2": "YE"
+      },
+      {
+        "name": "Algeria",
+        "unicodeFlag": "🇩🇿",
+        "capital": "Algiers",
+        "iso2": "DZ"
+      },
+      {
+        "name": "United States",
+        "unicodeFlag": "🇺🇸",
+        "capital": "Washington",
+        "iso2": "US"
+      },
+      {
+        "name": "Uruguay",
+        "unicodeFlag": "🇺🇾",
+        "capital": "Montevideo",
+        "iso2": "UY"
+      },
+      {
+        "name": "Mayotte",
+        "unicodeFlag": "🇾🇹",
+        "capital": "Mamoudzou",
+        "iso2": "YT"
+      },
+      {
+        "name": "United States Minor Outlying Islands",
+        "unicodeFlag": "🇺🇲",
+        "iso2": "UM"
+      },
+      {
+        "name": "Lebanon",
+        "unicodeFlag": "🇱🇧",
+        "capital": "Beirut",
+        "iso2": "LB"
+      },
+      {
+        "name": "Saint Lucia",
+        "unicodeFlag": "🇱🇨",
+        "capital": "Castries",
+        "iso2": "LC"
+      },
+      {
+        "name": "Laos",
+        "unicodeFlag": "🇱🇦",
+        "capital": "Vientiane",
+        "iso2": "LA"
+      },
+      {
+        "name": "Tuvalu",
+        "unicodeFlag": "🇹🇻",
+        "capital": "Funafuti",
+        "iso2": "TV"
+      },
+      {
+        "name": "Taiwan",
+        "unicodeFlag": "🇹🇼",
+        "capital": "Taipei",
+        "iso2": "TW"
+      },
+      {
+        "name": "Trinidad and Tobago",
+        "unicodeFlag": "🇹🇹",
+        "capital": "Port of Spain",
+        "iso2": "TT"
+      },
+      {
+        "name": "Turkey",
+        "unicodeFlag": "🇹🇷",
+        "capital": "Ankara",
+        "iso2": "TR"
+      },
+      {
+        "name": "Sri Lanka",
+        "unicodeFlag": "🇱🇰",
+        "capital": "Colombo",
+        "iso2": "LK"
+      },
+      {
+        "name": "Liechtenstein",
+        "unicodeFlag": "🇱🇮",
+        "capital": "Vaduz",
+        "iso2": "LI"
+      },
+      {
+        "name": "Latvia",
+        "unicodeFlag": "🇱🇻",
+        "capital": "Riga",
+        "iso2": "LV"
+      },
+      {
+        "name": "Tonga",
+        "unicodeFlag": "🇹🇴",
+        "capital": "Nuku'alofa",
+        "iso2": "TO"
+      },
+      {
+        "name": "Lithuania",
+        "unicodeFlag": "🇱🇹",
+        "capital": "Vilnius",
+        "iso2": "LT"
+      },
+      {
+        "name": "Luxembourg",
+        "unicodeFlag": "🇱🇺",
+        "capital": "Luxembourg",
+        "iso2": "LU"
+      },
+      {
+        "name": "Liberia",
+        "unicodeFlag": "🇱🇷",
+        "capital": "Monrovia",
+        "iso2": "LR"
+      },
+      {
+        "name": "Lesotho",
+        "unicodeFlag": "🇱🇸",
+        "capital": "Maseru",
+        "iso2": "LS"
+      },
+      {
+        "name": "Thailand",
+        "unicodeFlag": "🇹🇭",
+        "capital": "Bangkok",
+        "iso2": "TH"
+      },
+      {
+        "name": "French Southern Territories",
+        "unicodeFlag": "🇹🇫",
+        "capital": "Port-aux-Francais",
+        "iso2": "TF"
+      },
+      {
+        "name": "Togo",
+        "unicodeFlag": "🇹🇬",
+        "capital": "Lome",
+        "iso2": "TG"
+      },
+      {
+        "name": "Chad",
+        "unicodeFlag": "🇹🇩",
+        "capital": "N'Djamena",
+        "iso2": "TD"
+      },
+      {
+        "name": "Turks and Caicos Islands",
+        "unicodeFlag": "🇹🇨",
+        "capital": "Cockburn Town",
+        "iso2": "TC"
+      },
+      {
+        "name": "Libya",
+        "unicodeFlag": "🇱🇾",
+        "capital": "Tripolis",
+        "iso2": "LY"
+      },
+      {
+        "name": "Vatican",
+        "unicodeFlag": "🇻🇦",
+        "capital": "Vatican City",
+        "iso2": "VA"
+      },
+      {
+        "name": "Saint Vincent and the Grenadines",
+        "unicodeFlag": "🇻🇨",
+        "capital": "Kingstown",
+        "iso2": "VC"
+      },
+      {
+        "name": "United Arab Emirates",
+        "unicodeFlag": "🇦🇪",
+        "capital": "Abu Dhabi",
+        "iso2": "AE"
+      },
+      {
+        "name": "Andorra",
+        "unicodeFlag": "🇦🇩",
+        "capital": "Andorra la Vella",
+        "iso2": "AD"
+      },
+      {
+        "name": "Antigua and Barbuda",
+        "unicodeFlag": "🇦🇬",
+        "capital": "St. John's",
+        "iso2": "AG"
+      },
+      {
+        "name": "Afghanistan",
+        "unicodeFlag": "🇦🇫",
+        "capital": "Kabul",
+        "iso2": "AF"
+      },
+      {
+        "name": "Anguilla",
+        "unicodeFlag": "🇦🇮",
+        "capital": "The Valley",
+        "iso2": "AI"
+      },
+      {
+        "name": "U.S. Virgin Islands",
+        "unicodeFlag": "🇻🇮",
+        "capital": "Charlotte Amalie",
+        "iso2": "VI"
+      },
+      {
+        "name": "Iceland",
+        "unicodeFlag": "🇮🇸",
+        "capital": "Reykjavik",
+        "iso2": "IS"
+      },
+      {
+        "name": "Iran",
+        "unicodeFlag": "🇮🇷",
+        "capital": "Tehran",
+        "iso2": "IR"
+      },
+      {
+        "name": "Armenia",
+        "unicodeFlag": "🇦🇲",
+        "capital": "Yerevan",
+        "iso2": "AM"
+      },
+      {
+        "name": "Albania",
+        "unicodeFlag": "🇦🇱",
+        "capital": "Tirana",
+        "iso2": "AL"
+      },
+      {
+        "name": "Angola",
+        "unicodeFlag": "🇦🇴",
+        "capital": "Luanda",
+        "iso2": "AO"
+      },
+      {
+        "name": "Antarctica",
+        "unicodeFlag": "🇦🇶",
+        "iso2": "AQ"
+      },
+      {
+        "name": "Argentina",
+        "unicodeFlag": "🇦🇷",
+        "capital": "Buenos Aires",
+        "iso2": "AR"
+      },
+      {
+        "name": "Australia",
+        "unicodeFlag": "🇦🇺",
+        "capital": "Canberra",
+        "iso2": "AU"
+      },
+      {
+        "name": "Austria",
+        "unicodeFlag": "🇦🇹",
+        "capital": "Vienna",
+        "iso2": "AT"
+      },
+      {
+        "name": "Aruba",
+        "unicodeFlag": "🇦🇼",
+        "capital": "Oranjestad",
+        "iso2": "AW"
+      },
+      {
+        "name": "India",
+        "unicodeFlag": "🇮🇳",
+        "capital": "New Delhi",
+        "iso2": "IN"
+      },
+      {
+        "name": "Aland Islands",
+        "unicodeFlag": "🇦🇽",
+        "capital": "Mariehamn",
+        "iso2": "AX"
+      },
+      {
+        "name": "Azerbaijan",
+        "unicodeFlag": "🇦🇿",
+        "capital": "Baku",
+        "iso2": "AZ"
+      },
+      {
+        "name": "Ireland",
+        "unicodeFlag": "🇮🇪",
+        "capital": "Dublin",
+        "iso2": "IE"
+      },
+      {
+        "name": "Indonesia",
+        "unicodeFlag": "🇮🇩",
+        "capital": "Jakarta",
+        "iso2": "ID"
+      },
+      {
+        "name": "Ukraine",
+        "unicodeFlag": "🇺🇦",
+        "capital": "Kiev",
+        "iso2": "UA"
+      },
+      {
+        "name": "Qatar",
+        "unicodeFlag": "🇶🇦",
+        "capital": "Doha",
+        "iso2": "QA"
+      },
+      {
+        "name": "Mozambique",
+        "unicodeFlag": "🇲🇿",
+        "capital": "Maputo",
+        "iso2": "MZ"
+      }
+    ]
+  },
+  "capturedAt": "2026-08-07T03:22:17.861Z",
+  "capturedFrom": "https://countriesnow.space/api/v0.1"
+}

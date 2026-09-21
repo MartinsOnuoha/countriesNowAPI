@@ -1,0 +1,17 @@
+{
+  "id": "currency-bulgaria",
+  "path": "/countries/currency/q?country=Bulgaria",
+  "status": 200,
+  "body": {
+    "error": false,
+    "msg": "Bulgaria and currency retrieved",
+    "data": {
+      "name": "Bulgaria",
+      "currency": "BGN",
+      "iso2": "BG",
+      "iso3": "BGR"
+    }
+  },
+  "capturedAt": "2026-08-07T03:22:18.216Z",
+  "capturedFrom": "https://countriesnow.space/api/v0.1"
+}

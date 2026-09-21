@@ -1,0 +1,119 @@
+# Which source wins for which field.
+#
+# This file is the answer to V1's central defect. V1 held the same country in
+# six data files with no shared key and no rule about which one was right, so
+# they drifted apart: Greece was "EL" in one and "GR" in another, Bahamas had to
+# be fixed twice on the same day in two different files, and "Congo" appeared
+# twice with no way to reach the second record.
+#
+# Here, exactly one source is authoritative for each field. Everything else is
+# either a fallback (used only when the authority has no value) or a cross-check
+# (never written; a disagreement raises an anomaly instead).
+#
+# Ordering within `sources` is the fallback chain, highest authority first.
+
+version: 1
+
+# Sources under ODbL share-alike. They may inform reconciliation but must never
+# supply a published value, or our output inherits the copyleft and every
+# downstream consumer of a free API is bound by it.
+quarantined:
+  - dr5hn
+  - mledoze
+
+country:
+  iso2: { sources: [iso-codes], crosscheck: [country-codes, geonames] }
+  iso3: { sources: [iso-codes], crosscheck: [country-codes, geonames] }
+  isoNumeric: { sources: [iso-codes], crosscheck: [country-codes] }
+  m49: { sources: [country-codes] }
+
+  # The crosswalk is the only source that carries both of these, which is what
+  # makes joining GeoNames and Wikidata cheap everywhere else in the pipeline.
+  geonamesId: { sources: [country-codes, geonames] }
+  wikidataQid: { sources: [country-codes] }
+
+  # Three name fields, three different authorities, on purpose.
+  # See docs/DATA_POLICY.md — serving CLDR's wording by default lets us cite a
+  # standards body rather than take a position on contested names.
+  #
+  # `policy` sits last in both name chains for the codes ISO has not assigned:
+  # Kosovo has no iso-codes row, so without it XK would publish a name that no
+  # source claims. See harness/policy/territories.ts.
+  isoOfficialName: { sources: [iso-codes, policy, geonames] }
+  displayName: { sources: [cldr, iso-codes, policy] }
+  commonName: { sources: [iso-codes, cldr] }
+
+  isoStatus: { sources: [iso-codes] }
+  independent: { sources: [iso-codes] }
+  unMember: { sources: [country-codes] }
+
+  capital: { sources: [geonames, country-codes] }
+  capitalGeonamesId: { sources: [geonames] }
+  continentCode: { sources: [geonames, country-codes] }
+  region: { sources: [country-codes] }
+  subregion: { sources: [country-codes] }
+  tld: { sources: [geonames, country-codes] }
+  latitude: { sources: [geonames] }
+  longitude: { sources: [geonames] }
+  areaKm2: { sources: [geonames] }
+
+  # libphonenumber tracks regulator changes and models shared codes (+1 NANP,
+  # +7, +599) properly. GeoNames and the crosswalk both flatten them.
+  dialCode: { sources: [libphonenumber, country-codes, geonames] }
+  dialRoot: { sources: [libphonenumber] }
+  dialSuffixes: { sources: [libphonenumber] }
+
+  # SIX is the ISO 4217 maintenance agency. GeoNames countryInfo.txt is
+  # explicitly excluded: as of 2026-08 it still reports BGN for Bulgaria, months
+  # after the euro changeover, which is issue #236 in a nutshell.
+  currencies: { sources: [six-4217], crosscheck: [country-codes], exclude: [geonames] }
+  primaryCurrency: { sources: [six-4217], exclude: [geonames] }
+
+  flagEmoji: { sources: [flag-icons] }
+  flagSvgUrl: { sources: [flag-icons] }
+  flagPngUrl: { sources: [flag-icons] }
+
+  population: { sources: [world-bank, geonames], crosscheck: [wikidata] }
+  populationYear: { sources: [world-bank, geonames] }
+
+subdivision:
+  # ISO is the only source with correct post-2016 French region names AND the
+  # official `type` string. GeoNames admin1 still says "Bourgogne" and
+  # "Rhône-Alpes", which is issue #227.
+  iso3166_2: { sources: [iso-codes] }
+  code: { sources: [iso-codes] }
+  type: { sources: [iso-codes] }
+  name: { sources: [iso-codes] }
+  displayName: { sources: [cldr, iso-codes] }
+
+  # ISO publishes no hierarchy. Without this, Sri Lanka's 9 provinces and its
+  # 25 districts flatten into one list, which is issue #229.
+  parentCode: { sources: [wikidata, iso-codes] }
+  level: { sources: [iso-codes, wikidata] }
+
+  geonamesId: { sources: [geonames] }
+  geonamesAdmin1: { sources: [geonames] }
+  wikidataQid: { sources: [wikidata] }
+  latitude: { sources: [geonames] }
+  longitude: { sources: [geonames] }
+  timezone: { sources: [geonames] }
+  population: { sources: [geonames], crosscheck: [wikidata] }
+
+place:
+  # GeoNames is the sole authority for places. Nothing else has daily deltas.
+  '*': { sources: [geonames] }
+  population: { sources: [geonames], crosscheck: [wikidata] }
+
+currency:
+  '*': { sources: [six-4217] }
+  # SIX publishes no symbols; CLDR does.
+  symbol: { sources: [cldr] }
+
+names:
+  # Country names are deep in CLDR (100+ locales) and deeper still in iso-codes
+  # gettext (159 languages). Subdivisions are the trap: CLDR's `fr` subdivision
+  # file has three entries, while iso-codes covers 70 languages. Cities are only
+  # covered by GeoNames alternateNames. Issue #215 needs all three.
+  country: { sources: [cldr, iso-codes, geonames] }
+  subdivision: { sources: [iso-codes, cldr, wikidata] }
+  place: { sources: [geonames] }

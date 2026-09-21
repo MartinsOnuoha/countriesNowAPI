@@ -1,0 +1,11 @@
+{
+  "id": "state-cities-lagos",
+  "path": "/countries/state/cities/q?country=Nigeria&state=Lagos",
+  "status": 404,
+  "body": {
+    "error": true,
+    "msg": "state not found"
+  },
+  "capturedAt": "2026-08-07T03:22:18.982Z",
+  "capturedFrom": "https://countriesnow.space/api/v0.1"
+}

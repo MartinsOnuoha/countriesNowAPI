@@ -1,14 +1,56 @@
-node_modules
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
-node_modules/*
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
 
-.vscode
-.vscode/*
-_readthedocs/build/*
+# testing
+/coverage
+
+# next.js
+/.next/
+/out/
+
+# production
+/build
+
+# misc
 .DS_Store
-public/.DS_Store
-coverage
-coverage/*
-./coverage
-.idea
-.idea/*
+*.pem
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# local env files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# vercel
+.vercel
+
+**/*.trace
+**/*.tar.gz
+**/*.tgz
+**/*.log
+package-lock.json
+**/*.bun
+
+# Drizzle migrations under /drizzle ARE version-controlled on purpose.
+# Only the local studio scratch dir is ignored.
+/drizzle/.drizzle
+
+# Pipeline working data: upstream snapshots and built serving artifacts are
+# reproducible from the harness, so they are never committed.
+/data/snapshots
+/data/artifacts
+/data/tmp
+*.sqlite
+*.sqlite-journal
+*.sqlite-wal
+*.sqlite-shm

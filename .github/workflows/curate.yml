@@ -1,0 +1,140 @@
+name: Curate
+
+# The curation plane. This is the only thing that changes the data, and it
+# cannot affect the API: the serving replicas read an artifact that is only
+# swapped when a human merges the pull request this workflow opens.
+on:
+  schedule:
+    # 04:00 UTC daily. GeoNames publishes its modification deltas around 03:00,
+    # and the World Bank and SIX both update well before that.
+    - cron: '0 4 * * *'
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Run every stage but do not open a pull request'
+        type: boolean
+        default: false
+      limit:
+        description: 'Maximum anomalies to send to the agent'
+        type: string
+        default: '40'
+      tier:
+        description: 'GeoNames tier'
+        type: choice
+        options: [cities15000, cities5000, cities1000, cities500, allCountries]
+        default: cities15000
+
+concurrency:
+  group: curate
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  curate:
+    name: Detect, propose, gate, open PR
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    # At job level so the `if:` on the propose step can see it. A step's own
+    # `env:` block is not in scope for its own condition, which would make the
+    # guard always false and silently skip the agent on every run.
+    env:
+      HARNESS_API_KEY: ${{ secrets.HARNESS_API_KEY }}
+      GEONAMES_TIER: ${{ inputs.tier || 'cities15000' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - run: bun install --frozen-lockfile
+
+      - name: Restore upstream snapshots
+        uses: actions/cache@v4
+        with:
+          path: data/snapshots
+          key: snapshots-curate-${{ github.run_id }}
+          restore-keys: snapshots-curate-
+
+      # Keeping the last release on disk is what makes the drift rules work:
+      # "population moved 40% since 2026.07.0" is only a question you can ask if
+      # you still have 2026.07.0.
+      - name: Restore the previous release
+        uses: actions/cache@v4
+        with:
+          path: data/artifacts/dataset.previous.json
+          key: previous-dataset-${{ github.run_id }}
+          restore-keys: previous-dataset-
+
+      - name: Pull upstream sources
+        run: bun run harness:pull
+
+      - name: Resolve
+        run: bun run harness:resolve --offline
+
+      - name: Publish artifact
+        run: bun run harness:publish
+
+      # If the freshly pulled data cannot pass its own invariants, there is
+      # nothing worth proposing on top of it. Stop here and say so.
+      - name: Invariant gates
+        run: bun run harness:gate
+
+      - name: Detect anomalies
+        run: bun run harness detect --json > data/artifacts/anomalies.json
+
+      # HYPOTHESIZE, RETRIEVE, VERIFY, GATE, SHAPE. Skipped when no key is
+      # configured, so a fork sees the deterministic half of the pipeline work.
+      - name: Propose changes
+        if: env.HARNESS_API_KEY != ''
+        run: |
+          bun run harness propose \
+            --limit "${{ inputs.limit || '40' }}" \
+            ${{ inputs.dry_run && '--dry-run' || '' }}
+        env:
+          HARNESS_HYPOTHESIS_MODEL: ${{ vars.HARNESS_HYPOTHESIS_MODEL }}
+          HARNESS_VERIFY_MODEL: ${{ vars.HARNESS_VERIFY_MODEL }}
+          HARNESS_MIN_CONFIDENCE: ${{ vars.HARNESS_MIN_CONFIDENCE }}
+          HARNESS_CONTACT: ${{ vars.HARNESS_CONTACT }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+
+      - name: Keep this release as the drift baseline
+        run: cp data/artifacts/dataset.json data/artifacts/dataset.previous.json
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: curation-run
+          path: |
+            data/artifacts/dataset.json
+            data/artifacts/anomalies.json
+            data/artifacts/gate-report.json
+            data/artifacts/proposals.json
+            data/artifacts/proposals.md
+          retention-days: 30
+          if-no-files-found: ignore
+
+      - name: Summary
+        if: always()
+        run: |
+          {
+            echo "## Curation run"
+            echo
+            if [ -f data/artifacts/gate-report.json ]; then
+              bun -e '
+                const r = JSON.parse(await Bun.file("data/artifacts/gate-report.json").text());
+                const passed = r.results.filter((x) => x.passed).length;
+                console.log(`Gates: ${passed}/${r.results.length} passed, ${r.errors} errors, ${r.warnings} warnings`);
+              ' || echo "Gates: see the uploaded report"
+            fi
+            echo
+            if [ -f data/artifacts/proposals.md ]; then
+              cat data/artifacts/proposals.md
+            else
+              echo "_No proposals: the agent did not run._"
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"

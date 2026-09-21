@@ -1,0 +1,188 @@
+name: Release
+
+# A release is a dataset, not a code change.
+#
+# The artifact is built here, gated here, and then baked into an image tagged
+# with the dataset version, so the image tag and the data version are one fact.
+# Rolling back the deploy rolls back the data with it.
+
+on:
+  workflow_dispatch:
+    inputs:
+      tier:
+        description: GeoNames tier to build against
+        type: choice
+        options: [cities15000, cities5000, cities1000, allCountries]
+        default: allCountries
+      deploy:
+        description: Deploy after publishing
+        type: boolean
+        default: true
+  # A merged curation PR is the normal trigger: the agent proposed, a human
+  # approved, and the approved data should reach production without a second
+  # manual step.
+  push:
+    tags: ['v*']
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  packages: write
+
+env:
+  IMAGE: ghcr.io/${{ github.repository }}
+
+jobs:
+  build:
+    name: Build and gate the artifact
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.publish.outputs.version }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+      - run: bun install --frozen-lockfile
+
+      - name: Cache upstream snapshots
+        uses: actions/cache@v4
+        with:
+          path: data/snapshots
+          key: release-snapshots-${{ inputs.tier || 'allCountries' }}-${{ github.run_id }}
+          restore-keys: release-snapshots-${{ inputs.tier || 'allCountries' }}-
+
+      - name: Pull, resolve, publish
+        env:
+          GEONAMES_TIER: ${{ inputs.tier || 'allCountries' }}
+        run: |
+          bun run harness:pull
+          bun run harness:resolve --offline
+          bun run harness:publish
+
+      - name: Record the version
+        id: publish
+        run: echo "version=$(bun run --silent harness dataset-version)" >> "$GITHUB_OUTPUT"
+
+      # No artifact ships without clearing all three gates. This is the same
+      # suite CI runs, re-run here because CI builds against cities15000 and a
+      # release builds against the full GeoNames dump — different data, and the
+      # invariants are about the data.
+      - name: Gate — invariants
+        run: bun run harness:gate
+
+      - name: Gate — v0.1 goldens and API tests
+        run: bun test
+
+      - name: Gate — latency
+        run: bun run harness:bench --ci
+
+      - name: Stage the artifact at its fixed image path
+        run: |
+          cp "data/artifacts/countriesnow-${{ steps.publish.outputs.version }}.sqlite" \
+             data/artifacts/countriesnow.sqlite
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: release-artifact
+          path: |
+            data/artifacts/countriesnow.sqlite
+            data/artifacts/countriesnow-${{ steps.publish.outputs.version }}.json
+          retention-days: 30
+
+  image:
+    name: Build and push the image
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: release-artifact
+          path: data/artifacts/
+
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          # The dataset version is the meaningful tag. `latest` is a
+          # convenience; anything reproducible should pin the version.
+          tags: |
+            ${{ env.IMAGE }}:${{ needs.build.outputs.version }}
+            ${{ env.IMAGE }}:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+  release:
+    name: Publish the dataset
+    needs: [build, image]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: release-artifact
+          path: artifacts/
+
+      # The SQLite file is attached to the release so the dataset is usable
+      # without running the API at all — the offline use case V1 never had.
+      - uses: softprops/action-gh-release@v2
+        with:
+          tag_name: dataset-${{ needs.build.outputs.version }}
+          name: Dataset ${{ needs.build.outputs.version }}
+          generate_release_notes: true
+          files: artifacts/*
+          body: |
+            Dataset `${{ needs.build.outputs.version }}`, built from pinned upstream snapshots
+            and cleared of every invariant, golden and latency gate.
+
+            Image: `${{ env.IMAGE }}:${{ needs.build.outputs.version }}`
+
+            The SQLite file is the same one the API serves. Attribution and per-source
+            licences are in `docs/ATTRIBUTION.md`; the dataset is CC BY 4.0.
+
+  deploy:
+    name: Deploy
+    needs: [build, image]
+    # A tag push always deploys. A manual run deploys unless asked not to —
+    # spelled this way because on a tag push `inputs` is empty, and
+    # `inputs.deploy != false` evaluates to false there rather than true.
+    if: github.event_name != 'workflow_dispatch' || inputs.deploy
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - uses: actions/checkout@v4
+      - uses: superfly/flyctl-actions/setup-flyctl@master
+      - name: Roll the fleet onto the new dataset
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+        run: |
+          flyctl deploy \
+            --image "${{ env.IMAGE }}:${{ needs.build.outputs.version }}" \
+            --strategy rolling \
+            --wait-timeout 10m
+
+      # A deploy that reports success while replicas still serve the old data
+      # is worse than one that fails, so the version is asserted, not assumed.
+      - name: Verify the fleet is serving the new dataset
+        run: |
+          for i in $(seq 1 30); do
+            served=$(curl -fsS https://countriesnow.space/ready | jq -r '.datasetVersion' || true)
+            if [ "$served" = "${{ needs.build.outputs.version }}" ]; then
+              echo "serving ${{ needs.build.outputs.version }}"
+              exit 0
+            fi
+            echo "attempt $i: serving '$served'"
+            sleep 10
+          done
+          echo "fleet did not converge on ${{ needs.build.outputs.version }}"
+          exit 1

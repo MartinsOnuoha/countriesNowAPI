@@ -1,0 +1,17 @@
+{
+  "id": "flag-unicode-ng",
+  "path": "/countries/flag/unicode/q?country=Nigeria",
+  "status": 200,
+  "body": {
+    "error": false,
+    "msg": "Nigeria and unicode flag retrieved",
+    "data": {
+      "name": "Nigeria",
+      "iso2": "NG",
+      "iso3": "NGA",
+      "unicodeFlag": "🇳🇬"
+    }
+  },
+  "capturedAt": "2026-08-07T03:22:18.596Z",
+  "capturedFrom": "https://countriesnow.space/api/v0.1"
+}

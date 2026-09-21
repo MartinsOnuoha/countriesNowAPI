@@ -1,0 +1,11 @@
+{
+  "id": "err-range-missing-param",
+  "path": "/countries/positions/range/q?type=lat",
+  "status": 400,
+  "body": {
+    "error": true,
+    "msg": "missing param (type, min, max)"
+  },
+  "capturedAt": "2026-08-07T03:22:19.715Z",
+  "capturedFrom": "https://countriesnow.space/api/v0.1"
+}

@@ -1,57 +1,59 @@
 {
-  "name": "country-city-api",
-  "version": "0.0.0",
-  "private": true,
+  "name": "countries-now",
+  "version": "2.0.0",
+  "description": "CountriesNow V2 — a self-updating geo-data API. Zero-I/O serving plane over an immutable artifact, with an evidence-gated AI curation harness.",
+  "license": "MIT",
+  "type": "module",
+  "module": "src/index.ts",
   "scripts": {
-    "debug": "DEBUG=country-city-api:* npm start",
-    "watch": "nodemon npm start",
-    "start": "node ./bin/www",
+    "dev": "bun run --watch src/index.ts",
+    "start": "NODE_ENV=production bun run src/index.ts",
+    "build": "bun build src/index.ts --outdir=build --target=bun --minify",
+
+    "typecheck": "tsc --noEmit",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "integration:test": "mocha --timeout 50000 --exit ./test/tests.js",
-    "report": "nyc report --reporter=lcov --reporter=text --reporter=html",
-    "test": "mocha ./test/tests.js --timeout 50000 --exit",
-    "make:commit": "./node_modules/.bin/cz",
-    "coveralls": "nyc report --reporter=text-lcov | coveralls"
+    "format": "prettier --write \"**/*.{ts,md,json,yaml}\"",
+    "test": "bun test",
+
+    "harness": "bun run harness/src/cli.ts",
+    "harness:pull": "bun run harness/src/cli.ts pull",
+    "harness:resolve": "bun run harness/src/cli.ts resolve",
+    "harness:publish": "bun run harness/src/cli.ts publish",
+    "harness:gate": "bun run harness/src/cli.ts gate",
+    "harness:detect": "bun run harness/src/cli.ts detect",
+    "harness:propose": "bun run harness/src/cli.ts propose",
+    "harness:bench": "bun run harness/src/cli.ts bench",
+
+    "goldens:capture": "bun run tests/goldens/capture.ts",
+
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate",
+    "db:push": "drizzle-kit push",
+    "db:studio": "drizzle-kit studio"
   },
   "dependencies": {
-    "apicache": "^1.6.3",
-    "axios": "^1.12.0",
-    "body-parser": "^1.19.0",
-    "cookie-parser": "~1.4.7",
-    "debug": "~2.6.9",
-    "dotenv": "^8.2.0",
-    "express": "~4.21.2",
-    "express-rate-limit": "^6.3.0",
-    "hbs": "^4.1.1",
-    "http-errors": "~1.6.3",
-    "morgan": "~1.10.1",
-    "swagger-jsdoc": "^4.0.0",
-    "swagger-ui-express": "^4.1.4"
+    "@elysiajs/cors": "^1.4.0",
+    "@elysiajs/openapi": "^1.4.11",
+    "drizzle-orm": "^0.44.5",
+    "elysia": "^1.4.9",
+    "fast-xml-parser": "^5.2.5",
+    "postgres": "^3.4.7",
+    "yaml": "^2.8.1"
   },
   "devDependencies": {
-    "@babel/register": "^7.11.5",
-    "chai": "^4.2.0",
-    "chai-http": "^4.3.0",
-    "commitizen": "^4.3.0",
-    "coveralls": "^3.1.0",
-    "cross-env": "^7.0.2",
-    "cz-conventional-changelog": "^3.3.0",
-    "cz-emoji": "^1.2.2",
-    "deasync": "^0.1.30",
-    "eslint": "^7.9.0",
-    "eslint-config-airbnb-base": "^14.2.0",
-    "eslint-plugin-import": "^2.22.0",
-    "istanbul": "^0.4.5",
-    "locus": "^2.0.4",
-    "mocha": "^10.2.0",
-    "mocha-lcov-reporter": "^1.3.0",
-    "nodemon": "^2.0.20",
-    "nyc": "^15.1.0"
+    "@eslint/js": "^9.36.0",
+    "@types/bun": "^1.2.22",
+    "drizzle-kit": "^0.31.5",
+    "eslint": "^9.36.0",
+    "eslint-config-prettier": "^10.1.8",
+    "globals": "^16.4.0",
+    "jiti": "^2.6.0",
+    "prettier": "^3.6.2",
+    "typescript": "^5.9.2",
+    "typescript-eslint": "^8.44.1"
   },
-  "config": {
-    "commitizen": {
-      "path": "cz-emoji"
-    }
+  "engines": {
+    "bun": ">=1.2.0"
   }
 }

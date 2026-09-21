@@ -1,0 +1,53 @@
+{
+  "id": "population-filter",
+  "path": "/countries/population/filter/q?limit=5&order=dsc&orderBy=population",
+  "status": 200,
+  "body": {
+    "error": false,
+    "msg": "filtered result",
+    "data": [
+      {
+        "country": "World",
+        "code": "WLD",
+        "populationCounts": {
+          "year": 2018,
+          "value": 7594270356
+        }
+      },
+      {
+        "country": "IDA & IBRD total",
+        "code": "IBT",
+        "populationCounts": {
+          "year": 2018,
+          "value": 6412522234
+        }
+      },
+      {
+        "country": "Low & middle income",
+        "code": "LMY",
+        "populationCounts": {
+          "year": 2018,
+          "value": 6383958209
+        }
+      },
+      {
+        "country": "Middle income",
+        "code": "MIC",
+        "populationCounts": {
+          "year": 2018,
+          "value": 5678540888
+        }
+      },
+      {
+        "country": "IBRD only",
+        "code": "IBD",
+        "populationCounts": {
+          "year": 2018,
+          "value": 4772284113
+        }
+      }
+    ]
+  },
+  "capturedAt": "2026-08-07T03:22:19.349Z",
+  "capturedFrom": "https://countriesnow.space/api/v0.1"
+}
