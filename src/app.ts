@@ -13,6 +13,7 @@ import { v01, v01Lookups } from './api/v01/index.ts';
 import { ArtifactMissingError, getMeta, isReady } from './serving/artifact.ts';
 import { ResolutionError } from './serving/resolve.ts';
 import { InvalidCursorError } from './serving/queries.ts';
+import { DEFAULT_LANDING_DESIGN, isLandingDesign, renderLanding } from './landing.ts';
 
 const CACHE_MAX_AGE = Number(process.env.CACHE_MAX_AGE ?? 86_400);
 
@@ -183,18 +184,30 @@ export function createApp() {
         { detail: { summary: 'Readiness', tags: ['Reference'] } }
       )
 
+      // V1 served a hard-coded hbs view here — a single, non-scrolling hero
+      // with links out to GitHub, docs and a support link. This keeps that
+      // contract: `/` is for humans landing in a browser, `/v2`, `/v0.1` and
+      // `/openapi` are for everything else. Machine-readable service info
+      // lives at `/ready` (liveness + dataset version) instead of duplicating
+      // it here as JSON that nobody but this page ever fetched.
+      //
+      // Three designs ship side by side so the pick is an actual decision
+      // rather than a guess — see src/landing.ts. `?design=` previews the
+      // others without touching the default.
       .get(
         '/',
-        () => ({
-          name: 'CountriesNow',
-          version: '2.0.0',
-          docs: '/openapi',
-          current: '/v2',
-          legacy: '/v0.1',
-          dataset: '/v2/dataset',
-          license: 'CC BY 4.0 — see ATTRIBUTION.md'
-        }),
-        { detail: { summary: 'Service index', tags: ['Reference'] } }
+        ({ query, set }) => {
+          set.headers['content-type'] = 'text/html; charset=utf-8';
+          const design = isLandingDesign(query.design) ? query.design : DEFAULT_LANDING_DESIGN;
+          let datasetVersion: string | undefined;
+          try {
+            datasetVersion = getMeta().datasetVersion;
+          } catch {
+            /* no artifact yet — the page renders fine without a version badge */
+          }
+          return renderLanding(design, { datasetVersion });
+        },
+        { detail: { hide: true } }
       )
 
       .use(v2)
