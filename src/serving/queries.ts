@@ -1,11 +1,4 @@
-/**
- * Read queries and response shaping.
- *
- * Every list endpoint is paginated and every response supports sparse
- * fieldsets. Both are reactions to V1: `/population/cities` returns 1.86 MB in
- * one unbounded array, and issue #121 asked for GraphQL essentially because
- * there was no way to ask for less than everything.
- */
+/** Paginated lists, sparse fieldsets, response shaping. */
 
 import type { Database, SQLQueryBindings } from 'bun:sqlite';
 import { ENTITY_COUNTRY, ENTITY_PLACE, ENTITY_SUBDIVISION } from './constants.ts';
@@ -21,20 +14,8 @@ export interface Page<T> {
   total: number;
 }
 
-/**
- * Cursors are keyset, not offset.
- *
- * OFFSET makes page N cost O(N) and, worse, silently skips or repeats rows when
- * the underlying set changes. Our data is immutable per release, so the second
- * problem does not bite — but the first does, and encoding the last key keeps
- * every page the same cost.
- */
-/**
- * A tag so a cursor is recognisably ours. Base64url decoding almost never
- * throws — arbitrary text decodes to arbitrary bytes — so without a marker a
- * typo'd cursor is indistinguishable from a valid key and the caller silently
- * gets the wrong page. Failing loudly is the whole point.
- */
+/** Keyset cursors (not OFFSET) for stable pagination cost. */
+/** cn1: prefix so invalid base64 cursors fail loudly. */
 const CURSOR_PREFIX = 'cn1:';
 
 export class InvalidCursorError extends Error {
@@ -133,8 +114,7 @@ export function shapeCountry(row: CountryRow, displayName?: string): Country {
     currency: row.primary_currency,
     currencies: row.currencies ? JSON.parse(row.currencies) : [],
     flag: { emoji: row.flag_emoji, svg: row.flag_svg_url, svgSquare: row.flag_svg_square_url },
-    // Population always travels with its year, or not at all. An undated number
-    // presented as current is the shape of V1's population endpoints.
+    // Population includes year when present (V1 had undated numbers).
     population:
       row.population === null ? null : { value: row.population, year: row.population_year }
   };
@@ -208,13 +188,7 @@ export function shapePlace(
   };
 }
 
-/**
- * Sparse fieldsets: `?fields=iso2,name,currency`.
- *
- * Applied after shaping rather than pushed into SQL. The artifact rows are
- * already in memory and narrow, so the win here is transfer size, not query
- * cost — and doing it in one place means every endpoint gets it for free.
- */
+/** ?fields= applied after shaping (transfer size, not SQL). */
 export function project<T extends object>(item: T, fields: string[] | null): Partial<T> {
   if (!fields || fields.length === 0) return item;
   const out: Partial<T> = {};
@@ -237,12 +211,7 @@ export function parseFields(raw: string | undefined): string[] | null {
 /* Localized names                                                             */
 /* -------------------------------------------------------------------------- */
 
-/**
- * Look up display names for a batch of entities in one query.
- *
- * Batched because the alternative — one query per row while rendering a page of
- * 50 cities — is the classic N+1 that makes an otherwise fast endpoint slow.
- */
+/** Batch localized names to avoid N+1. */
 export function localizedNames(
   db: Database,
   entityType: number,
@@ -270,11 +239,7 @@ export function localizedNames(
   return out;
 }
 
-/**
- * The single-entity form of `localizedNames`. Kept so the detail routes honour
- * `?locale=` exactly as the list routes do — an endpoint that quietly ignores a
- * documented cross-cutting parameter is worse than one that rejects it.
- */
+/** Detail routes honor ?locale= like list routes. */
 export function localizedName(
   db: Database,
   entityType: number,
@@ -500,12 +465,7 @@ export function listPlaces(db: Database, filter: PlaceFilter = {}): Page<Partial
   };
 }
 
-/**
- * Prefix search over the name index, for typeaheads.
- *
- * Backed by the same `folded` column the resolver uses, so a search and a
- * lookup can never disagree about whether a name exists.
- */
+/** Typeahead uses same folded column as resolve. */
 export function searchPlaces(
   db: Database,
   query: string,

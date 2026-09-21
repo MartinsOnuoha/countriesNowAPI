@@ -1,16 +1,4 @@
-/**
- * RETRIEVE — deterministic evidence gathering.
- *
- * The model does not choose what to look up. Given an anomaly, this module runs
- * a fixed set of queries and hands back whatever they return. That is the
- * difference between an LLM that confabulates a citation and one that is handed
- * a specific contradiction, the relevant register row, and a Wikidata claim
- * with its `P248` "stated in" qualifier.
- *
- * Wikidata is the workhorse here because its population claims carry `P585`
- * (point in time) and `P248` (stated in) qualifiers — the best free provenance
- * available, and exactly what a verifier needs to cite.
- */
+/** Fixed evidence queries per anomaly (no model-chosen lookups). */
 
 import { config, userAgent } from '../config.ts';
 import type { Anomaly, EvidenceItem, ResolvedDataset } from '../types.ts';
@@ -21,11 +9,7 @@ interface SparqlBinding {
   [key: string]: { value: string; type: string } | undefined;
 }
 
-/**
- * Wikidata blocks anonymous clients, so a contact address in the User-Agent is
- * mandatory rather than polite. Failures are returned as empty results: missing
- * evidence should weaken a proposal, never abort the run.
- */
+/** Wikidata requires User-Agent; failures → empty evidence. */
 async function sparql(query: string, timeoutMs = 45_000): Promise<SparqlBinding[]> {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), timeoutMs);
@@ -117,13 +101,7 @@ export async function wikidataNames(qid: string): Promise<EvidenceItem[]> {
     }));
 }
 
-/**
- * Gather everything relevant to one anomaly.
- *
- * Which queries run is decided by the anomaly's `field`, not by the model. The
- * raw values from every source that disagreed are also included verbatim, so
- * the verifier sees the contradiction rather than a summary of it.
- */
+/** Evidence keyed by anomaly.field; include raw source disagreement. */
 export async function retrieveEvidence(
   anomaly: Anomaly,
   dataset: ResolvedDataset
@@ -131,7 +109,6 @@ export async function retrieveEvidence(
   const evidence: EvidenceItem[] = [];
   const retrievedAt = new Date().toISOString();
 
-  // The disagreement itself is primary evidence.
   for (const [source, value] of Object.entries(anomaly.sources)) {
     evidence.push({
       source,

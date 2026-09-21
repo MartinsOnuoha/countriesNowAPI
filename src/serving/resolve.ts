@@ -1,25 +1,4 @@
-/**
- * resolve(ref) — the single entry point for turning a caller's string into an
- * entity.
- *
- * V1 had this logic copied into every handler, each with slightly different
- * bugs: `.toLowerCase()` in one place, `.trim().toLowerCase()` in another, a
- * hand-rolled "State" suffix stripper that lowercased a value the next line
- * lowercased again. That is why `?country=Réunion` worked, `?country=Reunion`
- * returned 404, and `?state=Lagos` failed where `?state=Lagos State` succeeded.
- *
- * Here there is one function. Every endpoint goes through it, so a name is
- * findable if and only if some source recorded it.
- *
- * Lookup order, most specific first:
- *   1. exact ISO code (iso2, iso3) or GeoNames id
- *   2. exact folded name
- *   3. punctuation-insensitive folded name
- *
- * Ambiguity is an answer, not a coin flip. "Congo" matches two countries, and
- * V1 silently returned whichever came first in the array — which is why the DRC
- * was unreachable. We return 409 with both candidates instead.
- */
+/** Single name/code resolver; 409 on ambiguity, 404 on miss. */
 
 import type { Database, SQLQueryBindings } from 'bun:sqlite';
 import { classifyRef, fold, foldTight } from './normalize.ts';
@@ -152,9 +131,7 @@ export function resolveCountry(db: Database, ref: string): Resolution<CountryRow
     if (row) return { ok: true, value: row, matchedOn: 'id' };
   }
 
-  // A three-letter string that is not an alpha-3 can still be a name ("Fiji"
-  // is four, but "Chad" and aliases like "UAE" arrive here), so name lookup
-  // always runs as a fallback rather than being skipped for code-shaped input.
+  // Still try name lookup for code-shaped refs (e.g. aliases).
   return resolveByName<CountryRow>(db, ENTITY_COUNTRY, trimmed, (keys) =>
     db
       .query(`SELECT * FROM countries WHERE iso2 IN (${keys.map(() => '?').join(',')})`)
@@ -200,8 +177,7 @@ export function resolveSubdivision(
       if (ids.length === 0) return [];
       const params: SQLQueryBindings[] = [...ids];
       let sql = `SELECT * FROM subdivisions WHERE id IN (${ids.map(() => '?').join(',')})`;
-      // Scoping by country is what makes "Lagos" unambiguous when the caller
-      // has already said Nigeria, without making it unambiguous globally.
+      // Optional country scope disambiguates subdivision names.
       if (countryIso2) {
         sql += ' AND country_iso2 = ?';
         params.push(countryIso2.toUpperCase());
@@ -266,24 +242,14 @@ export function resolvePlace(
   );
 }
 
-/**
- * Place names repeat far more than country names do, and most repeats have an
- * obvious intended answer. "Marseille" is one city plus sixteen arrondissements
- * that share the name; "Springfield" in the US is a dozen peers with no winner.
- *
- * A match is dominant when exactly one candidate is a city, or when the largest
- * city is an order of magnitude bigger than the runner-up. Anything else stays
- * ambiguous, because guessing between real peers is the V1 behaviour we are
- * replacing.
- */
 const DOMINANCE_RATIO = 10;
 
+/** pickDominantPlace: one clear city or 10× population gap; else ambiguous. */
 function pickDominantPlace(rows: PlaceRow[]): PlaceRow | null {
   const cities = rows.filter((r) => r.is_city === 1);
   if (cities.length === 0) return null;
   if (cities.length === 1) return cities[0]!;
 
-  // rows arrive ordered by is_city then population, so cities keeps that order.
   const [first, second] = cities as [PlaceRow, PlaceRow];
   const top = first.population ?? 0;
   const next = second.population ?? 0;

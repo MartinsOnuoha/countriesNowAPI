@@ -1,28 +1,4 @@
-/**
- * The v0.1 compatibility shim.
- *
- * Every V1 endpoint, served from the V2 engine, with V1's exact response
- * shapes — including its inconsistencies. `/countries/iso` capitalises `Iso2`
- * and `Iso3` while every other endpoint lowercases them; `/countries/codes`
- * calls alpha-2 `code`; the city population payload misspells `reliabilty`.
- * All of that is reproduced deliberately, because a compatibility layer that
- * quietly corrects field names is not a compatibility layer.
- *
- * Three things are deliberately *not* reproduced:
- *
- *   1. The `/cities/q` HTTP 500. V1 guards with `if (!DB1 && !DB2)` and then
- *      destructures `DB1` unconditionally, so 23 countries — Tuvalu, South
- *      Sudan, Vatican City among them — return a server error. Returning the
- *      correct data instead cannot break a client that currently receives a 500.
- *
- *   2. Stale values. V1 reports BGN for Bulgaria; we report EUR, because the
- *      ISO 4217 register does. Freezing a known-wrong value to preserve
- *      byte-compatibility would defeat the point of the rebuild.
- *
- *   3. The POST-to-GET redirect loop. V1 301s POST requests to the GET route,
- *      and clients that preserve the method across a 301 loop forever. We
- *      accept both verbs on the same handler instead.
- */
+/** V0.1 response shapes preserved; intentional fixes documented in tests/docs. */
 
 import { Elysia, t } from 'elysia';
 import type { Database } from 'bun:sqlite';
@@ -300,11 +276,7 @@ const legacyQuery = t.Object({
 });
 const legacyBody = t.Optional(t.Any());
 
-/**
- * V1 exposed each lookup as both POST (original) and GET (added in 2022, with
- * the POST route left in place behind a 301). Registering one handler for both
- * verbs is simpler and removes the redirect loop.
- */
+/** Same handler for GET and POST (avoids V1 POST→GET redirect loop). */
 interface LegacyContext {
   query: Record<string, string | undefined>;
   body: unknown;
@@ -417,10 +389,7 @@ export const v01 = new Elysia({ prefix: '/v0.1', name: 'v0.1' })
     '/countries/population',
     () => {
       const db = getDb();
-      // V1 served a full 1960-2018 time series per country and included World
-      // Bank aggregates such as "Arab World" as though they were countries. We
-      // carry one dated observation and only real countries; the envelope and
-      // field names are unchanged so existing parsers still work.
+      // One dated population point; real countries only; V1 envelope unchanged.
       return ok(
         'all countries and population',
         allCountries(db).filter(withPopulation).map(asCountryPopulation)
@@ -651,8 +620,7 @@ both(
   lookups,
   '/countries/flag/images/q',
   ({ query, body, set }) => {
-    // V1 accepted any of the three here, which is why the resolver takes an
-    // untyped reference rather than three separate lookups.
+    // Single untyped ref for country/state/city (V1 behavior).
     const ref = param(query, body, 'iso2', 'iso3', 'country');
     if (!ref) return fail(set, MSG.missingCountryOrIso2, 400);
     const r = resolveCountry(getDb(), ref);
@@ -799,9 +767,7 @@ both(
   ({ query, body, set }) => {
     const ref = param(query, body, 'city');
     if (!ref) return fail(set, MSG.missingCity, 400);
-    // Resolved through the names table, so accented and unaccented spellings
-    // both hit. Ties break on population, which is what a caller asking for
-    // "Springfield" almost certainly wants.
+    // Name index + population tie-break for city lookup.
     const row = getDb()
       .query(
         `SELECT p.name, p.population, p.population_year, c.display_name AS country

@@ -1,10 +1,4 @@
-/**
- * Entity-type discriminators in the artifact's `names` table.
- *
- * Integers rather than strings because `names` is by far the largest table and
- * `(entity_type, folded)` is the hottest index in the process. Shared between
- * the publisher and the server so the two cannot drift.
- */
+/** Integer entity_type for names index; shared with publisher. */
 export const ENTITY_COUNTRY = 0;
 export const ENTITY_SUBDIVISION = 1;
 export const ENTITY_PLACE = 2;

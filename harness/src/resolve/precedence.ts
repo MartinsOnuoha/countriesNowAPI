@@ -1,11 +1,4 @@
-/**
- * Loads harness/policy/precedence.yaml and turns it into the small API the
- * resolver actually needs.
- *
- * Keeping precedence in data rather than in code is the point: changing which
- * source wins for a field is a one-line diff that a reviewer can read, not an
- * archaeology exercise across adapter files.
- */
+/** Load precedence.yaml for field source chains. */
 
 import { readFileSync } from 'node:fs';
 import { resolve as resolvePath } from 'node:path';
@@ -66,18 +59,7 @@ function isEmpty(v: unknown): boolean {
   return v === null || v === undefined || v === '' || (Array.isArray(v) && v.length === 0);
 }
 
-/**
- * Choose a value for one field.
- *
- * Walks the precedence chain and takes the first source that actually has a
- * value. Anything from a quarantined (ODbL) source or an explicit `exclude` is
- * dropped outright rather than used as a late fallback — a share-alike value
- * must not reach the output even when nothing better exists.
- *
- * Disagreements are returned rather than resolved. DETECT turns them into
- * anomalies, which is how a stale value like GeoNames' BGN for Bulgaria becomes
- * a visible question instead of a silent overwrite.
- */
+/** First non-empty allowed source; return conflicts for DETECT. */
 export function pick<T>(
   entity: EntityType,
   field: string,

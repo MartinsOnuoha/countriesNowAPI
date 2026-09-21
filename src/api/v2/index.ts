@@ -1,12 +1,4 @@
-/**
- * The v2 API.
- *
- * Schemas are declared once with TypeBox and Elysia derives runtime validation,
- * TypeScript types and the OpenAPI document from them. V1 hand-wrote 33 files
- * under `swagger/` and they drifted so far that the published docs still
- * describe POST endpoints replaced by GET in 2022. Schema-derived docs make
- * that class of drift impossible rather than merely discouraged.
- */
+/** v2 routes; TypeBox schemas drive validation and OpenAPI. */
 
 import { Elysia, t } from 'elysia';
 import { getDb, getMeta } from '../../serving/artifact.ts';
@@ -112,8 +104,6 @@ export const v2 = new Elysia({ prefix: '/v2', name: 'v2' })
     '/countries/:ref',
     ({ params, query }) => {
       const db = getDb();
-      // One resolver for every kind of reference: alpha-2, alpha-3, GeoNames
-      // id, official name, CLDR name, historical name or alias.
       const row = unwrap(resolveCountry(db, params.ref), 'country', params.ref);
 
       const country = shapeCountry(row);

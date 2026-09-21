@@ -1,29 +1,4 @@
-/**
- * SIX Group — the ISO 4217 register.
- *
- * SIX is the maintenance agency for ISO 4217 and publishes the official lists
- * as XML with no key, no auth and no rate limit. This is the source of truth
- * for which currency a country uses, and it is the direct fix for issue #236:
- * `list-one.xml` carries `Pblshd="2026-01-01"` and says
- *
- *     <CcyNtry><CtryNm>BULGARIA</CtryNm><CcyNm>Euro</CcyNm>
- *       <Ccy>EUR</Ccy><CcyNbr>978</CcyNbr><CcyMnrUnts>2</CcyMnrUnts></CcyNtry>
- *
- * while GeoNames still reports BGN. The `Pblshd` attribute is also the change
- * trigger DETECT diffs on, so the next changeover raises an anomaly by itself
- * instead of waiting for a bug report.
- *
- * Two shapes the parser has to handle that a naive reader gets wrong:
- *
- *   - Entries with no <Ccy> at all. Antarctica and Palestine are listed as
- *     "No universal currency". They are entities without a currency, not
- *     parse errors.
- *
- *   - Multiple currencies per entity. 280 rows cover 261 entities; 14 have more
- *     than one, and several of those are funds codes (CLF, MXV, USN, CHE/CHW)
- *     rather than circulating cash. Funds are marked and never chosen as the
- *     primary.
- */
+/** ISO 4217 XML from SIX (#236); handles multi-currency and no-currency rows. */
 
 import { XMLParser } from 'fast-xml-parser';
 import { fold } from '../../../src/serving/normalize.ts';
@@ -101,12 +76,7 @@ const text = (v: unknown): string | null => {
   return s || null;
 };
 
-/**
- * SIX entity names are SHOUTY and ISO-3166-*style* without being codes:
- * "BOLIVIA (PLURINATIONAL STATE OF)", "UNITED STATES OF AMERICA (THE)". They
- * have to be matched against country names by folding, with the parenthetical
- * and the trailing article removed.
- */
+/** Normalize SIX SHOUTY names for country matching. */
 export function normaliseEntityName(name: string): string[] {
   const base = name.trim();
   const variants = new Set<string>([base]);
@@ -115,9 +85,7 @@ export function normaliseEntityName(name: string): string[] {
   const noArticle = base.replace(/\s*\(THE\)\s*$/i, '').trim();
   if (noArticle) variants.add(noArticle);
 
-  // "KOREA (THE REPUBLIC OF)" -> "KOREA, REPUBLIC OF", which is exactly ISO's
-  // comma form. Without this both Koreas collapse to "KOREA" and neither gets
-  // a currency, because the parenthetical is the only thing telling them apart.
+  // Parenthetical normalization so both Koreas match.
   const commaForm = base.replace(/\s*\((?:THE\s+)?(.+?)\)\s*$/i, ', $1').trim();
   if (commaForm !== base) variants.add(commaForm);
 

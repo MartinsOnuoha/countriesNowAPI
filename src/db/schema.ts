@@ -1,22 +1,4 @@
-/**
- * Curation-plane schema (Postgres).
- *
- * This database is never on the request path. It is where the harness
- * assembles, reconciles and audits data; releases are compiled out of it into
- * an immutable SQLite artifact (see harness/src/publish).
- *
- * Two design rules drive the shape of everything below, and both exist because
- * of specific V1 failures:
- *
- *   1. Every entity has a stable synthetic key plus at least one external
- *      identifier (ISO code, GeoNames id, Wikidata QID). V1 joined six data
- *      files on the country *name* string, which is why it shipped two records
- *      both called "Congo" and why the DRC was unreachable.
- *
- *   2. Every published field carries provenance. V1 could not answer "where did
- *      Bulgaria's BGN come from, and when?", so nobody could tell a stale value
- *      from a deliberate one.
- */
+/** Postgres curation schema; releases compile to SQLite artifact. */
 
 import { relations, sql } from 'drizzle-orm';
 import {

@@ -1,10 +1,4 @@
-/**
- * Thin OpenAI-compatible chat client.
- *
- * Deliberately not an SDK. The harness makes two kinds of call — cheap
- * over-production and expensive refutation — and both want strict JSON back.
- * Everything else an SDK offers is surface area we would have to keep current.
- */
+/** Minimal chat client for JSON-only harness calls. */
 
 import { config, userAgent } from '../config.ts';
 
@@ -50,8 +44,7 @@ export async function chat(options: ChatOptions): Promise<ChatResult> {
       body: JSON.stringify({
         model: options.model,
         messages: options.messages,
-        // Curation is adjudication, not creative writing. Determinism matters
-        // more than variety, so temperature defaults to zero.
+        // Default temperature 0 for deterministic curation.
         temperature: options.temperature ?? 0,
         max_tokens: options.maxTokens ?? 2048,
         ...(options.json ? { response_format: { type: 'json_object' } } : {})
@@ -83,13 +76,7 @@ export async function chat(options: ChatOptions): Promise<ChatResult> {
   }
 }
 
-/**
- * Parse JSON from a model response.
- *
- * Models wrap JSON in prose or fences even when told not to, so the fenced
- * block is extracted before parsing. A parse failure returns null rather than
- * throwing: one malformed response should cost one candidate, not the run.
- */
+/** Extract JSON from fences; parse failure → null. */
 export function parseJson<T>(content: string): T | null {
   const fenced = /```(?:json)?\s*([\s\S]*?)```/.exec(content);
   const raw = (fenced?.[1] ?? content).trim();

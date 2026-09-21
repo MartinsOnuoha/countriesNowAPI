@@ -1,18 +1,4 @@
-/**
- * Membership policy for the country list.
- *
- * The rule is mechanical: membership is ISO 3166-1, with no editorial additions
- * or removals. That is defensible in a way that curation is not — a report can
- * be answered with "we follow ISO 3166-1, here is the entry" instead of an
- * argument about recognition.
- *
- * Applying it also silently fixes two open V1 issues. Palestine (#224) and Sint
- * Maarten (#226) both have had ISO codes for years; their absence from V1 was a
- * data-entry failure, not a position.
- *
- * The one exception is documented below and tagged in the output, so a client
- * can always tell a standard code from a pragmatic one.
- */
+/** Country list = ISO 3166-1 + documented exceptions. */
 
 /**
  * Bump when a decision in this file changes.
@@ -34,13 +20,7 @@ export interface TerritoryException {
   emittedBy: string[];
 }
 
-/**
- * Kosovo has no ISO 3166-1 entry, but GeoNames (XK/XKX), CLDR (XK → "Kosovo"),
- * libphonenumber (region XK) and the ITU (+383, footnoted) all effectively
- * treat it as one. Omitting it would make the API less useful than every
- * dataset it is built from; emitting it silently would misrepresent ISO. So it
- * is emitted with `isoAssigned: false`.
- */
+/** XK exception: emit with isoAssigned false. */
 export const TERRITORY_EXCEPTIONS: readonly TerritoryException[] = [
   {
     iso2: 'XK',
@@ -58,24 +38,10 @@ export const EXCEPTION_CODES: ReadonlySet<string> = new Set(
   TERRITORY_EXCEPTIONS.map((t) => t.iso2)
 );
 
-/**
- * Entities some upstreams model as countries that we deliberately do not.
- *
- * GeoNames splits France's overseas departments (GP, MQ, RE, YT, GF) into
- * separate countries while ISO 3166-2:FR also lists them as French
- * subdivisions. Both models are defensible; what breaks clients is holding both
- * at once, which is what V1 did. We follow ISO 3166-1, where each of these has
- * its own alpha-2 and is therefore a country — so nothing is suppressed here
- * today. The list exists so that future divergences are recorded rather than
- * discovered.
- */
+/** SUPPRESSED_ENTITIES: reserved for upstream/ISO conflicts (currently empty). */
 export const SUPPRESSED_ENTITIES: ReadonlySet<string> = new Set<string>([]);
 
-/**
- * Countries whose absence was a confirmed V1 bug. The gate in
- * harness/src/gates asserts each of these is present, so they cannot silently
- * disappear again.
- */
+/** REQUIRED_PRESENT: gate asserts these ISO2 codes exist. */
 export const REQUIRED_PRESENT: ReadonlyArray<{ iso2: string; why: string }> = [
   { iso2: 'PS', why: 'issue #224 — Palestine missing from /countries' },
   { iso2: 'SX', why: 'issue #226 — Sint Maarten (Dutch part) missing' },
@@ -131,15 +97,7 @@ export const REQUIRED_ALIASES: ReadonlyArray<{ query: string; iso2: string; why:
   { query: 'South Sudan', iso2: 'SS', why: 'V1 returns HTTP 500 for this country today' }
 ];
 
-/**
- * Hand-maintained aliases, merged into the `names` table alongside everything
- * the sources supply.
- *
- * This is the one place where curation by hand is still allowed, and it is
- * deliberately narrow: only alternative *names for an entity that already
- * exists*. It can never add, remove or re-key a country, so it cannot
- * reintroduce the class of drift that made V1's six data files disagree.
- */
+/** MANUAL_ALIASES: extra names only; cannot add/remove countries. */
 export const MANUAL_ALIASES: Readonly<Record<string, readonly string[]>> = {
   AE: ['UAE', 'Emirates'],
   BO: ['Bolivia'],

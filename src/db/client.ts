@@ -1,10 +1,4 @@
-/**
- * Curation-plane database client.
- *
- * Nothing on the request path imports this. The API reads an embedded SQLite
- * artifact (src/serving) and has no network dependency at all, which is the
- * whole point of the split: Postgres going down stops the pipeline, not the API.
- */
+/** Postgres client for harness only; API uses artifact. */
 
 import { drizzle } from 'drizzle-orm/postgres-js';
 import postgres from 'postgres';

@@ -1,21 +1,4 @@
-/**
- * datasets/country-codes — the crosswalk.
- *
- * This is the cheapest source in the pipeline and one of the most valuable: a
- * single 249-row CSV that carries alpha-2, alpha-3, numeric, M49, the GeoNames
- * id and the Wikidata QID on the same line. Every later join — GeoNames places
- * to countries, Wikidata evidence to entities — goes through those two
- * identifier columns, so having them pre-matched removes the name-based joining
- * that was V1's original sin.
- *
- * It is also public domain (ODC-PDDL-1.0), so nothing here constrains our
- * output licence.
- *
- * Its currency columns are deliberately ignored. They are single-valued, which
- * cannot represent the 14 countries that legitimately have more than one
- * currency, and they lag the register. Currency comes from SIX; see
- * harness/policy/precedence.yaml.
- */
+/** ISO/GeoNames/Wikidata crosswalk CSV (ODC-PDDL). */
 
 import { fold } from '../../../src/serving/normalize.ts';
 import { fetchArtifact, readSnapshotText } from '../snapshot/store.ts';
@@ -220,13 +203,7 @@ export const countryCodes: SourceAdapter<CountryCodesData> = {
   }
 };
 
-/**
- * The UN official names, as localised name records.
- *
- * Six languages is thin next to CLDR's hundred, but these arrive for free with
- * the crosswalk and cover the UN languages, so the localisation feature in
- * issue #215 has something to serve even before the CLDR adapter runs.
- */
+/** UN official names as NameRecords (#215 baseline locales). */
 export function crosswalkNames(row: CrosswalkRow): NameRecord[] {
   const out: NameRecord[] = [];
   const add = (name: string | null, locale: string, kind: NameRecord['kind']) => {

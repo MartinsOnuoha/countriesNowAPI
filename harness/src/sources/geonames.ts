@@ -1,25 +1,4 @@
-/**
- * GeoNames — places, coordinates and hierarchy.
- *
- * The only source with daily deltas, which is what makes "continuously
- * updating" a real property rather than an aspiration. CC BY 4.0, commercial
- * use permitted.
- *
- * Two deliberate exclusions:
- *
- *   - Currency. `countryInfo.txt` still reports BGN for Bulgaria months after
- *     the euro changeover. That exact staleness is issue #236, so currency is
- *     taken from the SIX register and GeoNames is listed under `exclude` in
- *     harness/policy/precedence.yaml.
- *
- *   - Subdivision names. `admin1CodesASCII.txt` still says "Bourgogne" and
- *     "Rhône-Alpes" for France, and its codes are INSEE region numbers rather
- *     than ISO 3166-2. We take coordinates and the admin1 linkage from here,
- *     but names and codes come from iso-codes (issue #227).
- *
- * The tier is configurable because `allCountries.zip` is 400 MB. Development
- * and CI use cities15000 (3 MB, 34,076 rows); releases use allCountries.
- */
+/** GeoNames places/hierarchy; currency/names excluded per precedence.yaml. */
 
 import { fold } from '../../../src/serving/normalize.ts';
 import { config } from '../config.ts';
@@ -149,8 +128,7 @@ export const geonames: SourceAdapter<GeonamesData> = {
     const placesTsv = new TextDecoder().decode(extractOne(placesZip, `${tier}.txt`).data);
     const places = parsePlaces(placesTsv);
 
-    // Containment decides whether an arrondissement counts as a city, so the
-    // hierarchy has to be applied before the policy runs.
+    // Apply hierarchy.txt before city policy (#242 containment).
     const hierarchyZip = await readSnapshot(by('hierarchy.zip'));
     const hierarchyTsv = new TextDecoder().decode(extractOne(hierarchyZip, 'hierarchy.txt').data);
     applyHierarchy(places, hierarchyTsv);

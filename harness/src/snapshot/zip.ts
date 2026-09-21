@@ -1,11 +1,4 @@
-/**
- * Minimal ZIP reader for the GeoNames dumps.
- *
- * GeoNames ships everything as single-entry deflate archives. Shelling out to
- * `unzip` would work locally but adds a system dependency to CI and to the
- * container; a full zip library is a lot of surface area for one file format we
- * only ever read. This handles exactly the two storage methods GeoNames uses.
- */
+/** Minimal ZIP reader for GeoNames single-entry archives. */
 
 import { inflateRawSync } from 'node:zlib';
 

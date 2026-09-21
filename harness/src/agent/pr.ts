@@ -1,15 +1,4 @@
-/**
- * SHAPE, second half: turn gated proposals into a pull request.
- *
- * The agent never writes to the dataset. It writes a branch containing a
- * proposals file and opens a PR describing what it wants changed, what evidence
- * it found, what the strongest argument against it was, and which gates the
- * patched dataset passed. A human merges or does not.
- *
- * That indirection is the entire safety model. Every earlier stage — the
- * falsifiability check, the refutation pass, the confidence floor, the gate —
- * exists to make this PR worth reading, not to make it unnecessary.
- */
+/** Open PR with proposals file; agent never writes dataset directly. */
 
 import { config, userAgent } from '../config.ts';
 import type { Logger, Proposal } from '../types.ts';
@@ -47,13 +36,7 @@ async function gh<T>(path: string, init: RequestInit = {}): Promise<T> {
   return (await res.json()) as T;
 }
 
-/**
- * One branch per dataset version, reused across runs on the same day.
- *
- * Reusing it means a second run updates the existing PR rather than opening a
- * near-identical one, which is what keeps a scheduled agent from turning the
- * pull request list into a log file.
- */
+/** Reuse branch per dataset version; update open PR instead of duplicating. */
 function branchName(datasetVersion: string): string {
   return `harness/proposals-${datasetVersion}`;
 }

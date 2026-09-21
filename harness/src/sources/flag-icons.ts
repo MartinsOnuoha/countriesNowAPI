@@ -1,20 +1,4 @@
-/**
- * lipis/flag-icons — flags as URLs.
- *
- * MIT-licensed SVG flags for every ISO 3166-1 code, which is the cleanest
- * licence story available; the flag *designs* themselves are separately in the
- * public domain. The alternative, hampusborgos/country-flags, has no licence
- * file at all despite the README asserting public domain, which is a
- * procurement risk we do not need to take.
- *
- * We emit URLs, never bytes. Inlining SVG payloads would undo the "lighter
- * application sizes" promise the project exists for, and a URL lets flags be
- * cached and versioned independently of the data pipeline. The tag is pinned so
- * an upstream flag redesign cannot silently change API output.
- *
- * Emoji flags need no upstream at all — they are derived from the alpha-2 code
- * by regional-indicator arithmetic.
- */
+/** Pinned flag-icons SVG URLs + emoji from iso2. */
 
 import { fetchArtifact, readSnapshotJson } from '../snapshot/store.ts';
 import type { FetchContext, Snapshot, SourceAdapter } from '../types.ts';

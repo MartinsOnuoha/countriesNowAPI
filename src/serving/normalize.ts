@@ -1,16 +1,4 @@
-/**
- * Name folding.
- *
- * V1 compared names with `.trim().toLowerCase()` and nothing else, so
- * `?country=Réunion` resolved and `?country=Reunion` returned 404. The same
- * gap made "Cote d'Ivoire" unreachable while "Ivory Coast" worked, purely
- * because of which spelling happened to be typed into the data file.
- *
- * `fold()` is the single normalisation used everywhere: by the harness when it
- * writes the `names` table, and by the API when it resolves a caller's input.
- * Because both sides run the identical function, a name is findable if and only
- * if some source recorded it.
- */
+/** Shared fold() for harness names table and API resolution. */
 
 /**
  * Characters that are not decomposed by NFKD but should still be equated.
@@ -58,11 +46,7 @@ const IRREDUCIBLE_RE = new RegExp(`[${Object.keys(IRREDUCIBLE).join('')}]`, 'g')
 // eslint-disable-next-line no-misleading-character-class
 const COMBINING_MARKS = /[\u0300-\u036f\u1ab0-\u1aff\u1dc0-\u1dff\u20d0-\u20f0\ufe20-\ufe2f]/g;
 
-/**
- * Anything that is punctuation or whitespace collapses to a single space, so
- * "Cote d'Ivoire", "Cote dIvoire" and "Cote d Ivoire" converge. Kept
- * deliberately broad: no source spells a place apart by punctuation alone.
- */
+/** Punctuation/whitespace → single space in fold(). */
 const SEPARATORS = /[\s\p{P}\p{S}]+/gu;
 
 /**

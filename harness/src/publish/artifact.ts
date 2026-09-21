@@ -1,21 +1,4 @@
-/**
- * Compile a resolved dataset into the immutable serving artifact.
- *
- * The output is one SQLite file that gets baked into the container image. At
- * runtime the API opens it read-only and never touches a network socket, which
- * is the point of the two-plane split: Postgres going down stops the pipeline,
- * not the API. "API is down" was filed eleven separate times against V1
- * (#239, #234, #233, #232, #225, #216, #203, #202, #201, #90, #88) and it was
- * never a code problem.
- *
- * The schema here is deliberately not the Postgres schema. This one is
- * denormalised and indexed for the four questions the API actually asks:
- *
- *   1. resolve an arbitrary string to an entity        -> names(folded)
- *   2. fetch a country by code                         -> countries(iso2/iso3)
- *   3. list a country's subdivisions                   -> subdivisions(country_iso2)
- *   4. list a subdivision's cities                     -> places(..., is_city)
- */
+/** Build denormalized read-only SQLite artifact for API. */
 
 import { Database } from 'bun:sqlite';
 import { createHash } from 'node:crypto';

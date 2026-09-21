@@ -1,16 +1,4 @@
-/**
- * google/libphonenumber — dial codes.
- *
- * The ITU is the authority for E.164, but it publishes assignments as PDFs.
- * libphonenumber is Apache-2.0, tracks regulator changes closely, and is the
- * only machine-readable source that models the awkward cases correctly:
- * one calling code shared by many regions (+1 across the NANP, +7 between
- * Russia and Kazakhstan, +599 between Curaçao and the BES islands).
- *
- * V1 stored a single flat string per country, which is fine until a client
- * tries to work out which of the 25 +1 regions a number belongs to. We keep the
- * flat form for compatibility and add `root` plus `suffixes` beside it.
- */
+/** Dial codes from libphonenumber; root + suffixes for shared codes. */
 
 import { XMLParser } from 'fast-xml-parser';
 import { fetchArtifact, readSnapshotText } from '../snapshot/store.ts';

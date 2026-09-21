@@ -1,17 +1,4 @@
-/**
- * The invariant suite.
- *
- * Most of these encode a specific bug from V1's tracker. Once a rule is here,
- * that bug cannot come back without failing CI — which is the difference
- * between fixing data and fixing a process. V1 fixed "duplicate Warsaw",
- * "duplicate Myanmar", "duplicate Jordan" and "make Bahamas uniform" as four
- * separate hand-authored pull requests over two years; a primary key and a
- * uniqueness check would have made all four structurally impossible.
- *
- * Rules are `error` when a violation must block a release and `warn` when it
- * should be visible but is not disqualifying (usually because upstream coverage
- * is genuinely incomplete rather than wrong).
- */
+/** Release-blocking invariants; many map to GitHub issues. */
 
 import { fold, foldTight } from '../../../src/serving/normalize.ts';
 import { EXCLUDED_FEATURE_CODES } from '../../policy/places.ts';
@@ -65,10 +52,7 @@ export const INVARIANTS: Invariant[] = [
     id: 'country-display-name-unique',
     title: 'No two countries share a display name',
     severity: 'error',
-    // V1's countriesAndState.js held two records both named "Congo" (iso2 CG
-    // and CD). Because lookup was a linear .find() on the name, the DRC was
-    // permanently unreachable via ?country=Congo. A uniqueness check on the
-    // folded display name makes that shape of data unpublishable.
+    // Unique folded country display names (V1 duplicate "Congo").
     check({ dataset }) {
       const seen = new Map<string, string[]>();
       for (const c of dataset.countries) {
@@ -104,13 +88,7 @@ export const INVARIANTS: Invariant[] = [
     id: 'subdivision-name-unique-per-level',
     title: 'No duplicate subdivision names within a country, level and type',
     severity: 'warn',
-    // Genuine same-name subdivisions at different levels exist (a French
-    // department often shares its region's name), so this is scoped to a level.
-    // Type is part of the key too, because ISO 3166-2 deliberately assigns a
-    // city and the region around it the same name: AZ-LA is the municipality of
-    // Lənkəran and AZ-LAN is the rayon, TW-CYI the city and TW-CYQ the county.
-    // Those are two real places, not a data error. Two entries sharing a level,
-    // a type and a name is the Congo failure and is what this catches.
+    // Uniqueness scoped by country+level+type (same-name dept/region OK).
     check({ dataset }) {
       const seen = new Map<string, string[]>();
       for (const s of dataset.subdivisions) {
@@ -148,9 +126,7 @@ export const INVARIANTS: Invariant[] = [
     title: 'No neighbourhood, arrondissement or defunct place is marked a city',
     severity: 'error',
     issue: '#242',
-    // Asking V1 for cities in Provence-Alpes-Côte d'Azur returned Mazargues and
-    // Sainte-Marguerite (PPLX neighbourhoods of Marseille) and "Marseille 08"
-    // (a PPLA5 arrondissement). This is that report, as a rule.
+    // #242: no PPLX/PPLA5 cities in city lists.
     check({ dataset }) {
       return dataset.places
         .filter((p) => p.isCity && EXCLUDED_FEATURE_CODES.has(p.featureCode))
@@ -251,10 +227,6 @@ export const INVARIANTS: Invariant[] = [
     title: 'Bulgaria uses EUR',
     severity: 'error',
     issue: '#236',
-    // Deliberately specific. Bulgaria adopted the euro on 2026-01-01 and the
-    // SIX register reflects it; GeoNames countryInfo.txt still says BGN months
-    // later. This asserts the pipeline took the value from the right source,
-    // and it is the canary for the whole precedence policy.
     check({ byIso2 }) {
       const bg = byIso2.get('BG');
       if (!bg) return [{ entityRef: 'BG', detail: 'Bulgaria is missing entirely' }];
@@ -305,10 +277,7 @@ export const INVARIANTS: Invariant[] = [
     title: 'French subdivisions reflect the post-2016 regions',
     severity: 'error',
     issue: '#227',
-    // France merged 22 metropolitan regions into 13 in 2016. ISO 3166-2:FR now
-    // lists 12 as "Metropolitan region" plus Corse as a collectivity with
-    // special status, and 95 metropolitan departments beneath them. V1 carried
-    // both "Nord-Pas-De-Calais" and "Hauts-de-France" at once.
+    // #227: post-2016 FR regions/depts counts and names.
     check({ dataset }) {
       const fr = dataset.subdivisions.filter((s) => s.countryIso2 === 'FR');
       const out: InvariantViolation[] = [];
@@ -356,9 +325,7 @@ export const INVARIANTS: Invariant[] = [
     title: 'Sri Lanka exposes 9 provinces with districts nested beneath them',
     severity: 'error',
     issue: '#229',
-    // V1 flattened provinces and districts into one `states` list. Sri Lanka is
-    // province > district > city, so a location picker built on V1 offered 34
-    // undifferentiated options where it should have offered 9.
+    // #229: LK 9 provinces, districts nested under provinces.
     check({ dataset }) {
       const lk = dataset.subdivisions.filter((s) => s.countryIso2 === 'LK');
       const out: InvariantViolation[] = [];
@@ -429,14 +396,8 @@ export const INVARIANTS: Invariant[] = [
     id: 'required-aliases-resolve',
     title: 'Historically failing name lookups all resolve',
     severity: 'error',
-    // Every entry in REQUIRED_ALIASES is a spelling that 404'd against V1 or a
-    // rename that broke clients. "Reunion" without the accent is the canonical
-    // case: V1 compared with .toLowerCase() only.
+    // Test exact + foldTight alias resolution like API.
     check({ dataset }) {
-      // Mirrors the two-tier lookup in src/serving/resolve.ts: exact fold
-      // first, punctuation-insensitive fold only on a miss. Testing just the
-      // exact index would fail inputs the API actually resolves, and — worse —
-      // could pass inputs it does not.
       const exact = new Map<string, Set<string>>();
       const tight = new Map<string, Set<string>>();
       for (const c of dataset.countries) {
@@ -603,16 +564,7 @@ export const INVARIANTS: Invariant[] = [
     id: 'population-has-a-year',
     title: 'An undated population comes from a source that publishes no date',
     severity: 'warn',
-    // V1 served unlabelled population numbers, so a 2011 census and a 2024
-    // estimate looked identical. Being unable to date a figure is acceptable;
-    // presenting it as though it were current is not, and neither is inventing
-    // a year from the snapshot date.
-    //
-    // World Bank figures carry a reference year and must keep it — a dated
-    // figure silently losing its year is the regression worth catching. The
-    // ~35 territories World Bank does not cover fall back to GeoNames
-    // countryInfo.txt, which ships a bare integer with no reference period. For
-    // those, populationYear stays null all the way out to the response.
+    // Warn if dated source published population without year.
     check({ dataset }) {
       const DATELESS = new Set(['geonames']);
       const source = new Map(
@@ -651,9 +603,7 @@ export const INVARIANTS: Invariant[] = [
     id: 'no-quarantined-sources-in-output',
     title: 'No published value came from a share-alike source',
     severity: 'error',
-    // The licence firewall, asserted rather than assumed. If an ODbL value ever
-    // reaches the published tables, our output arguably becomes a derivative
-    // database and every downstream consumer inherits the copyleft.
+    // No quarantined ODbL sources in published provenance.
     check({ dataset }) {
       const banned = new Set(['dr5hn', 'mledoze']);
       const hits = dataset.provenance.filter((p) => banned.has(p.source));
@@ -668,8 +618,7 @@ export const INVARIANTS: Invariant[] = [
     id: 'dataset-not-empty',
     title: 'The dataset has a plausible amount of data',
     severity: 'error',
-    // A cheap tripwire. A parser regression that silently produces zero rows is
-    // otherwise easy to publish, since every other rule passes vacuously.
+    // Minimum row counts catch empty parse regressions.
     check({ dataset }) {
       const out: InvariantViolation[] = [];
       if (dataset.countries.length < 200) {

@@ -1,27 +1,4 @@
-/**
- * The agent: HYPOTHESIZE -> RETRIEVE -> VERIFY -> SHAPE.
- *
- * The shape is borrowed from Aster's code-review pipeline, which is the right
- * shape for this problem even though its retrieval layer (SQLite FTS5 over
- * source files, tree-sitter symbols, ripgrep) is aimed at code and ours has to
- * be aimed at data. A cheap model over-produces candidates, targeted evidence
- * is pulled for each, and then a stronger model *prompted specifically to
- * refute* kills the plausible-but-wrong ones. Expensive tokens are spent only
- * on challenging what survived.
- *
- * The reason this is worth the trouble: an LLM asked "is Bulgaria's currency
- * right?" will confabulate. An LLM handed a specific contradiction, the SIX
- * register row, the Wikidata claim with its P248 citation, and an instruction
- * to disprove the proposed change is doing something much closer to verifiable
- * work.
- *
- * Three hard constraints, enforced in code rather than in the prompt:
- *
- *   1. A candidate with no falsifiable claim is dropped before RETRIEVE.
- *   2. A proposal the verifier refutes never reaches a human.
- *   3. Nothing here writes to the dataset. Output is a JSON Patch that must
- *      still clear the deterministic gates and a human review.
- */
+/** Agent pipeline: hypothesize → retrieve → verify → gate → proposals. */
 
 import { config } from '../config.ts';
 import type {
@@ -184,21 +161,7 @@ async function verify(
 /* GATE                                                                        */
 /* -------------------------------------------------------------------------- */
 
-/**
- * Apply the patch to a candidate dataset and run the deterministic invariants
- * against the result.
- *
- * This is the stage that makes the whole pipeline safe to leave running. Both
- * models can be wrong in the same direction — a cheap one proposing a plausible
- * change and a strong one failing to find the counter-argument is not a rare
- * event — and neither of them is checking whether the change keeps ISO codes
- * unique or leaves France with thirteen regions. The invariant suite is,
- * and it does not have opinions.
- *
- * A failure here is silent rejection, not a warning on a pull request. If the
- * change cannot survive rules derived from bugs the project has already been
- * bitten by, a reviewer should never have to spend attention on it.
- */
+/** Gate patched dataset; reject if new invariant errors vs baseline. */
 async function gateProposal(
   dataset: ResolvedDataset,
   patch: PatchOp[],
@@ -214,9 +177,7 @@ async function gateProposal(
 
   const report = await runGates(candidate, silentLogger(log));
 
-  // Compare against the baseline rather than demanding a clean run. The
-  // dataset already carries known warnings, and failing a proposal for a
-  // pre-existing one would mean nothing could ever be proposed.
+  // Ignore pre-existing invariant failures when judging a patch.
   const introduced = report.results
     .filter((r) => !r.passed && r.severity === 'error' && !baseline.has(r.id))
     .map((r) => r.title);
@@ -233,10 +194,7 @@ function failingIds(report: GateReport): Set<string> {
   return new Set(report.results.filter((r) => !r.passed).map((r) => r.id));
 }
 
-/**
- * The gate runs once per proposal, and its own progress output would drown the
- * agent's. Errors still surface through the returned report.
- */
+/** Suppress gate step noise; errors still surface via report. */
 function silentLogger(base: Logger): Logger {
   return {
     info: () => {},
@@ -262,8 +220,6 @@ function shapePatch(anomaly: Anomaly, hypothesis: Hypothesis): PatchOp[] {
   return [
     {
       op: 'replace',
-      // JSON Pointer against the resolved dataset, keyed by the stable
-      // identifier rather than an array index, so the patch survives reordering.
       path: `/${collection}/${anomaly.entityRef}/${hypothesis.field}`,
       value: hypothesis.newValue
     }
@@ -285,8 +241,7 @@ export async function propose(
 ): Promise<Proposal[]> {
   const queue = [...anomalies]
     .sort((a, b) => SEVERITY_ORDER[a.severity] - SEVERITY_ORDER[b.severity])
-    // Low-severity anomalies are almost always coverage gaps rather than
-    // errors, and paying a model to say so is a poor trade.
+    // Skip low severity (usually coverage gaps).
     .filter((a) => a.severity !== 'low')
     .slice(0, limit);
 
@@ -340,8 +295,7 @@ export async function propose(
       );
       continue;
     }
-    // An upheld proposal with no primary source is exactly the plausible-but-
-    // unverifiable case this pipeline exists to catch.
+    // Reject upheld proposals without a primary source citation.
     if (!verification.primarySourceCited) {
       refuted++;
       log.debug(`${c.anomaly.entityRef}: upheld but no primary source cited`);
@@ -360,8 +314,6 @@ export async function propose(
 
   log.step(`GATE — applying ${survivors.length} patches to a candidate dataset`);
 
-  // Establish what is already failing before any patch is applied, so a
-  // proposal is judged on what it changes rather than on what it inherits.
   const baseline = failingIds(await runGates(dataset, silentLogger(log)));
 
   const proposals: Proposal[] = [];
@@ -419,11 +371,7 @@ function compactCountry(c: ResolvedDataset['countries'][number]) {
   };
 }
 
-/**
- * Render proposals as a pull-request body: what changed, why, the evidence, and
- * the strongest argument against. Reviewers see the refutation even for upheld
- * proposals, which is the point — approving is a judgement, not a rubber stamp.
- */
+/** PR body includes claim, evidence, refutation, gate scores. */
 export function formatProposalsAsMarkdown(proposals: Proposal[], datasetVersion: string): string {
   if (proposals.length === 0) return '_No proposals survived verification._\n';
 

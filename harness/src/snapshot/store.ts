@@ -1,16 +1,4 @@
-/**
- * Content-addressed snapshot store.
- *
- * Every upstream file we ever read is written to
- * `data/snapshots/<source>/<sha256>.<ext>` alongside a small JSON sidecar, and
- * an index maps (source, artifact) to the most recent hash.
- *
- * The reason is auditability. When the agent later says "Bulgaria's currency
- * changed because the SIX register published EUR on 2026-01-01", the exact
- * bytes it read are still on disk under their own hash and can be re-parsed.
- * V1 had the opposite property: its 33.7 MB of data files recorded no upstream,
- * no version, and no date, so nobody could tell a stale value from a chosen one.
- */
+/** SHA-256 snapshot store with index per source artifact. */
 
 import { createHash } from 'node:crypto';
 import { mkdir, readFile, writeFile, readdir, stat } from 'node:fs/promises';
@@ -180,15 +168,7 @@ export interface FetchOptions extends StoreOptions {
   versionFrom?: (body: Uint8Array, res: Response) => string | undefined;
 }
 
-/**
- * Fetch an upstream artifact into the store.
- *
- * In offline mode, or when the network fails and we already hold a copy, the
- * cached snapshot is returned instead. That keeps CI reproducible and means a
- * flaky upstream degrades the pipeline rather than breaking it — V1's
- * population endpoints, by contrast, fetched once at boot and stayed broken
- * until the dyno restarted if that single request failed.
- */
+/** Offline/cache fallback on fetch failure. */
 export async function fetchArtifact(opts: FetchOptions): Promise<Snapshot> {
   const cached = await latest(opts.source, opts.artifact);
 

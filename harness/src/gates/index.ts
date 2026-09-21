@@ -1,12 +1,4 @@
-/**
- * Gate runner.
- *
- * Runs every invariant against a candidate dataset and produces a report. This
- * is the boundary the agent cannot cross: a proposal is applied to a copy of
- * the dataset, gated here, and only reaches a human if it passes. A model that
- * confidently proposes something wrong fails at this step rather than in
- * production.
- */
+/** Run invariants on candidate dataset; agent boundary. */
 
 import type { GateReport, GateResult, Invariant, Logger, ResolvedDataset } from '../types.ts';
 import { INVARIANTS } from './invariants.ts';

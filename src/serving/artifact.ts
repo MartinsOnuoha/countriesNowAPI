@@ -1,16 +1,4 @@
-/**
- * The serving artifact.
- *
- * Opens the compiled SQLite file read-only and keeps it open for the process
- * lifetime. There is no connection pool, no socket, and no retry logic, because
- * there is no network involved: the file is baked into the container image and
- * the OS page cache holds the hot pages after the first few requests.
- *
- * This is the single most important property of the V2 design. "API is down"
- * was filed eleven times against V1 (#239, #234, #233, #232, #225, #216, #203,
- * #202, #201, #90, #88) and every instance traced to a runtime dependency
- * rather than to the code. A replica here has nothing to be down *to*.
- */
+/** Read-only SQLite artifact for the request path; no network at runtime. */
 
 import { Database } from 'bun:sqlite';
 import { existsSync, readdirSync, statSync } from 'node:fs';
@@ -30,13 +18,7 @@ export interface ArtifactMeta {
 let db: Database | null = null;
 let meta: ArtifactMeta | null = null;
 
-/**
- * Locate the artifact.
- *
- * COUNTRIESNOW_ARTIFACT wins if set; otherwise the newest
- * `countriesnow-*.sqlite` under the artifact directory. Deployments pin the
- * path explicitly, so the directory scan is a development convenience.
- */
+/** COUNTRIESNOW_ARTIFACT or newest countriesnow-*.sqlite in data/artifacts. */
 export function findArtifact(dir = join(process.cwd(), 'data', 'artifacts')): string | null {
   const explicit = process.env.COUNTRIESNOW_ARTIFACT;
   if (explicit) {
@@ -96,9 +78,7 @@ export function openArtifact(path?: string): { db: Database; meta: ArtifactMeta 
     sourceVersions: kv.source_versions ? JSON.parse(kv.source_versions) : {},
     path: found,
     bytes,
-    // Derived from the dataset version, so it is stable across replicas and
-    // across restarts. A CDN can therefore treat any replica's response as
-    // interchangeable, which is what makes the cache actually work.
+    // ETag = quoted dataset version (stable across replicas).
     etag: `"${datasetVersion}"`
   };
 

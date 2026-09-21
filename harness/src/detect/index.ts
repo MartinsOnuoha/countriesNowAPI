@@ -1,23 +1,4 @@
-/**
- * DETECT — the deterministic first stage.
- *
- * No model runs here. This stage turns two things into a queue of concrete,
- * checkable questions:
- *
- *   1. Cross-source contradictions recorded by the resolver. When precedence
- *      picks SIX's EUR for Bulgaria and GeoNames still says BGN, that
- *      disagreement is not silently discarded — it becomes an anomaly.
- *
- *   2. Structural gaps that no single source can settle: a country with no
- *      currency, a subdivision with no coordinates, a population that moved
- *      more than a plausible amount since the last release.
- *
- * Keeping this stage model-free matters. The agent is only ever asked about
- * things a deterministic rule already found suspicious, so its budget is spent
- * on adjudication rather than on scanning 250 countries hoping to notice
- * something. That is the same economy Aster's review pipeline uses: cheap
- * over-production first, expensive judgement only on what survives.
- */
+/** Deterministic anomalies: resolver conflicts, gaps, release drift. */
 
 import { createHash } from 'node:crypto';
 import { existsSync } from 'node:fs';
@@ -33,24 +14,10 @@ function fingerprint(kind: string, ref: string, field: string | null): string {
 /** How much a country's population may move between releases before we ask. */
 const POPULATION_DRIFT_THRESHOLD = 0.2;
 
-/**
- * Two sources may legitimately differ on the same population figure by this
- * much, because they are measuring different years with different methods. The
- * World Bank's 2025 estimate and GeoNames' undated snapshot will never agree
- * exactly, and raising 250 anomalies to say so would bury the ones that matter.
- */
+/** POPULATION_AGREEMENT_TOLERANCE avoids noise between years/methods. */
 const POPULATION_AGREEMENT_TOLERANCE = 0.1;
 
-/**
- * Decide whether a cross-source difference is a real contradiction or just the
- * two sources modelling the same fact differently.
- *
- * This filter is what keeps the anomaly queue worth reading. Without it DETECT
- * emits several hundred items per run, almost all of them noise, and the
- * signal — a currency that actually changed — is indistinguishable from the
- * background. Being deliberately conservative here is also what lets the agent
- * stage stay cheap: it only ever sees questions a rule could not settle.
- */
+/** Filter cross-source noise before enqueueing anomalies. */
 function isExplainable(field: string, a: string, b: string): boolean {
   const x = a.replace(/^"|"$/g, '').trim();
   const y = b.replace(/^"|"$/g, '').trim();
@@ -358,9 +325,7 @@ export async function detect(dataset: ResolvedDataset, log: Logger): Promise<Ano
     log.debug('no previous release on disk; drift rules skipped');
   }
 
-  // Dedupe by fingerprint. The same field can be contested by more than one
-  // source pair, and a queue that lists the same question twice wastes a
-  // reviewer's attention and the agent's budget equally.
+  // Dedupe anomalies by fingerprint; merge source evidence.
   const unique = new Map<string, Anomaly>();
   for (const a of out) {
     const existing = unique.get(a.fingerprint);
@@ -382,12 +347,7 @@ export async function detect(dataset: ResolvedDataset, log: Logger): Promise<Ano
   return deduped;
 }
 
-/**
- * The most recent published dataset that is not the one being built.
- *
- * Falls back to nothing on a first run, which is why every drift rule is
- * conditional — a fresh checkout must still be able to produce a release.
- */
+/** Previous release on disk, if any (skipped on first run). */
 async function loadPreviousDataset(currentVersion: string): Promise<ResolvedDataset | null> {
   const path = join(config.artifactDir, 'dataset.previous.json');
   if (!existsSync(path)) return null;

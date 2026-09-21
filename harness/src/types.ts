@@ -1,19 +1,4 @@
-/**
- * Shared vocabulary for the curation pipeline.
- *
- * The pipeline is five stages, and the boundary between them is data, not
- * function calls — every stage writes something a human can read and a later
- * run can replay:
- *
- *   PULL     upstream bytes            -> Snapshot (content-addressed on disk)
- *   RESOLVE  Snapshot[]                -> ResolvedDataset (+ per-field provenance)
- *   DETECT   ResolvedDataset           -> Anomaly[]
- *   PROPOSE  Anomaly[]                 -> Proposal[]  (the only LLM stage)
- *   GATE     ResolvedDataset + Patch   -> GateReport
- *
- * Only PROPOSE involves a model, and its output cannot become data without
- * clearing GATE and a human review.
- */
+/** Pipeline stage types: pull → resolve → detect → propose → gate. */
 
 import type { EntityType } from '../../src/db/schema.ts';
 
@@ -59,13 +44,7 @@ export interface SourceLicense {
   shareAlike: boolean;
 }
 
-/**
- * A single fetched file, addressed by the SHA-256 of its bytes.
- *
- * Content addressing is what makes "the agent claimed X because source Y said
- * Z" checkable months later: the snapshot that produced the claim is still on
- * disk under its own hash, byte for byte.
- */
+/** Snapshot identified by SHA-256 of bytes. */
 export interface Snapshot {
   source: SourceId;
   /** Logical name within the source, e.g. 'iso_3166-2.json'. */
@@ -88,12 +67,7 @@ export interface FetchContext {
   log: Logger;
 }
 
-/**
- * Every upstream implements this. Adapters do exactly two things: fetch bytes
- * and parse them into normalised records. They never merge, never resolve
- * conflicts, and never decide precedence — that is the resolver's job, driven
- * by policy rather than by whichever adapter happened to run last.
- */
+/** SourceAdapter: fetch + parse only; no merge. */
 export interface SourceAdapter<T = unknown> {
   id: SourceId;
   title: string;
@@ -310,11 +284,7 @@ export interface Proposal {
   confidence?: number;
   hypothesisModel?: string;
   verifyModel?: string;
-  /**
-   * How the candidate dataset scored once the patch was applied. A reviewer
-   * seeing "31/31" knows the change survived every rule derived from a bug the
-   * project has already been bitten by.
-   */
+  /** Gate pass counts for PR review. */
   gatesPassed?: number;
   gatesRun?: number;
 }
@@ -333,13 +303,7 @@ export interface InvariantViolation {
   detail: string;
 }
 
-/**
- * A rule that must hold for any publishable dataset.
- *
- * Most of these encode a specific bug from V1's tracker, cited in `issue`.
- * Once a rule is here the bug cannot come back without failing CI, which is the
- * difference between fixing data and fixing a process.
- */
+/** Invariant check; optional issue id. */
 export interface Invariant {
   id: string;
   title: string;

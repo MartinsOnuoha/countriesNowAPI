@@ -1,12 +1,5 @@
 #!/usr/bin/env bun
-/**
- * countriesnow-harness.
- *
- * Every stage is a separate subcommand that reads and writes files, so any of
- * them can be run in isolation, inspected, and re-run. That is deliberate: a
- * pipeline whose intermediate state you cannot look at is a pipeline you cannot
- * trust to change your data.
- */
+/** CLI subcommands; each stage reads/writes files. */
 
 import { agentEnabled, config, createLogger, formatBytes } from './config.ts';
 import { ADAPTERS, build, pull } from './pipeline.ts';
@@ -45,14 +38,7 @@ Options
   --dry-run          Run every agent stage but do not open a pull request
 `;
 
-/**
- * Write to stdout and wait for it to land.
- *
- * `console.log` of a multi-megabyte anomaly list into a pipe does not finish
- * before the process does, and the redirect silently produces truncated JSON.
- * Awaiting the write is the difference between a valid file and one that only
- * fails later, somewhere else.
- */
+/** Await stdout drain before exit (large --json redirects). */
 async function emit(text: string): Promise<void> {
   await Bun.write(Bun.stdout, `${text}\n`);
 }
@@ -214,9 +200,7 @@ async function main(): Promise<number> {
         log.info(`[${(p.confidence ?? 0).toFixed(2)}] ${p.claim}`);
       }
 
-      // Opening the PR is the last step and deliberately separate: --dry-run
-      // gives the full pipeline with nothing pushed, which is what you want the
-      // first few times you change a prompt.
+      // PR step separate from --dry-run pipeline.
       if (args.dryRun) {
         log.info('dry run: no pull request opened');
         return 0;

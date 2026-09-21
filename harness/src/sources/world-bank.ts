@@ -1,17 +1,4 @@
-/**
- * World Bank — country population.
- *
- * CC BY 4.0, no key, no auth, and the indicator API always returns the year
- * alongside the value. That last part is the whole reason it is preferred over
- * GeoNames for country population: V1 served unlabelled numbers, so nobody
- * could tell a 2011 census from a 2024 estimate.
- *
- * One gotcha, handled below: `country/all` mixes in regional and income-group
- * aggregates — "Arab World", "Africa Eastern and Southern", "Euro area". V1's
- * population endpoint served `{"country":"Arab World","iso3":"ARB"}` as though
- * it were a country. We drop anything whose ISO3 does not match a real country,
- * which the resolver enforces by looking these up by ISO3 in the first place.
- */
+/** World Bank population with year; drop non-country aggregates. */
 
 import { fetchArtifact, readSnapshotJson } from '../snapshot/store.ts';
 import type { FetchContext, Snapshot, SourceAdapter } from '../types.ts';

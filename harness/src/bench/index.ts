@@ -1,15 +1,4 @@
-/**
- * Latency benchmark, wired as a blocking CI check.
- *
- * The point is not to produce an impressive number. It is to make a performance
- * regression fail a build the same way a data regression does. Serving from an
- * embedded artifact means p99 is measured in microseconds; if a change makes a
- * lookup do a table scan, that shows up here immediately instead of in
- * production.
- *
- * Thresholds are deliberately loose enough to survive a shared CI runner and
- * tight enough that a missing index cannot pass.
- */
+/** CI latency budgets on real resolve/list queries. */
 
 import { getDb, getMeta } from '../../../src/serving/artifact.ts';
 import { resolveCountry, resolvePlace, resolveSubdivision } from '../../../src/serving/resolve.ts';
@@ -78,9 +67,7 @@ export async function runBenchmark(log: Logger): Promise<BenchmarkResult> {
 
   log.step(`Benchmarking ${meta.datasetVersion} (${(meta.bytes / 1024 / 1024).toFixed(1)} MB)`);
 
-  // Real inputs, including the ones that used to be bugs. Benchmarking only the
-  // happy path would hide a regression in exactly the code that fixes #242 and
-  // the Réunion accent case.
+  // Include accent/alias refs used in production bugs.
   const countryRefs = ['US', 'FRA', 'Nigeria', 'Réunion', 'Reunion', 'Ivory Coast', 'Türkiye'];
   const subRefs = ['FR-PAC', 'Lagos', 'California', 'Western Province'];
   const placeRefs = ['Marseille', 'Lagos', 'Tokyo', 'São Paulo'];

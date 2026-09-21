@@ -1,16 +1,4 @@
-/**
- * The deterministic resolver.
- *
- * Takes the parsed output of every source adapter and produces one dataset
- * where each field has exactly one value, chosen by
- * harness/policy/precedence.yaml, plus a provenance row saying where it came
- * from.
- *
- * No model runs here. Nothing is guessed. Where sources disagree the winner is
- * whichever policy names, and the disagreement is recorded so DETECT can raise
- * it — that is how a stale GeoNames currency becomes a visible question rather
- * than a silent overwrite.
- */
+/** Merge source adapters into one dataset via precedence.yaml. */
 
 import { fold } from '../../../src/serving/normalize.ts';
 import {
@@ -125,8 +113,7 @@ export function resolveDataset(input: ResolveInput): ResolvedDataset {
   /* Countries                                                               */
   /* ---------------------------------------------------------------------- */
 
-  // Membership is ISO 3166-1 plus the documented exceptions, and nothing else.
-  // See harness/policy/territories.ts and docs/DATA_POLICY.md.
+  // ISO 3166-1 + policy exceptions; see territories.ts.
   const memberCodes = new Set<string>(isoByIso2.keys());
   for (const ex of TERRITORY_EXCEPTIONS) memberCodes.add(ex.iso2);
   for (const suppressed of SUPPRESSED_ENTITIES) memberCodes.delete(suppressed);
@@ -153,11 +140,7 @@ export function resolveDataset(input: ResolveInput): ResolvedDataset {
       return result.value;
     };
 
-    // The policy exception and the GeoNames name are candidates in the chain
-    // rather than `??` fallbacks after it. A fallback outside f() produces a
-    // published value with no provenance row, which is exactly the "where did
-    // BGN come from?" problem this pipeline exists to prevent — Kosovo has no
-    // ISO entry, so without this its official name had no recorded origin.
+    // Policy/GeoNames names in precedence chain (provenance required).
     const isoOfficialName =
       f<string>('isoOfficialName', [
         { source: 'iso-codes', value: iso?.official_name ?? iso?.name ?? null },
@@ -395,21 +378,14 @@ export function resolveDataset(input: ResolveInput): ResolvedDataset {
 
     add(row.name, 'en', 'iso-official', 'iso-codes');
     if (cldrName) add(cldrName, 'en', 'cldr-display', 'cldr');
-    // Issues #42, #112 and #143 were all the same complaint: "Lagos" would not
-    // match "Lagos State". Registering the suffix-stripped form as an alias
-    // fixes the class rather than the instance. V1 attempted this but the
-    // transform was a no-op — it lowercased a value that the very next line
-    // lowercased again.
+    // #42/#112/#143: register "X State" and bare ISO names as aliases.
     const SUBDIVISION_SUFFIX =
       /\s+(State|Province|Region|District|County|Prefecture|Governorate|Oblast|Department|Territory|Municipality|Parish|Canton|Emirate)$/i;
 
     const stripped = row.name.replace(SUBDIVISION_SUFFIX, '');
     if (stripped !== row.name && stripped.length > 1) add(stripped, 'und', 'variant', 'iso-codes');
 
-    // The other direction matters just as much. ISO names Nigeria's states
-    // bare — "Lagos", not "Lagos State" — but V1's data carried the suffix and
-    // callers copied it out of V1 responses. Both spellings have to land here
-    // or the shim breaks every client that stored a name.
+    // Also alias suffixed forms callers stored from V1.
     if (row.type && !SUBDIVISION_SUFFIX.test(row.name)) {
       const suffixed = `${row.name} ${row.type}`;
       if (SUBDIVISION_SUFFIX.test(suffixed)) add(suffixed, 'und', 'variant', 'iso-codes');
@@ -477,11 +453,7 @@ export function resolveDataset(input: ResolveInput): ResolvedDataset {
   /* Country coordinates                                                     */
   /* ---------------------------------------------------------------------- */
 
-  // No upstream in the permissive tier publishes a country centroid, so it is
-  // derived: the capital's coordinates where the capital is a place we hold,
-  // otherwise the population-weighted centroid of the country's cities.
-  // Both are recorded with provenance so a consumer can tell a measured value
-  // from a computed one, which V1's static coordinate list could not.
+  // Country coords: capital else population-weighted city centroid.
   const placesByCountry = new Map<string, ResolvedPlace[]>();
   for (const p of places) {
     if (!p.isCity) continue;
@@ -524,8 +496,6 @@ export function resolveDataset(input: ResolveInput): ResolvedDataset {
     const withCoords = cities.filter((p) => p.latitude != null && p.longitude != null);
     if (withCoords.length === 0) continue;
 
-    // Weighting by population keeps the centroid near where people actually
-    // are, rather than in the middle of an empty interior.
     let weight = 0;
     let lat = 0;
     let lon = 0;
@@ -547,8 +517,7 @@ export function resolveDataset(input: ResolveInput): ResolvedDataset {
       sourceVersion: sourceVersions.geonames ?? null,
       sourceUrl: null,
       retrievedAt,
-      // Lower confidence than a capital's actual coordinates, because it is a
-      // computed approximation rather than an observation.
+      // Lower confidence for computed vs capital coords.
       confidence: 0.5
     });
   }
@@ -616,26 +585,7 @@ export function resolveDataset(input: ResolveInput): ResolvedDataset {
 /* GeoNames admin1 reconciliation                                              */
 /* -------------------------------------------------------------------------- */
 
-/**
- * Attach each GeoNames admin1 division to the ISO 3166-2 subdivision it
- * actually denotes.
- *
- * This has to match on *name*, not on code. GeoNames admin1 codes are INSEE
- * region numbers for France, FIPS letters elsewhere, and ISO local parts in a
- * few lucky countries — so comparing the strings finds real matches and
- * plausible-looking wrong ones with equal enthusiasm. Concretely: GeoNames
- * `FR.93` is the Provence-Alpes-Côte d'Azur *region*, while ISO `FR-93` is the
- * Seine-Saint-Denis *department*, six hundred kilometres away. Linking those
- * files every city in Marseille under a suburb of Paris.
- *
- * Two further constraints keep the join honest:
- *
- *   - Only level-1 subdivisions are eligible. GeoNames admin1 is by definition
- *     a country's top administrative tier, so a match against a department can
- *     only ever be a collision.
- *   - A name must match exactly one candidate. Ambiguity leaves the link null,
- *     which costs some coordinates and costs no correctness.
- */
+/** Match admin1 to ISO subdivisions by name at level 1 only (not FR-93 vs FR.93). */
 function reconcileAdmin1(
   subdivisions: ResolvedSubdivision[],
   admin1ByCountry: Map<string, GeoAdmin1[]>,

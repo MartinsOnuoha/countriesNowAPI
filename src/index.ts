@@ -1,11 +1,4 @@
-/**
- * Server entry point.
- *
- * The only startup work is opening the embedded artifact. There is no
- * migration, no connection pool and no upstream to wait for, so a replica is
- * serving within milliseconds of the process starting — which is what makes
- * scaling out and rolling restarts uneventful.
- */
+/** Startup opens embedded artifact only. */
 
 import { createApp } from './app.ts';
 import { getMeta, isReady } from './serving/artifact.ts';

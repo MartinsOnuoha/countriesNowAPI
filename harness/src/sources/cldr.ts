@@ -1,20 +1,4 @@
-/**
- * CLDR — localized display names. This is most of issue #215.
- *
- * CLDR gives 311 territory names across a hundred-plus locales, and its wording
- * is the neutral-in-practice one ("Taïwan" rather than ISO's "Taiwan, Province
- * of China"), which is why `displayName` prefers it.
- *
- * The trap worth knowing: CLDR's *subdivision* coverage is nothing like its
- * territory coverage. `cldr-subdivisions-full` has 5,395 names in English but
- * the French file has three entries — England, Scotland and Wales. Anyone who
- * wires up "CLDR for localization" and stops there ships translated countries
- * and untranslated states without noticing. Subdivision names therefore come
- * primarily from iso-codes gettext (70 languages); CLDR is a supplement.
- *
- * Locales are configurable. Fetching all 766 would be gratuitous for an API
- * whose callers mostly want the widely-used ones.
- */
+/** CLDR territory names (#215); subdivision coverage thin — iso-codes primary. */
 
 import { fetchArtifact, readSnapshotJson } from '../snapshot/store.ts';
 import type { FetchContext, Snapshot, SourceAdapter } from '../types.ts';
@@ -96,10 +80,7 @@ export const cldr: SourceAdapter<CldrData> = {
   async fetch(ctx: FetchContext): Promise<Snapshot[]> {
     const out: Snapshot[] = [];
 
-    // CLDR is ~40 small files. One locale being unavailable should cost that
-    // locale, not the whole source — every other adapter is all-or-nothing
-    // because it fetches one logical dataset, but this one is genuinely
-    // separable.
+    // Per-locale fetch failures are non-fatal.
     const tryFetch = async (artifact: string, url: string) => {
       try {
         out.push(
@@ -119,10 +100,7 @@ export const cldr: SourceAdapter<CldrData> = {
 
     await tryFetch('currencies-en.json', `${BASE}/cldr-numbers-full/main/en/currencies.json`);
 
-    // Subdivisions live in their own package with their own layout —
-    // `subdivisions/<locale>/<locale>.json`, not the `main/<locale>/` shape
-    // every other CLDR package uses. Note the coverage caveat in the file
-    // header: English has thousands of names, French has three.
+    // Subdivisions use subdivisions/<locale>/ layout, not main/.
     await tryFetch(
       'subdivisions-en.json',
       `${BASE}/cldr-subdivisions-full/subdivisions/en/en.json`

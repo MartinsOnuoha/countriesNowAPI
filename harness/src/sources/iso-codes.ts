@@ -1,27 +1,4 @@
-/**
- * Debian iso-codes — the canonical registry.
- *
- * ISO is the maintenance agency for 3166 and 4217, but its own machine-readable
- * product is a paid subscription and the free Online Browsing Platform has no
- * bulk export. iso-codes is the practical answer: a permissively licensed
- * project that tracks the OBP and ISO newsletters by hand, ships JSON, and
- * carries gettext translations in 159 languages for country names and 70 for
- * subdivisions — broader subdivision coverage than CLDR, which has three
- * entries in its French subdivision file.
- *
- * Two things here matter more than they look:
- *
- *   - `iso_3166-2.json` carries a `parent` field on 1,456 of its 5,046 rows.
- *     That is the administrative hierarchy ISO is often said not to publish,
- *     and it is what lets Sri Lanka expose 9 provinces above 25 districts
- *     (issue #229) rather than flattening both into one list.
- *
- *   - The French subdivisions are current. ISO lists 12 metropolitan regions
- *     plus Corse as a collectivity with special status, with all 95 departments
- *     correctly parented beneath them. GeoNames, by contrast, still calls
- *     FR-27 "Bourgogne" and FR-84 "Rhône-Alpes" — the pre-2016 names behind
- *     issue #227.
- */
+/** iso-codes JSON: countries, subdivisions, translations, parent hierarchy. */
 
 import { fold } from '../../../src/serving/normalize.ts';
 import { fetchArtifact, readSnapshotJson } from '../snapshot/store.ts';

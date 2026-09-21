@@ -1,10 +1,4 @@
-/**
- * Orchestration: pull every source, then resolve them into one dataset.
- *
- * Adapters know nothing about each other. This file is the only place that
- * knows the order things happen in, and it is deliberately linear and boring —
- * the interesting decisions live in harness/policy, not here.
- */
+/** pull → resolve orchestration; policy lives elsewhere. */
 
 import { mkdir } from 'node:fs/promises';
 import { config } from './config.ts';
@@ -43,14 +37,7 @@ async function ensureDirs(): Promise<void> {
   await mkdir(config.tmpDir, { recursive: true });
 }
 
-/**
- * Fetch every upstream.
- *
- * A source that fails does not abort the run. It is recorded and the pipeline
- * continues with whatever cached snapshot exists, because a single flaky
- * upstream should degrade a release, not block one. Tier 0 is the exception —
- * without ISO codes there is nothing to build — and `resolve` enforces that.
- */
+/** Failed source uses cache; tier-0 failure handled in resolve. */
 export async function pull(log: Logger, offline = false): Promise<PullResult> {
   await ensureDirs();
   const ctx: FetchContext = { offline, dataDir: config.dataDir, log };
@@ -78,15 +65,7 @@ export interface BuildOptions {
   version?: string;
 }
 
-/**
- * Parse every snapshot and resolve into a dataset.
- *
- * Tier 0 (iso-codes, country-codes, geonames) is required. Tier 1 is optional:
- * without SIX there are no currencies, without CLDR the display names fall back
- * to ISO wording, and so on. The gates then decide whether the result is
- * publishable, which keeps "what we could fetch" separate from "what is good
- * enough to ship".
- */
+/** Tier 0 required; tier 1 optional; gates decide publish. */
 export async function build(options: BuildOptions): Promise<ResolvedDataset> {
   const { log } = options;
   const offline = options.offline ?? false;

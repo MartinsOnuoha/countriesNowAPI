@@ -1,17 +1,4 @@
-/**
- * Applying a proposal's JSON Patch to a candidate dataset.
- *
- * The patch paths are JSON Pointers keyed by a stable identifier rather than an
- * array index — `/countries/BG/primaryCurrency`, not `/countries/23/...` — so a
- * proposal written against yesterday's dataset still targets the right row
- * after the resolver reorders things. That costs a lookup here and buys
- * patches that do not silently hit the wrong country.
- *
- * Everything is applied to a deep clone. The gate needs to run invariants
- * against a dataset that includes the change without the change ever touching
- * the real one — if a patch fails its gate, the only trace it leaves is a log
- * line.
- */
+/** Apply JSON Patch to cloned dataset by stable id paths. */
 
 import type { PatchOp, ResolvedDataset } from '../types.ts';
 
@@ -34,13 +21,7 @@ const KEY_OF: Record<Collection, (row: Record<string, unknown>) => string> = {
   currencies: (r) => String(r.code)
 };
 
-/**
- * Apply every op, or none.
- *
- * A partially applied patch is worse than a rejected one: it produces a dataset
- * that matches no proposal and no upstream, which is exactly the state V1's
- * hand-edited data files were permanently in.
- */
+/** All ops succeed or none (no partial patches). */
 export function applyPatch(dataset: ResolvedDataset, ops: PatchOp[]): ResolvedDataset {
   const next = structuredClone(dataset) as ResolvedDataset;
 
@@ -78,8 +59,7 @@ function applyToRow(op: PatchOp, row: Record<string, unknown>, fieldPath: string
 
   switch (op.op) {
     case 'replace':
-      // Replace means replace. Creating a field that was not there is `add`,
-      // and conflating the two is how a typo'd path silently becomes a new key.
+      // replace only on existing paths; add for new keys.
       if (!(leaf in target)) throw new PatchError(op, `field "${leaf}" does not exist`);
       target[leaf] = op.value;
       return;
