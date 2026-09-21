@@ -116,7 +116,7 @@ function terminalPage(ctx: LandingContext): string {
   const body = `
 <main class="wrap">
   <section class="copy">
-    <p class="kicker">GEO DATA API · v2</p>
+    <p class="kicker"><span class="cn-white">COUNTRIES</span><span class="cn-green">NOW</span> API</p>
     <h1>Countries<br>Cities<br><span class="accent">Currencies.</span></h1>
     <p class="sub">Provenance-tracked, AI-curated, served from a read-only artifact baked
       into every replica. Nothing to be down to.</p>
@@ -156,7 +156,8 @@ body{background:#0B0B0E;font-family:'JetBrains Mono',monospace;color:#E7E5E0;
   background-image:radial-gradient(circle,#17161c 1px,transparent 1px);background-size:22px 22px}
 .wrap{height:100%;display:grid;grid-template-columns:1.1fr 1fr;align-items:center;gap:40px;
   max-width:1100px;margin:0 auto;padding:32px}
-.kicker{color:#7CFF6B;font-size:12px;letter-spacing:.12em;margin:0 0 10px}
+.kicker{color:#E7E5E0;font-size:12px;letter-spacing:.12em;margin:0 0 10px}
+.kicker .cn-white{color:#E7E5E0}.kicker .cn-green{color:#7CFF6B}
 h1{font-size:clamp(30px,5.6vw,58px);line-height:1.02;margin:0 0 16px;font-weight:700}
 .accent{color:#7CFF6B}
 .sub{color:#9c9a94;max-width:38ch;font-size:14px;line-height:1.5;margin:0 0 22px}
