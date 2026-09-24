@@ -7,8 +7,11 @@
   "module": "src/index.ts",
   "scripts": {
     "dev": "bun run --watch src/index.ts",
-    "start": "NODE_ENV=production bun run src/index.ts",
-    "build": "bun build src/index.ts --outdir=build --target=bun --minify",
+    "start": "bash -lc 'export PATH=\"$HOME/.bun/bin:$PATH\"; export COUNTRIESNOW_ARTIFACT=\"${COUNTRIESNOW_ARTIFACT:-$PWD/data/artifacts/countriesnow.sqlite}\"; exec bun run src/index.ts'",
+    "bundle": "bun build src/index.ts --outdir=build --target=bun --minify",
+
+    "heroku-prebuild": "bash scripts/heroku-install-bun.sh",
+    "heroku-postbuild": "bash scripts/heroku-build-artifact.sh",
 
     "typecheck": "tsc --noEmit",
     "lint": "eslint .",
@@ -54,6 +57,7 @@
     "typescript-eslint": "^8.44.1"
   },
   "engines": {
+    "node": "22.x",
     "bun": ">=1.2.0"
   }
 }
