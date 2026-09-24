@@ -93,10 +93,31 @@ Memory is set to 1 GB so the page cache can hold the working set. After the firs
 requests the hot pages are resident and a query never touches disk. Under-provisioning
 memory is the one way to make this architecture slow.
 
-## Other platforms
+## Heroku (classic buildpack)
 
-Nothing about the design is Fly-specific. The requirement is "run N stateless copies of
-one image, route on `/ready`".
+V1 lived on Heroku; V2 prefers a container image (Fly / Cloud Run / the
+Dockerfile). Classic `git push heroku` still works, with two caveats the Node
+buildpack alone does not cover:
+
+1. **Bun is not on the Node buildpack.** `heroku-prebuild` installs it into the
+   slug; the `Procfile` puts `$HOME/.bun/bin` on `PATH` at boot.
+2. **The SQLite artifact is not in git.** `heroku-postbuild` runs
+   pull → resolve → publish (`GEONAMES_TIER=cities15000` by default) and writes
+   `data/artifacts/countriesnow.sqlite` into the slug.
+
+There is intentionally **no** `build` script in `package.json`. Heroku's Node
+buildpack auto-runs `npm run build` when that script exists; ours called `bun`
+and failed with `bun: not found`. Optional bundling lives under `bun run bundle`.
+
+```bash
+heroku config:set COUNTRIESNOW_ARTIFACT=/app/data/artifacts/countriesnow.sqlite
+git push heroku master
+```
+
+For production-scale GeoNames data, build the Docker image via
+`.github/workflows/release.yml` and deploy that image instead — Heroku's
+15-minute compile window and 500 MB slug limit are a poor fit for
+`allCountries`.
 
 **Cloud Run** — `--min-instances=2 --cpu=1 --memory=1Gi`, and set the startup probe to
 `/ready`. Scale-to-zero works but adds cold starts to the p99 for no saving worth having.
